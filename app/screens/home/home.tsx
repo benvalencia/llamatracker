@@ -1,8 +1,29 @@
 import {StyleSheet, View, Text, TextInput, Button, Image} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React from "react";
+import {Client, Language} from "fnapicom";
 
 export default function HomeScreen() {
+
+  const client = new Client({
+    language: Language.Spanish,
+    apiKey: '2eb358b4-ef78-41ce-aecb-961725393619',
+  });
+
+  const searchProfile = () => {
+    client.brMap().then((res) => {
+      console.log('map ->', res)
+    });
+
+    client.bannerColors().then((res) => {
+      console.log('banner color ->', res)
+    });
+
+    client.cosmeticsList().then((res) => {
+      console.log('cosmeticsList ->', res)
+    });
+  }
+
   return (
     <View style={{
       backgroundColor: Colors.primary,
@@ -24,7 +45,7 @@ export default function HomeScreen() {
       </View>
 
       <View>
-        <Button title={'Buscar'}></Button>
+        <Button onPress={searchProfile} title={'Buscar'}></Button>
       </View>
     </View>
   );
