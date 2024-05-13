@@ -1,5 +1,6 @@
-import {StyleSheet, View, Text, TextInput, Button} from 'react-native';
+import {StyleSheet, View, Text, TextInput, Button, Image} from 'react-native';
 import {Colors} from "@/constants/Colors";
+import React from "react";
 
 export default function HomeScreen() {
   return (
@@ -10,12 +11,21 @@ export default function HomeScreen() {
       alignItems: 'center',
       justifyContent: 'center'
     }}>
-      <Text>
-        imagen
-      </Text>
-      <TextInput placeholder={'Buscar'}>
-      </TextInput>
-      <Button title={'Buscar'}></Button>
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.tinyLogo}
+          source={require('../../../assets/images/logo/icons8-fortnite-llama-144.png')}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput style={{width: '100%'}} placeholder={'Buscar'}>
+        </TextInput>
+      </View>
+
+      <View>
+        <Button title={'Buscar'}></Button>
+      </View>
     </View>
   );
 }
@@ -30,6 +40,16 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 8,
   },
+
+  imageContainer: {
+    marginBottom: 20
+  },
+
+  inputContainer: {
+    backgroundColor: '#fbefff'
+  },
+
+  tinyLogo: {},
   reactLogo: {
     height: 178,
     width: 290,
