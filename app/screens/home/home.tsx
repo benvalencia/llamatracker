@@ -23,7 +23,9 @@ export default function HomeScreen() {
         </TextInput>
       </View>
 
-      <Button title={'Buscar'}></Button>
+      <View>
+        <Button title={'Buscar'}></Button>
+      </View>
     </View>
   );
 }
