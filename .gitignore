@@ -18,8 +18,13 @@ web-build/
 
 expo-env.d.ts
 # @end expo-cli
+
+
+package-lock.json
+
+#IDEA
 /.idea/vcs.xml
 /.idea/modules.xml
 /.idea/llamatracker.iml
 /.idea/.gitignore
-package-lock.json
+/.idea/git_toolbox_prj.xml
