@@ -1,22 +1,35 @@
-import {StyleSheet, View, Text, TextInput, Button} from 'react-native';
+import {StyleSheet, View, Text, TextInput, Button, KeyboardAvoidingView, Platform} from 'react-native';
 import {Colors} from "@/constants/Colors";
 
 export default function ValidateAccountScreen() {
+  const keyboardVerticalOffset = Platform.OS === 'ios' ? 90 : 0;
+
+
   return (
-    <View style={{
-      backgroundColor: Colors.primary,
-      height: '100%',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}>
-      <Text>
-        imagen
-      </Text>
-      <TextInput placeholder={'Buscar'}>
-      </TextInput>
-      <Button title={'Buscar'}></Button>
-    </View>
+    <KeyboardAvoidingView style={{flex: 1}}
+                          behavior='padding' keyboardVerticalOffset={keyboardVerticalOffset}
+    >
+
+      <View style={{
+        height: '100%',
+        backgroundColor: Colors.primary,
+
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <View>
+
+        </View>
+        <Text>
+          imagen
+        </Text>
+        <TextInput placeholder={'Buscar'}>
+        </TextInput>
+        <Button title={'Buscar'}></Button>
+      </View>
+
+    </KeyboardAvoidingView>
   );
 }
 

@@ -1,9 +1,21 @@
-import {StyleSheet, View, Text, TextInput, Button, Image} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Button,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable
+} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React from "react";
 import {Client, Language} from "fnapicom";
 
 export default function HomeScreen() {
+
+  const keyboardVerticalOffset = Platform.OS === 'ios' ? 0 : 0;
 
   const client = new Client({
     language: Language.Spanish,
@@ -31,47 +43,46 @@ export default function HomeScreen() {
   }
 
   return (
-    <View style={{
-      backgroundColor: Colors.primary,
-      height: '100%',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}>
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.tinyLogo}
-          source={require('../../../assets/images/logo/icons8-fortnite-llama-144.png')}
-        />
+    <KeyboardAvoidingView style={{flex: 1}}
+                          behavior='padding' keyboardVerticalOffset={keyboardVerticalOffset}
+    >
+      <View style={{
+        backgroundColor: Colors.primary,
+        height: '100%',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <View style={styles.imageContainer}>
+          <Image
+            style={{}}
+            source={require('../../../assets/images/logo/icons8-fortnite-llama-144.png')}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.inputComponent} placeholder={'Buscar perfil'} placeholderTextColor={'#4b4b4b'}>
+          </TextInput>
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <Pressable style={styles.buttonComponent} onPress={searchProfile}>
+            <Text style={styles.buttonText}>{'Buscar'}</Text>
+          </Pressable>
+        </View>
       </View>
 
-      <View style={styles.inputContainer}>
-        <TextInput style={styles.inputComponent} placeholder={'Buscar'} placeholderTextColor={'#4b4b4b'}>
-        </TextInput>
-      </View>
+    </KeyboardAvoidingView>
 
-      <View>
-        <Button onPress={searchProfile} title={'Buscar'}></Button>
-      </View>
-    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-
+  // IMAGE
   imageContainer: {
     marginBottom: 20
   },
-
+  // INPUT
   inputContainer: {
     width: '100%',
     height: 50,
@@ -84,13 +95,23 @@ const styles = StyleSheet.create({
     fontSize: 18,
     backgroundColor: '#fbefff',
   },
-
-  tinyLogo: {},
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  // BUTTON
+  buttonContainer: {
+    width: '100%',
+    marginTop: 10,
+  },
+  buttonComponent: {
+    width: '100%',
+    height: 30,
+    borderRadius: 13,
+    paddingLeft: 15,
+    backgroundColor: Colors.secondary,
+  },
+  buttonText: {
+    width: '100%',
+    height: 30,
+    fontSize: 18,
+    textAlign: 'center',
+    color: 'white',
   },
 });
