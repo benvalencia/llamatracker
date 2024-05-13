@@ -10,66 +10,79 @@ import {
   Pressable
 } from 'react-native';
 import {Colors} from "@/constants/Colors";
-import React from "react";
+import React, {useState} from "react";
 import {Client, Language} from "fnapicom";
+import {useNavigation} from "expo-router";
+import {CommonActions} from "@react-navigation/native";
 
 export default function HomeScreen() {
 
+  const [username, setUsername] = useState('');
+
+
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 0 : 0;
+
+  const navigation = useNavigation()
+
 
   const client = new Client({
     language: Language.Spanish,
     apiKey: '2eb358b4-ef78-41ce-aecb-961725393619',
   });
 
-  const searchProfile = () => {
+  const goToStats = () => {
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: 'screens/profile/stats',
+        params: {
+          username
+        }
 
-    client.brStats({
-      name: "TheWaxMell",
-      accountType: 'xbl',
-      timeWindow: 'season',
-      image: 'all',
-    }).then((res) => {
-      console.log('brStats -> ', res)
-    }).catch((err) => {
-      console.log('err -> ', err)
-    });
+      }));
+  }
 
+  // const searchProfile = () => {
+  // client.brStats({
+  //   name: "TheWaxMell",
+  //   accountType: 'xbl',
+  //   timeWindow: 'season',
+  //   image: 'all',
+  // }).then((res) => {
+  //   console.log('brStats -> ', res)
+  // }).catch((err) => {
+  //   console.log('err -> ', err)
+  // });
     // client.brMap().then((res) => {
     //   console.log('brMap -> ', res)
     // }).catch((err) => {
     //   console.log('err -> ',err)
     // });
-  }
+  // }
 
   return (
     <KeyboardAvoidingView style={{flex: 1}}
                           behavior='padding' keyboardVerticalOffset={keyboardVerticalOffset}
     >
-      <View style={{
-        backgroundColor: Colors.primary,
-        height: '100%',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
+      <View style={styles.viewContainer}>
+
         <View style={styles.imageContainer}>
-          <Image
-            style={{}}
-            source={require('../../../assets/images/logo/icons8-fortnite-llama-144.png')}
-          />
+          <Image source={require('../../../assets/images/logo/icons8-fortnite-llama-144.png')}/>
         </View>
 
         <View style={styles.inputContainer}>
-          <TextInput style={styles.inputComponent} placeholder={'Buscar perfil'} placeholderTextColor={'#4b4b4b'}>
+          <TextInput style={styles.inputComponent}
+                     placeholder={'Buscar perfil'} placeholderTextColor={'#4b4b4b'}
+                     onChangeText={(text) => setUsername(text)}
+          >
           </TextInput>
         </View>
 
         <View style={styles.buttonContainer}>
-          <Pressable style={styles.buttonComponent} onPress={searchProfile}>
+          <Pressable style={styles.buttonComponent} onPress={goToStats}>
             <Text style={styles.buttonText}>{'Buscar'}</Text>
           </Pressable>
         </View>
+
       </View>
 
     </KeyboardAvoidingView>
@@ -78,10 +91,20 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  // GENERAL CONTAINER
+  viewContainer: {
+    backgroundColor: Colors.primary,
+    height: '100%',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
   // IMAGE
   imageContainer: {
     marginBottom: 20
   },
+
   // INPUT
   inputContainer: {
     width: '100%',

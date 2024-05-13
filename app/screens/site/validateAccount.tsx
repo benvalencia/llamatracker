@@ -4,7 +4,6 @@ import {Colors} from "@/constants/Colors";
 export default function ValidateAccountScreen() {
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 90 : 0;
 
-
   return (
     <KeyboardAvoidingView style={{flex: 1}}
                           behavior='padding' keyboardVerticalOffset={keyboardVerticalOffset}
