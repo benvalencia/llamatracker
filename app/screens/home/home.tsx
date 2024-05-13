@@ -11,17 +11,23 @@ export default function HomeScreen() {
   });
 
   const searchProfile = () => {
-    client.brMap().then((res) => {
-      console.log('map ->', res)
+
+    client.brStats({
+      name: "TheWaxMell",
+      accountType: 'xbl',
+      timeWindow: 'season',
+      image: 'all',
+    }).then((res) => {
+      console.log('brStats -> ', res)
+    }).catch((err) => {
+      console.log('err -> ', err)
     });
 
-    client.bannerColors().then((res) => {
-      console.log('banner color ->', res)
-    });
-
-    client.cosmeticsList().then((res) => {
-      console.log('cosmeticsList ->', res)
-    });
+    // client.brMap().then((res) => {
+    //   console.log('brMap -> ', res)
+    // }).catch((err) => {
+    //   console.log('err -> ',err)
+    // });
   }
 
   return (
@@ -40,7 +46,7 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.inputContainer}>
-        <TextInput style={{width: '100%'}} placeholder={'Buscar'}>
+        <TextInput style={styles.inputComponent} placeholder={'Buscar'} placeholderTextColor={'#4b4b4b'}>
         </TextInput>
       </View>
 
@@ -67,7 +73,16 @@ const styles = StyleSheet.create({
   },
 
   inputContainer: {
-    backgroundColor: '#fbefff'
+    width: '100%',
+    height: 50,
+    borderRadius: 18,
+  },
+  inputComponent: {
+    height: 50,
+    borderRadius: 18,
+    paddingLeft: 15,
+    fontSize: 18,
+    backgroundColor: '#fbefff',
   },
 
   tinyLogo: {},
