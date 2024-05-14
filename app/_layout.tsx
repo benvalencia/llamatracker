@@ -1,11 +1,10 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
+import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
+import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import 'react-native-reanimated';
 import {createStackNavigator} from '@react-navigation/stack';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
+import {useColorScheme} from '@/hooks/useColorScheme';
 import HomeScreen from "@/app/screens/home/home";
 import ValidateAccountScreen from "@/app/screens/site/validateAccount";
 import NotFoundScreen from "@/app/screens/site/notFound";
@@ -14,6 +13,10 @@ import RegisterScreen from "@/app/screens/auth/register";
 import LoginScreen from "@/app/screens/auth/login";
 import ProfileScreen from "@/app/screens/profile/profile";
 import StatsScreen from "@/app/screens/profile/stats";
+import {Pressable} from "react-native";
+import {router} from "expo-router";
+import {AntDesign} from "@expo/vector-icons";
+import {Colors} from "@/constants/Colors";
 
 const Stack = createStackNavigator();
 
@@ -43,8 +46,17 @@ export default function RootLayout() {
                       component={HomeScreen}/>
 
         {/*PROFILE*/}
-        <Stack.Screen name="screens/profile/stats" options={{title: 'Stats', headerShown: false, gestureEnabled: false}}
-                      component={StatsScreen}/>
+        <Stack.Screen name="screens/profile/stats" options={{
+          title: '',
+          headerBackTitle: '',
+          headerShadowVisible: false,
+          headerStyle: {backgroundColor: Colors.primary},
+          headerLeft: () => (
+            <Pressable onPress={router.back}>
+              <AntDesign name="arrowleft" size={35} color="white" style={{paddingLeft: 5}}/>
+            </Pressable>
+          ),
+        }} component={StatsScreen}/>
         <Stack.Screen name="screens/profile/profile"
                       options={{title: 'Profile', headerShown: false, gestureEnabled: false}}
                       component={ProfileScreen}/>
