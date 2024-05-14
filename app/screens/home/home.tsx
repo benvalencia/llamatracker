@@ -1,17 +1,19 @@
 import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
+  Animated,
   Image,
   KeyboardAvoidingView,
   Platform,
-  Pressable, TouchableWithoutFeedback, Keyboard
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
 } from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React, {useState} from "react";
 import {useNavigation} from "expo-router";
 import {CommonActions} from "@react-navigation/native";
+import ScrollView = Animated.ScrollView;
 
 export default function HomeScreen() {
 
@@ -21,9 +23,9 @@ export default function HomeScreen() {
 
   const navigation = useNavigation()
 
-  // TODO: hacer aqui la llamda y pasar los datos por parametros
-  // TOOD: pensar donde hacer la llama si aqui o en el stats screen
   const goToStats = () => {
+    if (username === '') return;
+
     navigation.dispatch(
       CommonActions.navigate({
         name: 'screens/profile/stats',
@@ -37,43 +39,45 @@ export default function HomeScreen() {
     <KeyboardAvoidingView style={{flex: 1}}
                           behavior='padding' keyboardVerticalOffset={keyboardVerticalOffset}
     >
-      <View style={styles.viewContainer}>
-        {/*LOGO*/}
-        <View style={styles.imageContainer}>
-          <Image source={require('../../../assets/images/logo/icons8-fortnite-llama-144.png')}/>
-        </View>
-        {/*SEARCH PROFILE INPUT */}
-        <TouchableWithoutFeedback
-          onPress={() => Keyboard.dismiss()}
-          accessible={false}
-        >
+      <ScrollView style={styles.scrollViewContainer} keyboardShouldPersistTaps='handled'
+                  contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
+        <View style={styles.viewContainer}>
+
+          {/*LOGO*/}
+          <View style={styles.imageContainer}>
+            <Image source={require('../../../assets/images/logo/icons8-fortnite-llama-144.png')}/>
+          </View>
+
+          {/*SEARCH PROFILE INPUT */}
           <View style={styles.inputContainer}>
             <TextInput style={styles.inputComponent}
                        placeholder={'Buscar perfil'} placeholderTextColor={'#4b4b4b'}
-                       onBlur={() => console.log('test on blur')}
                        onChangeText={(text) => setUsername(text)}
             >
             </TextInput>
           </View>
-        </TouchableWithoutFeedback>
 
-        {/*SEARCH PROFILE BUTTON */}
-        <View style={styles.buttonContainer}>
-          <Pressable style={styles.buttonComponent} onPress={goToStats}>
-            <Text style={styles.buttonText}>{'Buscar'}</Text>
-          </Pressable>
+          {/*SEARCH PROFILE BUTTON */}
+          <View style={styles.buttonContainer}>
+            <Pressable style={styles.buttonComponent} onPress={goToStats}>
+              <Text style={styles.buttonText}>{'Buscar'}</Text>
+            </Pressable>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   // GENERAL CONTAINER
-  viewContainer: {
+  scrollViewContainer: {
     backgroundColor: Colors.primary,
+  },
+
+  // VIEW CONTAINER
+  viewContainer: {
     height: '100%',
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 25,
