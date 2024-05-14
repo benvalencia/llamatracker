@@ -26,11 +26,17 @@ export default function HomeScreen() {
   const goToStats = () => {
     if (username === '') return;
 
+    const fortniteUsername = username;
+
+    // RESET USERNAME
+    setUsername('');
+
+    // GO TO STATS VIEW
     navigation.dispatch(
       CommonActions.navigate({
         name: 'screens/profile/stats',
         params: {
-          username
+          fortniteUsername
         }
       }));
   }
@@ -53,6 +59,7 @@ export default function HomeScreen() {
             <TextInput style={styles.inputComponent}
                        placeholder={'Buscar perfil'} placeholderTextColor={'#4b4b4b'}
                        onChangeText={(text) => setUsername(text)}
+                       value={username}
             >
             </TextInput>
           </View>

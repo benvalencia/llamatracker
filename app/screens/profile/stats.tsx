@@ -1,9 +1,8 @@
-import {StyleSheet, View, Text, TextInput, Button} from 'react-native';
+import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import {Client, Language} from "fnapicom";
 
 export default function StatsScreen() {
-
 
   const client = new Client({
     language: Language.Spanish,
