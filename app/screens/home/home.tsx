@@ -3,15 +3,13 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   Image,
   KeyboardAvoidingView,
   Platform,
-  Pressable
+  Pressable, TouchableWithoutFeedback, Keyboard
 } from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React, {useState} from "react";
-import {Client, Language} from "fnapicom";
 import {useNavigation} from "expo-router";
 import {CommonActions} from "@react-navigation/native";
 
@@ -19,17 +17,12 @@ export default function HomeScreen() {
 
   const [username, setUsername] = useState('');
 
-
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 0 : 0;
 
   const navigation = useNavigation()
 
-
-  const client = new Client({
-    language: Language.Spanish,
-    apiKey: '2eb358b4-ef78-41ce-aecb-961725393619',
-  });
-
+  // TODO: hacer aqui la llamda y pasar los datos por parametros
+  // TOOD: pensar donde hacer la llama si aqui o en el stats screen
   const goToStats = () => {
     navigation.dispatch(
       CommonActions.navigate({
@@ -40,52 +33,38 @@ export default function HomeScreen() {
       }));
   }
 
-  // const searchProfile = () => {
-  // client.brStats({
-  //   name: "TheWaxMell",
-  //   accountType: 'xbl',
-  //   timeWindow: 'season',
-  //   image: 'all',
-  // }).then((res) => {
-  //   console.log('brStats -> ', res)
-  // }).catch((err) => {
-  //   console.log('err -> ', err)
-  // });
-    // client.brMap().then((res) => {
-    //   console.log('brMap -> ', res)
-    // }).catch((err) => {
-    //   console.log('err -> ',err)
-    // });
-  // }
-
   return (
     <KeyboardAvoidingView style={{flex: 1}}
                           behavior='padding' keyboardVerticalOffset={keyboardVerticalOffset}
     >
       <View style={styles.viewContainer}>
-
+        {/*LOGO*/}
         <View style={styles.imageContainer}>
           <Image source={require('../../../assets/images/logo/icons8-fortnite-llama-144.png')}/>
         </View>
+        {/*SEARCH PROFILE INPUT */}
+        <TouchableWithoutFeedback
+          onPress={() => Keyboard.dismiss()}
+          accessible={false}
+        >
+          <View style={styles.inputContainer}>
+            <TextInput style={styles.inputComponent}
+                       placeholder={'Buscar perfil'} placeholderTextColor={'#4b4b4b'}
+                       onBlur={() => console.log('test on blur')}
+                       onChangeText={(text) => setUsername(text)}
+            >
+            </TextInput>
+          </View>
+        </TouchableWithoutFeedback>
 
-        <View style={styles.inputContainer}>
-          <TextInput style={styles.inputComponent}
-                     placeholder={'Buscar perfil'} placeholderTextColor={'#4b4b4b'}
-                     onChangeText={(text) => setUsername(text)}
-          >
-          </TextInput>
-        </View>
-
+        {/*SEARCH PROFILE BUTTON */}
         <View style={styles.buttonContainer}>
           <Pressable style={styles.buttonComponent} onPress={goToStats}>
             <Text style={styles.buttonText}>{'Buscar'}</Text>
           </Pressable>
         </View>
-
       </View>
-
     </KeyboardAvoidingView>
-
   );
 }
 
@@ -96,7 +75,8 @@ const styles = StyleSheet.create({
     height: '100%',
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: 25,
   },
 
   // IMAGE
@@ -132,8 +112,10 @@ const styles = StyleSheet.create({
   buttonText: {
     width: '100%',
     height: 30,
+    lineHeight: 30,
     fontSize: 18,
-    textAlign: 'center',
     color: 'white',
+    textAlign: 'center',
+    verticalAlign: 'middle',
   },
 });
