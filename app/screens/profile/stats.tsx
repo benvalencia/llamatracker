@@ -38,7 +38,7 @@ export default function StatsScreen({route}: any) {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
     <View style={styles.profileSection}>
       <Text style={styles.sectionTitle}>Fortnite Profile</Text>
       <Text style={styles.profileText}>ACCOUNT</Text>
@@ -78,7 +78,7 @@ export default function StatsScreen({route}: any) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    alignItems: 'center',
     backgroundColor: Colors.primary,
     paddingBottom: 16,
   },
