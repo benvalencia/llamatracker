@@ -59,8 +59,7 @@ export default function HomeScreen() {
             <TextInput style={styles.inputComponent}
                        placeholder={'Buscar perfil'} placeholderTextColor={'#4b4b4b'}
                        onChangeText={(text) => setUsername(text)}
-                       value={username}
-            >
+                       value={username}>
             </TextInput>
           </View>
 
