@@ -19,7 +19,8 @@ export default function HomeScreen() {
 
   const [username, setUsername] = useState('');
 
-  const keyboardVerticalOffset = Platform.OS === 'ios' ? 0 : 0;
+  // Ajuste del teclado para mejorar la experiencia de usuario en iOS.
+  const keyboardVerticalOffset = Platform.OS === 'ios' ? 64 : 0;
 
   const navigation = useNavigation()
 
