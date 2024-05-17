@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.primary,
+    paddingBottom: 16,
   },
   loadingContainer: {
     flex: 1,
