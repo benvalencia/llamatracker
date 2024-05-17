@@ -79,12 +79,13 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   // GENERAL CONTAINER
   scrollViewContainer: {
+    flex: 1,
     backgroundColor: Colors.primary,
   },
 
   // VIEW CONTAINER
   viewContainer: {
-    height: '100%',
+    flex: 1, 
     alignItems: 'center',
     justifyContent: 'center',
     padding: 25,
@@ -92,7 +93,8 @@ const styles = StyleSheet.create({
 
   // IMAGE
   imageContainer: {
-    marginBottom: 20
+    marginBottom: 20,
+    alignContent: 'center',
   },
 
   // INPUT
@@ -115,8 +117,8 @@ const styles = StyleSheet.create({
   },
   buttonComponent: {
     width: '100%',
-    height: 30,
-    borderRadius: 13,
+    height: 40,
+    borderRadius: 18,
     paddingLeft: 15,
     backgroundColor: Colors.secondary,
   },
