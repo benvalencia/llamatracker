@@ -10,10 +10,11 @@ export default function StatsScreen({route}: any) {
   const [fortniteProfile, setFortniteProfile] = useState<BRStatsByAccountIDResponseData | null>(null)
   const [loading,setLoading] = useState (true)
   const [refreshing, setRefreshing] = useState(false);
-  //Refresh;
+
+  //Funcion paraobtener el perfil de Fortnite
   const fetchProfile = useCallback (async () => {
     try {
-      setLoading(true);
+      if (!refreshing) setLoading(true); // Solo establece loading si no está refrescando
       const profile = await getProfileByUsername(fortniteUsername);
       setFortniteProfile(profile);
     } catch (error) {
@@ -22,31 +23,19 @@ export default function StatsScreen({route}: any) {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [fortniteUsername]);
+  }, [fortniteUsername, refreshing]);
 
-
-  // let fortniteProfile: BRStatsByAccountIDResponseData = {} as BRStatsByAccountIDResponseData;
-
+// Obtener perfil al montar el componente
     useEffect(() => {
-    const fetchProfile = async () => {
-      console.log('-------- ', new Date());
-      const profile = await getProfileByUsername(fortniteUsername);
-      setFortniteProfile(profile);
-      setLoading(false);
-    };
-
-    fetchProfile();
-  }, [fortniteUsername]);
-
-  useEffect(() => {
     fetchProfile();
   }, [fetchProfile]);
 
+  // Función de refresh
   const onRefresh = () => {
     setRefreshing(true);
     fetchProfile();
   };
-
+// Mostrar indicador de carga mientras se obtiene el perfil
   if (loading && !refreshing) {
     return (
       <View style={styles.loadingContainer}>
@@ -54,6 +43,7 @@ export default function StatsScreen({route}: any) {
       </View>
     );
   }
+  // Mostrar mensaje de error si no se encuentra el perfil
   if (!fortniteProfile) {
     return(
       <View style={styles.loadingContainer}>
