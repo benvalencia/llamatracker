@@ -55,8 +55,10 @@ export default function StatsScreen({route}: any) {
   return (
     <ScrollView
       contentContainerStyle={styles.container}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
-    >
+      refreshControl={
+        <RefreshControl refreshing={refreshing}
+                        onRefresh={onRefresh}
+                        style={styles.scrollReloadContainer}/>}>
       <View style={styles.profileSection}>
         <Text style={styles.sectionTitle}>Fortnite Profile</Text>
         <Text style={styles.profileText}>ACCOUNT</Text>
@@ -103,6 +105,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.primary,
     paddingBottom: 16,
+  },
+  scrollReloadContainer: {
+    backgroundColor: Colors.primary,
   },
   loadingContainer: {
     flex: 1,
