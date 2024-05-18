@@ -46,7 +46,6 @@ const getProfileByUsername = async (fortniteUser: string): Promise<BRStatsByAcco
       console.log('err', err)
     })
 
-  console.log(fortniteProfile)
   return fortniteProfile
 
 }

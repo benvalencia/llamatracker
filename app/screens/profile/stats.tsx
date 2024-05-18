@@ -11,7 +11,7 @@ export default function StatsScreen({route}: any) {
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false);
 
-  //Funcion para obtener el perfil de Fortnite
+  //Function para obtener el perfil de Fortnite
   const fetchProfile = useCallback(async () => {
     try {
       if (!refreshing) setLoading(true); // Solo establece loading si no está refrescando
