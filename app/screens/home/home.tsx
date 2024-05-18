@@ -1,14 +1,4 @@
-import {
-  Animated,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View
-} from 'react-native';
+import {Animated, Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React, {useState} from "react";
 import {useNavigation} from "expo-router";
@@ -18,9 +8,6 @@ import ScrollView = Animated.ScrollView;
 export default function HomeScreen() {
 
   const [username, setUsername] = useState('');
-
-  // Ajuste del teclado para mejorar la experiencia de usuario en iOS.
-  const keyboardVerticalOffset = Platform.OS === 'ios' ? 64 : 0;
 
   const navigation = useNavigation()
 
@@ -44,7 +31,7 @@ export default function HomeScreen() {
 
   return (
     <KeyboardAvoidingView style={{flex: 1}}
-                          behavior='padding' keyboardVerticalOffset={keyboardVerticalOffset}
+                          behavior='padding' keyboardVerticalOffset={0}
     >
       <ScrollView style={styles.scrollViewContainer} keyboardShouldPersistTaps='handled'
                   contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
@@ -124,8 +111,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     width: '100%',
-    height: 30,
-    lineHeight: 30,
+    height: 40,
+    lineHeight: 40,
     fontSize: 18,
     color: 'white',
     textAlign: 'center',
