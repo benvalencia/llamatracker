@@ -1,6 +1,6 @@
 import {Animated, Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {useNavigation} from "expo-router";
 import {CommonActions} from "@react-navigation/native";
 import ScrollView = Animated.ScrollView;
@@ -8,6 +8,7 @@ import ScrollView = Animated.ScrollView;
 export default function HomeScreen() {
 
   const [username, setUsername] = useState('');
+  const [timeRemaining,setTimeRemaining] = useState('');
 
   const navigation = useNavigation()
 
@@ -28,6 +29,29 @@ export default function HomeScreen() {
         }
       }));
   }
+
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      const nextUpdate = new Date('2024-05-24T08:00:00'); // Fecha y hora de la próxima actualización
+      const now = new Date();
+      const difference = nextUpdate.getTime() - now.getTime();
+
+      if (difference > 0) {
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        setTimeRemaining(`${hours}h ${minutes}m ${seconds}s`);
+      } else {
+        setTimeRemaining('¡La actualización ha llegado!');
+      }
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <KeyboardAvoidingView style={{flex: 1}}
@@ -56,6 +80,13 @@ export default function HomeScreen() {
             <Pressable style={styles.buttonComponent} onPress={goToStats}>
               <Text style={styles.buttonText}>{'Buscar'}</Text>
             </Pressable>
+
+            {/* TIMER */}
+          <View style={styles.timerContainer}>
+            <Text style={styles.timerText}>{timeRemaining}</Text>
+          </View>
+
+
           </View>
         </View>
       </ScrollView>
@@ -118,4 +149,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     verticalAlign: 'middle',
   },
+  // TIMER
+  timerContainer: {
+    marginTop: 20,
+  },
+  timerText: {
+    fontSize: 18,
+    color: 'white',
+  },  
 });
