@@ -52,16 +52,7 @@ export default function HomeScreen() {
         params: {
           fortniteUsername
         }
-      }));
-
-     //GO TO SHOP
-      const goToShop = () => {
-        navigation.dispatch(
-          CommonActions.navigate({
-            name: 'screens/shop',
-          })
-        );
-      };
+      }));    
   }
 
 
@@ -118,6 +109,7 @@ export default function HomeScreen() {
           {/*SEARCH PROFILE BUTTON */}
           <View style={styles.buttonContainer}>
           <Pressable style={styles.buttonComponent} onPress={goToStats}>
+            <Text style={styles.buttonText}>BUSCAR    </Text>
             </Pressable>
 
             {/* TIMER */}
@@ -153,7 +145,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  storeButtonText: {
+  shopButtonText: {
     color: 'white',
     fontSize: 12,
   },
