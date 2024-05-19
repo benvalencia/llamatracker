@@ -5,6 +5,28 @@ import {useNavigation} from "expo-router";
 import {CommonActions} from "@react-navigation/native";
 import ScrollView = Animated.ScrollView;
 
+// Agregar estilos al temporizador
+const timerStyle = StyleSheet.create({
+  timerContainer: {
+    marginTop: 10,
+    alignItems: 'center', // Centra el temporizador horizontalmente
+    backgroundColor: 'yellow', // Color de fondo amarillo
+    borderRadius: 18, // Radio del borde de 18
+    padding: 10, // Añadir un relleno de 10 puntos
+  },
+  timerTitle: {
+    fontSize: 20, // Tamaño de fuente del título
+    fontWeight: 'bold', // Texto en negrita
+    marginBottom: 10, // Espacio inferior de 10 puntos
+    color: 'gray', // Color del texto
+  },
+  timerText: {
+    fontSize: 24, // Tamaño de fuente más grande
+    fontWeight: 'bold', // Texto en negrita
+    color: 'gray', // Color del texto
+  },
+});
+
 export default function HomeScreen() {
 
   const [username, setUsername] = useState('');
@@ -83,8 +105,9 @@ export default function HomeScreen() {
             </Pressable>
 
             {/* TIMER */}
-          <View style={styles.timerContainer}>
-            <Text style={styles.timerText}>{timeRemaining}</Text>
+          <View style={timerStyle.timerContainer}>
+            <Text style={timerStyle.timerTitle}>Capitulo 5 en...</Text>
+            <Text style={timerStyle.timerText}>{timeRemaining}</Text>
           </View>
 
 
