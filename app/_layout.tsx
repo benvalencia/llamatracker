@@ -6,6 +6,7 @@ import 'react-native-reanimated';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useColorScheme} from '@/hooks/useColorScheme';
 import HomeScreen from "@/app/screens/home/home";
+import ShopScreen from './screens/home/shop';
 import ValidateAccountScreen from "@/app/screens/site/validateAccount";
 import NotFoundScreen from "@/app/screens/site/notFound";
 import ForgotPasswordScreen from "@/app/screens/auth/forgotPassword";
@@ -76,7 +77,12 @@ export default function RootLayout() {
         <Stack.Screen name="screens/site/validateAccount"
                       options={{title: 'Validate account', headerShown: false, gestureEnabled: false}}
                       component={ValidateAccountScreen}/>
+       {/*SHOP SCREEN*/}
+               <Stack.Screen name="screens/shop/shop" 
+                      options={{title: 'Shop', headerShown: true, gestureEnabled: true}} 
+                      component={ShopScreen}/>
       </Stack.Navigator>
     </ThemeProvider>
+
   );
 }
