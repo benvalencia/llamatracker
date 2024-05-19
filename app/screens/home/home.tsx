@@ -1,9 +1,10 @@
-import {Animated, Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Animated, Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View,TouchableOpacity} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React, {useState, useEffect} from "react";
 import {useNavigation} from "expo-router";
 import {CommonActions} from "@react-navigation/native";
 import ScrollView = Animated.ScrollView;
+import { Ionicons } from '@expo/vector-icons';
 
 // Agregar estilos al temporizador
 const timerStyle = StyleSheet.create({
@@ -33,6 +34,8 @@ export default function HomeScreen() {
   const [timeRemaining,setTimeRemaining] = useState('');
 
   const navigation = useNavigation()
+  
+
 
   const goToStats = () => {
     if (username === '') return;
@@ -50,6 +53,15 @@ export default function HomeScreen() {
           fortniteUsername
         }
       }));
+
+     //GO TO SHOP
+      const goToShop = () => {
+        navigation.dispatch(
+          CommonActions.navigate({
+            name: 'screens/shop',
+          })
+        );
+      };
   }
 
 
@@ -84,6 +96,11 @@ export default function HomeScreen() {
                   contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
         <View style={styles.viewContainer}>
 
+         {/* BOTÓN TIENDA */}
+          <TouchableOpacity style={styles.shopButton} onPress={goToStats}>
+          <Ionicons name="cart-outline" size={24} color="white" />
+          </TouchableOpacity>
+
           {/*LOGO*/}
           <View style={styles.imageContainer}>
             <Image source={require('../../../assets/images/logo/icons8-fortnite-llama-144.png')}/>
@@ -100,8 +117,7 @@ export default function HomeScreen() {
 
           {/*SEARCH PROFILE BUTTON */}
           <View style={styles.buttonContainer}>
-            <Pressable style={styles.buttonComponent} onPress={goToStats}>
-              <Text style={styles.buttonText}>{'Buscar'}</Text>
+          <Pressable style={styles.buttonComponent} onPress={goToStats}>
             </Pressable>
 
             {/* TIMER */}
@@ -123,6 +139,23 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     flex: 1,
     backgroundColor: Colors.primary,
+  },
+
+  // SHOP BUTTON
+  shopButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    width: 50,
+    height: 50,
+    backgroundColor: Colors.secondary,
+    borderRadius: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  storeButtonText: {
+    color: 'white',
+    fontSize: 12,
   },
 
   // VIEW CONTAINER
