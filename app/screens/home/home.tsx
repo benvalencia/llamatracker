@@ -8,7 +8,7 @@ import ScrollView = Animated.ScrollView;
 // Agregar estilos al temporizador
 const timerStyle = StyleSheet.create({
   timerContainer: {
-    marginTop: 20,
+    marginTop: 10,
     alignItems: 'center', // Centra el temporizador horizontalmente
     backgroundColor: 'yellow', // Color de fondo amarillo
     borderRadius: 18, // Radio del borde de 18
