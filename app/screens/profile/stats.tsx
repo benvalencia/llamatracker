@@ -1,7 +1,8 @@
 import {ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
-import {FortniteService} from "@/app/services/fortnite/fortnite.service";
 import {useCallback, useEffect, useState} from "react";
+import {IUserProfile} from "@/app/services/fortnite/fortnite.interface";
+import {FortniteService} from "@/app/services/fortnite/fortnite.service";
 
 export default function StatsScreen({route}: any) {
 

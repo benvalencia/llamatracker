@@ -6,7 +6,7 @@ interface IFortniteApiHeaderConfig {
   Authorization: string
 }
 
-interface IUserProfile {
+export interface IUserProfile {
   account: {
     id: string;
     name: string;
