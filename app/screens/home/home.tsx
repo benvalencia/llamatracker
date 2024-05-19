@@ -14,6 +14,12 @@ const timerStyle = StyleSheet.create({
     borderRadius: 18, // Radio del borde de 18
     padding: 10, // Añadir un relleno de 10 puntos
   },
+  timerTitle: {
+    fontSize: 20, // Tamaño de fuente del título
+    fontWeight: 'bold', // Texto en negrita
+    marginBottom: 10, // Espacio inferior de 10 puntos
+    color: 'gray', // Color del texto
+  },
   timerText: {
     fontSize: 24, // Tamaño de fuente más grande
     fontWeight: 'bold', // Texto en negrita
@@ -100,6 +106,7 @@ export default function HomeScreen() {
 
             {/* TIMER */}
           <View style={timerStyle.timerContainer}>
+            <Text style={timerStyle.timerTitle}>Capitulo 5 en...</Text>
             <Text style={timerStyle.timerText}>{timeRemaining}</Text>
           </View>
 
