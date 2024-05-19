@@ -17,6 +17,8 @@ import {Pressable} from "react-native";
 import {router} from "expo-router";
 import {AntDesign} from "@expo/vector-icons";
 import {Colors} from "@/constants/Colors";
+import ShopScreen from "@/app/screens/shop/shop";
+import AppScreen from "@/app/screens/app";
 
 const Stack = createStackNavigator();
 
@@ -41,22 +43,28 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack.Navigator initialRouteName="screens/home/home">
+      <Stack.Navigator initialRouteName="screens/app">
+        {/*BASE*/}
+        <Stack.Screen name="screens/app" options={{title: 'App', headerShown: false, gestureEnabled: false}}
+                      component={AppScreen}/>
+
+        {/*HOME*/}
         <Stack.Screen name="screens/home/home" options={{title: 'Home', headerShown: false, gestureEnabled: false}}
                       component={HomeScreen}/>
 
         {/*PROFILE*/}
-        <Stack.Screen name="screens/profile/stats" options={{
-          title: '',
-          headerBackTitle: '',
-          headerShadowVisible: false,
-          headerStyle: {backgroundColor: Colors.primary},
-          headerLeft: () => (
-            <Pressable onPress={router.back}>
-              <AntDesign name="arrowleft" size={35} color="white" style={{paddingLeft: 5}}/>
-            </Pressable>
-          ),
-        }} component={StatsScreen}/>
+        <Stack.Screen name="screens/profile/stats"
+                      options={{
+                        title: '',
+                        headerBackTitle: '',
+                        headerShadowVisible: false,
+                        headerStyle: {backgroundColor: Colors.primary},
+                        headerLeft: () => (
+                          <Pressable onPress={router.back}>
+                            <AntDesign name="arrowleft" size={35} color="white" style={{paddingLeft: 5}}/>
+                          </Pressable>
+                        ),
+                      }} component={StatsScreen}/>
         <Stack.Screen name="screens/profile/profile"
                       options={{title: 'Profile', headerShown: false, gestureEnabled: false}}
                       component={ProfileScreen}/>
@@ -69,6 +77,11 @@ export default function RootLayout() {
         <Stack.Screen name="screens/auth/forgotPassword"
                       options={{title: 'Forgot password', headerShown: false, gestureEnabled: false}}
                       component={ForgotPasswordScreen}/>
+
+        {/*SHOP*/}
+        <Stack.Screen name="screens/shop/shop" options={{title: 'Shop', headerShown: false, gestureEnabled: false}}
+                      component={ShopScreen}/>
+
         {/*SITE*/}
         <Stack.Screen name="screens/site/notFound"
                       options={{title: 'Not found', headerShown: false, gestureEnabled: false}}

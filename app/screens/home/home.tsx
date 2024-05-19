@@ -1,38 +1,16 @@
 import {Animated, Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigation} from "expo-router";
 import {CommonActions} from "@react-navigation/native";
 import ScrollView = Animated.ScrollView;
 
-// Agregar estilos al temporizador
-const timerStyle = StyleSheet.create({
-  timerContainer: {
-    marginTop: 10,
-    alignItems: 'center', // Centra el temporizador horizontalmente
-    backgroundColor: 'yellow', // Color de fondo amarillo
-    borderRadius: 18, // Radio del borde de 18
-    padding: 10, // Añadir un relleno de 10 puntos
-  },
-  timerTitle: {
-    fontSize: 20, // Tamaño de fuente del título
-    fontWeight: 'bold', // Texto en negrita
-    marginBottom: 10, // Espacio inferior de 10 puntos
-    color: 'gray', // Color del texto
-  },
-  timerText: {
-    fontSize: 24, // Tamaño de fuente más grande
-    fontWeight: 'bold', // Texto en negrita
-    color: 'gray', // Color del texto
-  },
-});
-
 export default function HomeScreen() {
+
+  const navigation = useNavigation()
 
   const [username, setUsername] = useState('');
   const [timeRemaining,setTimeRemaining] = useState('');
-
-  const navigation = useNavigation()
 
   const goToStats = () => {
     if (username === '') return;
@@ -52,7 +30,6 @@ export default function HomeScreen() {
       }));
   }
 
-
   useEffect(() => {
     const updateCountdown = () => {
       const nextUpdate = new Date('2024-05-24T08:00:00'); // Fecha y hora de la próxima actualización
@@ -64,7 +41,7 @@ export default function HomeScreen() {
         const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-        setTimeRemaining(`${days}D ${hours}h ${minutes}m ${seconds}s`);
+        setTimeRemaining(`${days} días ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds} `);
       } else {
         setTimeRemaining('¡La actualización ha llegado!');
       }
@@ -103,14 +80,17 @@ export default function HomeScreen() {
             <Pressable style={styles.buttonComponent} onPress={goToStats}>
               <Text style={styles.buttonText}>{'Buscar'}</Text>
             </Pressable>
-
-            {/* TIMER */}
-          <View style={timerStyle.timerContainer}>
-            <Text style={timerStyle.timerTitle}>Capitulo 5 en...</Text>
-            <Text style={timerStyle.timerText}>{timeRemaining}</Text>
           </View>
 
+          {/*NEWS */}
+          <View>
+            <Text>Aquí las noticias</Text>
+          </View>
 
+          {/* TIMER */}
+          <View style={styles.timerContainer}>
+            <Text style={styles.timerTitle}>Capitulo 5 en...</Text>
+            <Text style={styles.timerText}>{timeRemaining}</Text>
           </View>
         </View>
       </ScrollView>
@@ -127,15 +107,15 @@ const styles = StyleSheet.create({
 
   // VIEW CONTAINER
   viewContainer: {
-    flex: 1, 
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 25,
+    gap: 15,
   },
 
   // IMAGE
   imageContainer: {
-    marginBottom: 20,
     alignContent: 'center',
   },
 
@@ -155,7 +135,6 @@ const styles = StyleSheet.create({
   // BUTTON
   buttonContainer: {
     width: '100%',
-    marginTop: 10,
   },
   buttonComponent: {
     width: '100%',
@@ -173,12 +152,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     verticalAlign: 'middle',
   },
-  // TIMER
+  // TIMER CONTAINER
   timerContainer: {
-    marginTop: 20,
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: 'yellow',
+    borderRadius: 18,
+    padding: 10,
+  },
+  timerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'gray',
   },
   timerText: {
-    fontSize: 18,
-    color: 'white',
-  },  
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'gray',
+  },
 });
