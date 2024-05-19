@@ -10,11 +10,14 @@ const timerStyle = StyleSheet.create({
   timerContainer: {
     marginTop: 20,
     alignItems: 'center', // Centra el temporizador horizontalmente
+    backgroundColor: 'yellow', // Color de fondo amarillo
+    borderRadius: 18, // Radio del borde de 18
+    padding: 10, // Añadir un relleno de 10 puntos
   },
   timerText: {
     fontSize: 24, // Tamaño de fuente más grande
     fontWeight: 'bold', // Texto en negrita
-    color: 'black', // Color del texto
+    color: 'gray', // Color del texto
   },
 });
 
@@ -96,7 +99,7 @@ export default function HomeScreen() {
             </Pressable>
 
             {/* TIMER */}
-          <View style={styles.timerContainer}>
+          <View style={timerStyle.timerContainer}>
             <Text style={timerStyle.timerText}>{timeRemaining}</Text>
           </View>
 
