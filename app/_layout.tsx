@@ -57,6 +57,9 @@ export default function RootLayout() {
                       component={HomeScreen}/>
 
         {/*PROFILE*/}
+        <Stack.Screen name="screens/profile/profile"
+                      options={{title: 'Profile', headerShown: false, gestureEnabled: false}}
+                      component={ProfileScreen}/>
         <Stack.Screen name="screens/profile/stats"
                       options={{
                         title: '',
@@ -69,9 +72,7 @@ export default function RootLayout() {
                           </Pressable>
                         ),
                       }} component={StatsScreen}/>
-        <Stack.Screen name="screens/profile/profile"
-                      options={{title: 'Profile', headerShown: false, gestureEnabled: false}}
-                      component={ProfileScreen}/>
+
         {/*AUTH*/}
         <Stack.Screen name="screens/auth/login" options={{title: 'Login', headerShown: false, gestureEnabled: false}}
                       component={LoginScreen}/>
