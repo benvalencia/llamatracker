@@ -1,7 +1,7 @@
 import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 
-export default function ProfileScreen() {
+export default function ShopScreen() {
   return (
     <View style={{
       backgroundColor: Colors.primary,
@@ -11,7 +11,7 @@ export default function ProfileScreen() {
       justifyContent: 'center'
     }}>
       <Text>
-        profile
+        shop
       </Text>
       <TextInput placeholder={'Buscar'}>
       </TextInput>
