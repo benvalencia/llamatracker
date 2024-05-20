@@ -13,14 +13,28 @@ export default function ShopScreen() {
       <Text>
         shop
       </Text>
-      <TextInput placeholder={'Buscar'}>
-      </TextInput>
+      <TextInput placeholder={'Buscar'}style={styles.input}/>
       <Button title={'Buscar'}></Button>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  input: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 10,
+    width: '80%', // Puedes ajustar el ancho según tu diseño
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
