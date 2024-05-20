@@ -61,7 +61,7 @@ export default function StatsScreen({route}: any) {
       <View style={styles.profileSection}>
         <Text style={styles.sectionTitle}></Text>
         {/* Sección ACCOUNT y IMAGE */}
-       <view style={styles.cardCentered}>
+       <View style={styles.cardCentered}>
         <View style={styles.row}>
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Account</Text>
@@ -80,7 +80,7 @@ export default function StatsScreen({route}: any) {
             </View>
           </View>
         </View>
-       </view>
+       </View>
         {/* Sección BATTLE PASS */}
         <View style={styles.cardCentered}>
           <Text style={styles.cardTitle}>Battle Pass</Text>
