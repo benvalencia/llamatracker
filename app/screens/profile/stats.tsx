@@ -64,12 +64,16 @@ export default function StatsScreen({route}: any) {
       <Text style={styles.sectionTitle}></Text>
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Account</Text>
-        <Text style={styles.cardText}>Name: {fortniteProfile.account?.name}</Text>
-        <View style={styles.card}>
-        <Text style={styles.cardTitle}>Image</Text>
-        <Text style={styles.cardText}>Image: {fortniteProfile.image}</Text>
-      </View>
-      </View>
+        <View style={styles.cardContent}>
+            <View style={styles.cardTextContainer}>
+              <Text style={styles.cardText}>Name: {fortniteProfile.account?.name}</Text>
+            </View>
+            <View style={styles.imageContainer}>
+              <Text style={styles.cardTitle}>Image</Text>
+              <Text style={styles.cardText}>Image: {fortniteProfile.image}</Text>
+            </View>
+          </View>
+        </View>
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Battle Pass</Text>
         <Text style={styles.cardText}>Level: {fortniteProfile.battlePass?.level}</Text>
@@ -157,6 +161,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.primary,
     marginBottom: 4,
+  },
+  cardContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  cardTextContainer: {
+    flex: 1,
+  },
+  imageContainer: {
+    marginLeft: 16,
+    padding: 15,
+
   },
 });
 
