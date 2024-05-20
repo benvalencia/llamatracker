@@ -47,6 +47,7 @@ export default function AppScreen() {
     }
 
     const {translate, scale} = animatedValues;
+    const colorIcon = accessibilityState.selected ? 'white' : Colors.secondary;
 
     useEffect(() => {
       handleAnimated()
@@ -58,12 +59,12 @@ export default function AppScreen() {
         Animated.timing(translate, {
           toValue: accessibilityState.selected ? 1 : 0,
           duration: 350,
-          useNativeDriver: false,
+          useNativeDriver: true,
         }),
         Animated.timing(scale, {
           toValue: accessibilityState.selected ? 1 : 0,
           duration: 200,
-          useNativeDriver: false,
+          useNativeDriver: true,
         })
       ]).start()
     }
@@ -73,7 +74,7 @@ export default function AppScreen() {
         translateY: translate.interpolate({
           inputRange: [0, 1],
           outputRange: [0, -30],
-          extrapolate: 'clamp'
+          extrapolate: 'clamp',
         })
       }]
     }
@@ -90,36 +91,15 @@ export default function AppScreen() {
     }
 
     return (
-      <TouchableOpacity
-        onPress={onPress}
-        activeOpacity={1}
-        style={styles.tabContainer}
-      >
-        <Animatable.View
-          style={[{
-            width: 55,
-            height: 55,
-            borderRadius: 25,
-            borderWidth: 4,
-            borderColor: 'white',
-            justifyContent: 'center',
-            alignItems: 'center',
-            overflow: 'hidden',
-          }, translateStyles]}
-        >
-          <Animated.View style={[{
-            width: 50,
-            height: 50,
-            borderRadius: 100,
-            position: 'absolute',
-            backgroundColor: Colors.secondary
-          }, scaleStyles]}></Animated.View>
-
-          <AntDesign name={tab.icon} size={25} color={accessibilityState.selcted ? 'white' : 'black'}/>
-
+      <TouchableOpacity onPress={onPress}
+                        activeOpacity={1}
+                        style={styles.tabContainer}>
+        <Animatable.View style={[styles.animatedView, translateStyles]}>
+          <Animated.View style={[styles.animatedViewCircle, scaleStyles]}></Animated.View>
+          <AntDesign name={tab.icon} size={25} color={colorIcon}/>
         </Animatable.View>
         <Animatable.Text
-          style={[{fontSize: 12, color: Colors.secondary, textAlign: 'center', position: 'absolute', bottom: 20}, {
+          style={[styles.animatedText, {
             opacity: scale
           }]}>{tab.label}</Animatable.Text>
 
@@ -127,10 +107,8 @@ export default function AppScreen() {
     )
   }
 
-
   return (
     <Tab.Navigator screenOptions={{headerShown: false, tabBarStyle: styles.tabNavigatorContainer}}>
-
       {tabRoutes.map((tab, index: number) => {
         return (
           <Tab.Screen name={tab.route}
@@ -141,12 +119,12 @@ export default function AppScreen() {
                       }}
           ></Tab.Screen>)
       })}
-
     </Tab.Navigator>
   );
 }
 
 const styles = StyleSheet.create({
+  // NAVIGATOR CONTAINER
   tabNavigatorContainer: {
     height: 60,
     position: 'absolute',
@@ -157,11 +135,38 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
 
+  // TAB CONTAINER
   tabContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     height: 65,
     alignSelf: 'stretch'
+  },
+
+  // ANIMATED CONTAINER
+  animatedView: {
+    width: 55,
+    height: 55,
+    borderRadius: 25,
+    borderWidth: 4,
+    borderColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
+  animatedViewCircle: {
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+    position: 'absolute',
+    backgroundColor: Colors.secondary
+  },
+  animatedText: {
+    fontSize: 12,
+    color: Colors.secondary,
+    textAlign: 'center',
+    position: 'absolute',
+    bottom: 20
   }
 });
