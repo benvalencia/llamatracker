@@ -1,4 +1,4 @@
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 
 export default function ShopScreen() {
@@ -11,11 +11,8 @@ export default function ShopScreen() {
       justifyContent: 'center'
     }}>
       <Text>
-        shop
+        Aqui mostraremos lo cambios de la tienda
       </Text>
-      <TextInput placeholder={'Buscar'}>
-      </TextInput>
-      <Button title={'Buscar'}></Button>
     </View>
   );
 }
