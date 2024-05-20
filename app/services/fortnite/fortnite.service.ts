@@ -296,7 +296,7 @@ export class FortniteService {
     let response: any;
 
     await this.fortniteClient.news(options)
-      .then((res): void => {
+      .then((res: NewsResponseData): void => {
         response = res
       })
       .catch((err): void => {
