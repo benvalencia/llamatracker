@@ -21,6 +21,7 @@ import ShopScreen from "@/app/screens/shop/shop";
 import AppScreen from "@/app/screens/app";
 import NewsScreen from "@/app/screens/news/news";
 import SettingsScreen from "@/app/screens/settings/settings";
+import ItemDetailScreen from "@/app/screens/shop/itemDetail";
 
 const Stack = createStackNavigator();
 
@@ -83,6 +84,9 @@ export default function RootLayout() {
         {/*SHOP*/}
         <Stack.Screen name="screens/shop/shop" options={{title: 'Shop', headerShown: false, gestureEnabled: false}}
                       component={ShopScreen}/>
+        <Stack.Screen name="screens/shop/itemDetail"
+                      options={{title: 'Item Detail', headerShown: false, gestureEnabled: false}}
+                      component={ItemDetailScreen}/>
 
         {/*NEWS*/}
         <Stack.Screen name="screens/news/news" options={{title: 'News', headerShown: false, gestureEnabled: false}}
