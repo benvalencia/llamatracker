@@ -65,15 +65,15 @@ export default function StatsScreen({route}: any) {
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Account</Text>
         <Text style={styles.cardText}>Name: {fortniteProfile.account?.name}</Text>
+        <View style={styles.card}>
+        <Text style={styles.cardTitle}>Image</Text>
+        <Text style={styles.cardText}>Image: {fortniteProfile.image}</Text>
+      </View>
       </View>
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Battle Pass</Text>
         <Text style={styles.cardText}>Level: {fortniteProfile.battlePass?.level}</Text>
         <Text style={styles.cardText}>Progress: {fortniteProfile.battlePass?.progress}</Text>
-      </View>
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Image</Text>
-        <Text style={styles.cardText}>Image: {fortniteProfile.image}</Text>
       </View>
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Overall Stats</Text>
