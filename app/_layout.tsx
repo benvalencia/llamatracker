@@ -20,6 +20,7 @@ import {Colors} from "@/constants/Colors";
 import ShopScreen from "@/app/screens/shop/shop";
 import AppScreen from "@/app/screens/app";
 import NewsScreen from "@/app/screens/news/news";
+import SettingsScreen from "@/app/screens/settings/settings";
 
 const Stack = createStackNavigator();
 
@@ -86,6 +87,11 @@ export default function RootLayout() {
         {/*NEWS*/}
         <Stack.Screen name="screens/news/news" options={{title: 'News', headerShown: false, gestureEnabled: false}}
                       component={NewsScreen}/>
+
+        {/*SETTINGS*/}
+        <Stack.Screen name="screens/settings/settings"
+                      options={{title: 'Settings', headerShown: false, gestureEnabled: false}}
+                      component={SettingsScreen}/>
 
         {/*SITE*/}
         <Stack.Screen name="screens/site/notFound"
