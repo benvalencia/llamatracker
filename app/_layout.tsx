@@ -91,10 +91,31 @@ export default function RootLayout() {
                       component={ItemDetailScreen}/>
 
         {/*NEWS*/}
-        <Stack.Screen name="screens/news/news" options={{title: 'News', headerShown: false, gestureEnabled: false}}
+        <Stack.Screen name="screens/news/news" options={{
+          title: '',
+          headerBackTitle: '',
+          headerShadowVisible: false,
+          headerStyle: {backgroundColor: Colors.primary},
+          headerLeft: () => (
+            <Pressable onPress={router.back}>
+              <AntDesign name="arrowleft" size={35} color="white" style={{paddingLeft: 5}}/>
+            </Pressable>
+          ),
+        }}
                       component={NewsScreen}/>
         <Stack.Screen name="screens/news/newsDetail"
-                      options={{title: 'News Detail', headerShown: false, gestureEnabled: false}}
+                      options={{
+                        title: '',
+                        headerBackTitle: '',
+                        headerShadowVisible: false,
+                        gestureEnabled: true,
+                        headerStyle: {backgroundColor: Colors.primary},
+                        headerLeft: () => (
+                          <Pressable onPress={router.back}>
+                            <AntDesign name="arrowleft" size={35} color="white" style={{paddingLeft: 5}}/>
+                          </Pressable>
+                        ),
+                      }}
                       component={NewsDetailScreen}/>
 
         {/*SETTINGS*/}

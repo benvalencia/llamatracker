@@ -1,7 +1,10 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
+import React from "react";
 
-export default function NewsDetailScreen() {
+export default function NewsDetailScreen({route}: any) {
+  const {newsDetail} = route.params;
+
   return (
     <View style={{
       backgroundColor: Colors.primary,
@@ -10,9 +13,16 @@ export default function NewsDetailScreen() {
       alignItems: 'center',
       justifyContent: 'center'
     }}>
-      <Text>
-        Aquí mostraremos el detalle de una noticia
-      </Text>
+      <View>
+        <Text>body: {newsDetail.body}</Text>
+        <Text>hidden: {newsDetail.hidden ? 'true' : 'false'}</Text>
+        <Text>id: {newsDetail.id}</Text>
+        <Text>image: {newsDetail.image}</Text>
+        <Text>sortingPriority: {newsDetail.sortingPriority}</Text>
+        <Text>tabTitle: {newsDetail.tabTitle}</Text>
+        <Text>titleImage: {newsDetail.titleImage}</Text>
+        <Text>title: {newsDetail.title}</Text>
+      </View>
     </View>
   );
 }
