@@ -6,7 +6,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {CommonActions} from "@react-navigation/native";
 import ScrollView = Animated.ScrollView;
 
-
 export default function HomeScreen() {
 
   const navigation = useNavigation()
