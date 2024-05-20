@@ -1,7 +1,9 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 
-export default function ShopScreen() {
+export default function ItemDetailScreen({route}: any) {
+  // const {fortniteUsername} = route.params;
+
   return (
     <View style={{
       backgroundColor: Colors.primary,
@@ -11,7 +13,7 @@ export default function ShopScreen() {
       justifyContent: 'center'
     }}>
       <Text>
-        Aqui mostraremos lo cambios de la tienda
+        Aqui mostraremos el detalle de un item de la tienda
       </Text>
     </View>
   );
@@ -22,5 +24,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-  }
+  },
+  stepContainer: {
+    gap: 8,
+    marginBottom: 8,
+  },
+  reactLogo: {
+    height: 178,
+    width: 290,
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
+  },
 });

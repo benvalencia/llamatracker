@@ -15,25 +15,19 @@ export default function AppScreen() {
   const tabRoutes = [
     {
       route: 'screens/home/home',
-      label: 'home',
-      component: HomeScreen,
-      icon: 'home',
-    },
-    {
-      route: 'screens/stats/stats',
-      label: 'home',
+      label: 'Home',
       component: HomeScreen,
       icon: 'home',
     },
     {
       route: 'screens/shop/shop',
-      label: 'shop',
+      label: 'Shop',
       component: ShopScreen,
       icon: 'shoppingcart',
     },
     {
       route: 'screens/profile/profile',
-      label: 'profile',
+      label: 'Profile',
       component: ProfileScreen,
       icon: 'user',
     },

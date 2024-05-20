@@ -19,6 +19,10 @@ import {AntDesign} from "@expo/vector-icons";
 import {Colors} from "@/constants/Colors";
 import ShopScreen from "@/app/screens/shop/shop";
 import AppScreen from "@/app/screens/app";
+import NewsScreen from "@/app/screens/news/news";
+import SettingsScreen from "@/app/screens/settings/settings";
+import ItemDetailScreen from "@/app/screens/shop/itemDetail";
+import NewsDetailScreen from "@/app/screens/news/newsDetail";
 
 const Stack = createStackNavigator();
 
@@ -53,6 +57,9 @@ export default function RootLayout() {
                       component={HomeScreen}/>
 
         {/*PROFILE*/}
+        <Stack.Screen name="screens/profile/profile"
+                      options={{title: 'Profile', headerShown: false, gestureEnabled: false}}
+                      component={ProfileScreen}/>
         <Stack.Screen name="screens/profile/stats"
                       options={{
                         title: '',
@@ -65,9 +72,7 @@ export default function RootLayout() {
                           </Pressable>
                         ),
                       }} component={StatsScreen}/>
-        <Stack.Screen name="screens/profile/profile"
-                      options={{title: 'Profile', headerShown: false, gestureEnabled: false}}
-                      component={ProfileScreen}/>
+
         {/*AUTH*/}
         <Stack.Screen name="screens/auth/login" options={{title: 'Login', headerShown: false, gestureEnabled: false}}
                       component={LoginScreen}/>
@@ -81,6 +86,42 @@ export default function RootLayout() {
         {/*SHOP*/}
         <Stack.Screen name="screens/shop/shop" options={{title: 'Shop', headerShown: false, gestureEnabled: false}}
                       component={ShopScreen}/>
+        <Stack.Screen name="screens/shop/itemDetail"
+                      options={{title: 'Item Detail', headerShown: false, gestureEnabled: false}}
+                      component={ItemDetailScreen}/>
+
+        {/*NEWS*/}
+        <Stack.Screen name="screens/news/news" options={{
+          title: '',
+          headerBackTitle: '',
+          headerShadowVisible: false,
+          headerStyle: {backgroundColor: Colors.primary},
+          headerLeft: () => (
+            <Pressable onPress={router.back}>
+              <AntDesign name="arrowleft" size={35} color="white" style={{paddingLeft: 5}}/>
+            </Pressable>
+          ),
+        }}
+                      component={NewsScreen}/>
+        <Stack.Screen name="screens/news/newsDetail"
+                      options={{
+                        title: '',
+                        headerBackTitle: '',
+                        headerShadowVisible: false,
+                        gestureEnabled: true,
+                        headerStyle: {backgroundColor: Colors.primary},
+                        headerLeft: () => (
+                          <Pressable onPress={router.back}>
+                            <AntDesign name="arrowleft" size={35} color="white" style={{paddingLeft: 5}}/>
+                          </Pressable>
+                        ),
+                      }}
+                      component={NewsDetailScreen}/>
+
+        {/*SETTINGS*/}
+        <Stack.Screen name="screens/settings/settings"
+                      options={{title: 'Settings', headerShown: false, gestureEnabled: false}}
+                      component={SettingsScreen}/>
 
         {/*SITE*/}
         <Stack.Screen name="screens/site/notFound"

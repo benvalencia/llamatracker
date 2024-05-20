@@ -40,6 +40,12 @@ export default function HomeScreen() {
         }
       }));
   }
+  const goToNews = () => {
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: 'screens/news/news',
+      }));
+  }
 
   const storeRecentSearch = async (username: string) => {
     const isInArray = recentSearch.find((recentUserprofile) => recentUserprofile === username) !== undefined;
@@ -152,12 +158,12 @@ export default function HomeScreen() {
           </View>
 
           {/*NEWS */}
-          <View>
+          <Pressable onPress={goToNews}>
             <Image
               source={{uri: news?.data.br.image}}
               style={{width: 325, height: 185}}
             ></Image>
-          </View>
+          </Pressable>
 
           {/* TIMER */}
           <View style={styles.timerContainer}>
