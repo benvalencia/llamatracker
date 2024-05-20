@@ -19,6 +19,7 @@ import {AntDesign} from "@expo/vector-icons";
 import {Colors} from "@/constants/Colors";
 import ShopScreen from "@/app/screens/shop/shop";
 import AppScreen from "@/app/screens/app";
+import NewsScreen from "@/app/screens/news/news";
 
 const Stack = createStackNavigator();
 
@@ -81,6 +82,10 @@ export default function RootLayout() {
         {/*SHOP*/}
         <Stack.Screen name="screens/shop/shop" options={{title: 'Shop', headerShown: false, gestureEnabled: false}}
                       component={ShopScreen}/>
+
+        {/*NEWS*/}
+        <Stack.Screen name="screens/news/news" options={{title: 'News', headerShown: false, gestureEnabled: false}}
+                      component={NewsScreen}/>
 
         {/*SITE*/}
         <Stack.Screen name="screens/site/notFound"
