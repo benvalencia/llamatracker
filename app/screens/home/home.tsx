@@ -2,6 +2,7 @@ import {Animated, Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, Text
 import {Colors} from "@/constants/Colors";
 import React, {useEffect, useState} from "react";
 import {useNavigation} from "expo-router";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {CommonActions} from "@react-navigation/native";
 import ScrollView = Animated.ScrollView;
 
@@ -10,7 +11,9 @@ export default function HomeScreen() {
   const navigation = useNavigation()
 
   const [username, setUsername] = useState('');
-  const [timeRemaining,setTimeRemaining] = useState('');
+  const [timeRemaining, setTimeRemaining] = useState('');
+  const [recentSearch, setRecentSearch] = useState([] as string[]);
+
 
   const goToStats = () => {
     if (username === '') return;
@@ -19,6 +22,8 @@ export default function HomeScreen() {
 
     // RESET USERNAME
     setUsername('');
+
+    storeRecentSearch(fortniteUsername);
 
     // GO TO STATS VIEW
     navigation.dispatch(
@@ -29,6 +34,47 @@ export default function HomeScreen() {
         }
       }));
   }
+
+  const storeRecentSearch = async (username: string) => {
+    const isInArray = recentSearch.find((recentUserprofile) => recentUserprofile === username) !== undefined;
+    const isArrayFull = recentSearch.length > 4;
+
+    if (isArrayFull) {
+      const recentSearchArrayCut = recentSearch.filter((recentUserprofile, index) => index !== 0);
+      setRecentSearch(recentSearchArrayCut)
+    }
+
+    if (isInArray) {
+      const foundInSearch = recentSearch.filter((recentUserprofile, index) => recentUserprofile !== username);
+      setRecentSearch(foundInSearch)
+    }
+
+    setRecentSearch((recentSearch) => [
+      ...recentSearch,
+      username,
+    ]);
+
+    const objectToStore = Object.assign({}, recentSearch);
+    try {
+      const jsonValue = JSON.stringify(objectToStore);
+      await AsyncStorage.setItem('recent-search', jsonValue);
+    } catch (err) {
+      // saving error
+      console.log(err)
+    }
+  }
+
+  const getStoreRecentSearch = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('recent-search');
+      const objToTransform = jsonValue != null ? JSON.parse(jsonValue) : null;
+      const arrayRecentSearch = Object.keys(objToTransform as any).map((key) => objToTransform ? objToTransform[key as any] : null);
+      setRecentSearch(arrayRecentSearch);
+    } catch (err) {
+      // error reading value
+      console.log(err)
+    }
+  };
 
   useEffect(() => {
     const updateCountdown = () => {
@@ -47,6 +93,7 @@ export default function HomeScreen() {
       }
     };
 
+    getStoreRecentSearch()
     updateCountdown();
     const interval = setInterval(updateCountdown, 1000);
 
@@ -73,6 +120,16 @@ export default function HomeScreen() {
                        onChangeText={(text) => setUsername(text)}
                        value={username}>
             </TextInput>
+          </View>
+          {/*RECENT SEARCH PILLS*/}
+          <View style={styles.recentSearchContainer}>
+            {recentSearch.map((item) => {
+              return (
+                <Pressable style={styles.recentSearchPillContainer} onPress={() => setUsername(item)}>
+                  <Text style={styles.recentSearchPill}>{item}</Text>
+                </Pressable>
+              )
+            })}
           </View>
 
           {/*SEARCH PROFILE BUTTON */}
@@ -132,6 +189,28 @@ const styles = StyleSheet.create({
     fontSize: 18,
     backgroundColor: '#fbefff',
   },
+
+  // RECENT SEARCH CONTAINER
+  recentSearchContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 5,
+    justifyContent: 'center'
+  },
+  recentSearchPillContainer: {
+    backgroundColor: 'grey',
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 2,
+    paddingBottom: 2,
+    borderRadius: 20,
+  },
+  recentSearchPill: {
+    color: 'blue'
+  },
+
   // BUTTON
   buttonContainer: {
     width: '100%',
