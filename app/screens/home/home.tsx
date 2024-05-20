@@ -4,12 +4,13 @@ import React, {useEffect, useState} from "react";
 import {useNavigation} from "expo-router";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {CommonActions} from "@react-navigation/native";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 import ScrollView = Animated.ScrollView;
 
 export default function HomeScreen() {
 
   const navigation = useNavigation()
-
+  const {top} = useSafeAreaInsets()
   const [username, setUsername] = useState('');
   const [timeRemaining, setTimeRemaining] = useState('');
   const [recentSearch, setRecentSearch] = useState([] as string[]);
@@ -105,7 +106,7 @@ export default function HomeScreen() {
                           behavior='padding' keyboardVerticalOffset={0}
     >
       <ScrollView style={styles.scrollViewContainer} keyboardShouldPersistTaps='handled'
-                  contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
+                  contentContainerStyle={{justifyContent: 'center', paddingTop: top}}>
         <View style={styles.viewContainer}>
 
           {/*LOGO*/}
