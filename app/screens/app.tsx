@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Animated, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {useEffect, useRef} from "react";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import ShopScreen from "@/app/screens/shop/shop";
@@ -20,6 +20,12 @@ export default function AppScreen() {
       icon: 'home',
     },
     {
+      route: 'screens/stats/stats',
+      label: 'home',
+      component: HomeScreen,
+      icon: 'home',
+    },
+    {
       route: 'screens/shop/shop',
       label: 'shop',
       component: ShopScreen,
@@ -34,137 +40,128 @@ export default function AppScreen() {
 
   ];
 
-  const animationsTabIn = {
-    0: {scale: 1, translateY: 0},
-    .92: {scale: 1, translateY: -30},
-    1: {scale: 1.15, translateY: -20},
-  }
-  const animationsTabOut = {
-    0: {scale: 1.5, translateY: -20},
+  const TabButton = ({tab, onPress, accessibilityState}: any) => {
+    const animatedValues = {
+      translate: useRef(new Animated.Value(0)).current,
+      scale: useRef(new Animated.Value(0)).current,
+    }
 
-    1: {scale: 1, translateY: 0},
-  }
-  const animationsCircleIn = {
-    0: {scale: 0},
-    0.3: {scale: .5},
-    0.5: {scale: .3},
-    0.8: {scale: .7},
-    1: {scale: 1}
-  }
-  const animationsCircleOut = {
-    0: {scale: 1},
-    1: {scale: 0}
-  }
-
-  const TabButton = (props: any) => {
-    const {tab, index, onPress, accessibilityState} = props;
-    const focused = accessibilityState.selected;
-    const viewRef: React.MutableRefObject<any> = useRef(null)
-    const circleRef: React.MutableRefObject<any> = useRef(null)
-    const textRef: React.MutableRefObject<any> = useRef(null)
+    const {translate, scale} = animatedValues;
 
     useEffect(() => {
-      if (focused) {
-        viewRef.current.animate(animationsTabIn);
-        circleRef.current.animate(animationsCircleIn);
-        circleRef.current.transitionTo({scale: 1});
+      handleAnimated()
+    }, [accessibilityState.selected]);
 
-      } else {
-        viewRef.current.animate(animationsTabOut);
-        viewRef.current.animate(animationsCircleOut)
-        circleRef.current.transitionTo({scale: 0});
-      }
-    }, [focused]);
+
+    const handleAnimated = () => {
+      Animated.parallel([
+        Animated.timing(translate, {
+          toValue: accessibilityState.selected ? 1 : 0,
+          duration: 350,
+          useNativeDriver: false,
+        }),
+        Animated.timing(scale, {
+          toValue: accessibilityState.selected ? 1 : 0,
+          duration: 200,
+          useNativeDriver: false,
+        })
+      ]).start()
+    }
+
+    const translateStyles = {
+      transform: [{
+        translateY: translate.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, -30],
+          extrapolate: 'clamp'
+        })
+      }]
+    }
+
+    const scaleStyles = {
+      opacity: scale.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0.5, 1],
+        extrapolate: 'clamp'
+      }),
+      transform: [{
+        scale: scale
+      }]
+    }
 
     return (
       <TouchableOpacity
-        key={index}
         onPress={onPress}
         activeOpacity={1}
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 50,
-        }}
+        style={styles.tabContainer}
       >
         <Animatable.View
-          ref={viewRef}
-          duration={1000}
-          style={{
-            width: 50,
-            height: 50,
+          style={[{
+            width: 55,
+            height: 55,
             borderRadius: 25,
             borderWidth: 4,
             borderColor: 'white',
-            backgroundColor: 'white',
             justifyContent: 'center',
             alignItems: 'center',
-
-          }}
+            overflow: 'hidden',
+          }, translateStyles]}
         >
-          <View style={{
+          <Animated.View style={[{
             width: 50,
             height: 50,
-            borderRadius: 25,
-            borderWidth: 4,
-            borderColor: 'white',
-            backgroundColor: 'white',
-            justifyContent: 'center',
-            alignItems: 'center',
+            borderRadius: 100,
+            position: 'absolute',
+            backgroundColor: Colors.secondary
+          }, scaleStyles]}></Animated.View>
 
-          }}>
-            <Animatable.View
-              ref={circleRef}
-              style={
-                {
-                  ...StyleSheet.absoluteFillObject,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: Colors.secondary,
-                  borderRadius: 25,
-                }}
-            >
-              <AntDesign name={tab.icon} size={25} color={focused ? 'white' : 'black'}/>
-            </Animatable.View>
-          </View>
-          <Animatable.Text
-            ref={textRef}
-            style={{fontSize: 12, color: Colors.secondary, textAlign: 'center'}}
-          >{tab.label}</Animatable.Text>
+          <AntDesign name={tab.icon} size={25} color={accessibilityState.selcted ? 'white' : 'black'}/>
+
         </Animatable.View>
+        <Animatable.Text
+          style={[{fontSize: 12, color: Colors.secondary, textAlign: 'center', position: 'absolute', bottom: 20}, {
+            opacity: scale
+          }]}>{tab.label}</Animatable.Text>
+
       </TouchableOpacity>
     )
   }
 
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: {
-          height: 50,
-          position: 'absolute',
-          bottom: 25,
-          right: 15,
-          left: 15,
-          borderRadius: 15,
-          backgroundColor: 'white'
-        }
-      }}>
-      {tabRoutes.map((tab, index) => {
+    <Tab.Navigator screenOptions={{headerShown: false, tabBarStyle: styles.tabNavigatorContainer}}>
+
+      {tabRoutes.map((tab, index: number) => {
         return (
           <Tab.Screen name={tab.route}
-                      component={tab.component}
                       key={index}
+                      component={tab.component}
                       options={{
-                        tabBarButton: (props) => <TabButton {...props} tab={tab} index={index}/>
+                        tabBarButton: (props) => <TabButton {...props} tab={tab}/>
                       }}
           ></Tab.Screen>)
-      })
-      }
+      })}
+
     </Tab.Navigator>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  tabNavigatorContainer: {
+    height: 60,
+    position: 'absolute',
+    bottom: 25,
+    right: 15,
+    left: 15,
+    borderRadius: 15,
+    backgroundColor: 'white'
+  },
+
+  tabContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 65,
+    alignSelf: 'stretch'
+  }
+});
