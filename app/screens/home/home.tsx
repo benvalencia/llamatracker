@@ -125,7 +125,7 @@ export default function HomeScreen() {
           <View style={styles.recentSearchContainer}>
             {recentSearch.map((item) => {
               return (
-                <Pressable style={styles.recentSearchPillContainer} onPress={() => setUsername(item)}>
+                <Pressable style={styles.recentSearchPillContainer} key={item} onPress={() => setUsername(item)}>
                   <Text style={styles.recentSearchPill}>{item}</Text>
                 </Pressable>
               )
