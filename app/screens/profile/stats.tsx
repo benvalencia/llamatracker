@@ -61,11 +61,10 @@ export default function StatsScreen({route}: any) {
     }
   >
     <View style={styles.profileSection}>
-      <Text style={styles.sectionTitle}>Fortnite Profile</Text>
+      <Text style={styles.sectionTitle}></Text>
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Account</Text>
         <Text style={styles.cardText}>Name: {fortniteProfile.account?.name}</Text>
-        <Text style={styles.cardText}>ID: {fortniteProfile.account?.id}</Text>
       </View>
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Battle Pass</Text>
@@ -151,7 +150,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: Colors.primary,
+    color: Colors.yellow,
     marginBottom: 8,
   },
   cardText: {

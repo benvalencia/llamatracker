@@ -9,6 +9,7 @@ const tintColorDark = '#fff';
 const primary = '#e25bff';
 const secondary = '#4c51f7';
 const tertiary = '#3d02bd';
+const yellow = '#FFD700';
 
 export const Colors = {
   light: {
@@ -31,4 +32,6 @@ export const Colors = {
   primary: primary,
   secondary: secondary,
   tertiary: tertiary,
+  yellow: yellow,
+
 };
