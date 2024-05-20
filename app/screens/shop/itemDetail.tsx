@@ -1,7 +1,9 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 
-export default function ItemDetailScreen() {
+export default function ItemDetailScreen({route}: any) {
+  // const {fortniteUsername} = route.params;
+
   return (
     <View style={{
       backgroundColor: Colors.primary,

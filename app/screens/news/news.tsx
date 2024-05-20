@@ -2,21 +2,29 @@ import {Pressable, RefreshControl, ScrollView, StyleSheet, Text, View} from 'rea
 import {Colors} from "@/constants/Colors";
 import React, {useEffect, useState} from "react";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
+import {CommonActions} from "@react-navigation/native";
+import {useNavigation} from "expo-router";
 
 export default function NewsScreen() {
 
   const fortniteService = new FortniteService();
+  const navigation = useNavigation()
 
   const [newsBattleRoyaleList, setNewsBattleRoyaleList] = useState([] as any[]);
   const [newsSaveTheWorldList, setNewsSaveTheWorldList] = useState([] as any[]);
   const [refreshing, setRefreshing] = useState(false);
 
-  const goToNewsDetail = (news: any) => {
-    console.log('news detail -> ', news)
+  const goToNewsDetail = (newsDetail: any) => {
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: 'screens/news/newsDetail',
+        params: {
+          newsDetail
+        }
+      }));
   }
 
   const getNewsList = async () => {
-    // const news = await fortniteService.getNews();
     const getBatelRoyaleNews = await fortniteService.getBatelRoyaleNews();
     const getSaveTheWorldNews = await fortniteService.getSaveTheWorldNews();
 
@@ -55,7 +63,7 @@ export default function NewsScreen() {
         <View style={styles.newsListContainer}>
           {newsBattleRoyaleList.map((news, index: number) => {
             return (
-              <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news.id)}>
+              <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
                 <Text>body: {news.body}</Text>
                 <Text>hidden: {news.hidden ? 'true' : 'false'}</Text>
                 <Text>id: {news.id}</Text>
