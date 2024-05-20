@@ -55,60 +55,66 @@ export default function StatsScreen({route}: any) {
 
   return (
     <ScrollView
-    contentContainerStyle={styles.container}
-    refreshControl={
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    }
-  >
-    <View style={styles.profileSection}>
-      <Text style={styles.sectionTitle}></Text>
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Account</Text>
-        <View style={styles.cardContent}>
-            <View style={styles.cardTextContainer}>
-              <Text style={styles.cardText}>Name: {fortniteProfile.account?.name}</Text>
+      contentContainerStyle={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+      <View style={styles.profileSection}>
+        <Text style={styles.sectionTitle}></Text>
+        {/* Sección ACCOUNT y IMAGE */}
+       <view style={styles.cardCentered}>
+        <View style={styles.row}>
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Account</Text>
+            <View style={styles.cardContent}>
+              <View style={styles.cardTextContainer}>
+                <Text style={styles.cardText}>Name: {fortniteProfile.account?.name}</Text>
+              </View>
             </View>
-            <View style={styles.imageContainer}>
-              <Text style={styles.cardTitle}>Image</Text>
-              <Text style={styles.cardText}>Image: {fortniteProfile.image}</Text>
+          </View>
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Image</Text>
+            <View style={styles.cardContent}>
+              <View style={styles.cardTextContainer}>
+                <Text style={styles.cardText}>Image: {fortniteProfile.image}</Text>
+              </View>
             </View>
           </View>
         </View>
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Battle Pass</Text>
-        <Text style={styles.cardText}>Level: {fortniteProfile.battlePass?.level}</Text>
-        <Text style={styles.cardText}>Progress: {fortniteProfile.battlePass?.progress}</Text>
+       </view>
+        {/* Sección BATTLE PASS */}
+        <View style={styles.cardCentered}>
+          <Text style={styles.cardTitle}>Battle Pass</Text>
+          <Text style={styles.cardText}>Level: {fortniteProfile.battlePass?.level}</Text>
+          <Text style={styles.cardText}>Progress: {fortniteProfile.battlePass?.progress}</Text>
+        </View>
+        {/* Sección OVERALL STATS */}
+        <View style={styles.cardCentered}>
+          <Text style={styles.cardTitle}>Overall Stats</Text>
+          <Text style={styles.cardText}>Score: {fortniteProfile.stats?.all?.overall?.score}</Text>
+          <Text style={styles.cardText}>Score Per Min: {fortniteProfile.stats?.all?.overall?.scorePerMin}</Text>
+          <Text style={styles.cardText}>Score Per Match: {fortniteProfile.stats?.all?.overall?.scorePerMatch}</Text>
+          <Text style={styles.cardText}>Wins: {fortniteProfile.stats?.all?.overall?.wins}</Text>
+          <Text style={styles.cardText}>Top 3: {fortniteProfile.stats?.all?.overall?.top3}</Text>
+          <Text style={styles.cardText}>Top 5: {fortniteProfile.stats?.all?.overall?.top5}</Text>
+          <Text style={styles.cardText}>Top 6: {fortniteProfile.stats?.all?.overall?.top6}</Text>
+          <Text style={styles.cardText}>Top 10: {fortniteProfile.stats?.all?.overall?.top10}</Text>
+          <Text style={styles.cardText}>Top 12: {fortniteProfile.stats?.all?.overall?.top12}</Text>
+          <Text style={styles.cardText}>Top 25: {fortniteProfile.stats?.all?.overall?.top25}</Text>
+          <Text style={styles.cardText}>Kills: {fortniteProfile.stats?.all?.overall?.kills}</Text>
+          <Text style={styles.cardText}>Kills Per Min: {fortniteProfile.stats?.all?.overall?.killsPerMin}</Text>
+          <Text style={styles.cardText}>Kills Per Match: {fortniteProfile.stats?.all?.overall?.killsPerMatch}</Text>
+          <Text style={styles.cardText}>Deaths: {fortniteProfile.stats?.all?.overall?.deaths}</Text>
+          <Text style={styles.cardText}>KD: {fortniteProfile.stats?.all?.overall?.kd}</Text>
+          <Text style={styles.cardText}>Matches: {fortniteProfile.stats?.all?.overall?.matches}</Text>
+          <Text style={styles.cardText}>Win Rate: {fortniteProfile.stats?.all?.overall?.winRate}</Text>
+          <Text style={styles.cardText}>Minutes Played: {fortniteProfile.stats?.all?.overall?.minutesPlayed}</Text>
+          <Text style={styles.cardText}>Players Outlived: {fortniteProfile.stats?.all?.overall?.playersOutlived}</Text>
+          <Text style={styles.cardText}>Last Modified: {fortniteProfile.stats?.all?.overall?.lastModified}</Text>
+        </View>
       </View>
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Overall Stats</Text>
-        <Text style={styles.cardText}>Score: {fortniteProfile.stats?.all?.overall?.score}</Text>
-        <Text style={styles.cardText}>Score Per Min: {fortniteProfile.stats?.all?.overall?.scorePerMin}</Text>
-        <Text style={styles.cardText}>Score Per Match: {fortniteProfile.stats?.all?.overall?.scorePerMatch}</Text>
-        <Text style={styles.cardText}>Wins: {fortniteProfile.stats?.all?.overall?.wins}</Text>
-        <Text style={styles.cardText}>Top 3: {fortniteProfile.stats?.all?.overall?.top3}</Text>
-        <Text style={styles.cardText}>Top 5: {fortniteProfile.stats?.all?.overall?.top5}</Text>
-        <Text style={styles.cardText}>Top 6: {fortniteProfile.stats?.all?.overall?.top6}</Text>
-        <Text style={styles.cardText}>Top 10: {fortniteProfile.stats?.all?.overall?.top10}</Text>
-        <Text style={styles.cardText}>Top 12: {fortniteProfile.stats?.all?.overall?.top12}</Text>
-        <Text style={styles.cardText}>Top 25: {fortniteProfile.stats?.all?.overall?.top25}</Text>
-        <Text style={styles.cardText}>Kills: {fortniteProfile.stats?.all?.overall?.kills}</Text>
-        <Text style={styles.cardText}>Kills Per Min: {fortniteProfile.stats?.all?.overall?.killsPerMin}</Text>
-        <Text style={styles.cardText}>Kills Per Match: {fortniteProfile.stats?.all?.overall?.killsPerMatch}</Text>
-        <Text style={styles.cardText}>Deaths: {fortniteProfile.stats?.all?.overall?.deaths}</Text>
-        <Text style={styles.cardText}>KD: {fortniteProfile.stats?.all?.overall?.kd}</Text>
-        <Text style={styles.cardText}>Matches: {fortniteProfile.stats?.all?.overall?.matches}</Text>
-        <Text style={styles.cardText}>Win Rate: {fortniteProfile.stats?.all?.overall?.winRate}</Text>
-        <Text style={styles.cardText}>Minutes Played: {fortniteProfile.stats?.all?.overall?.minutesPlayed}</Text>
-        <Text style={styles.cardText}>Players Outlived: {fortniteProfile.stats?.all?.overall?.playersOutlived}</Text>
-        <Text style={styles.cardText}>Last Modified: {fortniteProfile.stats?.all?.overall?.lastModified}</Text>
-      </View>
-    </View>
-  </ScrollView>
-);
+    </ScrollView>
+  );
 }
-
-
-
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -133,6 +139,10 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: Colors.secondary,
     borderRadius: 8,
+    flexDirection: 'row',
+    flexWrap:'wrap',
+    justifyContent:'space-between'
+
   },
   sectionTitle: {
     fontSize: 20,
@@ -140,7 +150,15 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     marginBottom: 8,
   },
+  row: {
+    alignContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap:'wrap',
+  },
   card: {
+    alignContent: 'center',
+    width:'48%',
     backgroundColor: Colors.tertiary,
     borderRadius: 8,
     padding: 16,
@@ -168,7 +186,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardTextContainer: {
+    alignContent:'center',
+    alignItems:'center',
     flex: 1,
+  },
+  cardCentered: {
+    width: '100%',
+    backgroundColor: Colors.tertiary,
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+    alignItems: 'center',
   },
   imageContainer: {
     marginLeft: 16,
