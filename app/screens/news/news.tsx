@@ -1,4 +1,4 @@
-import {Pressable, RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React, {useEffect, useState} from "react";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
@@ -68,6 +68,9 @@ export default function NewsScreen() {
                 <Text>hidden: {news.hidden ? 'true' : 'false'}</Text>
                 <Text>id: {news.id}</Text>
                 <Text>image: {news.image}</Text>
+                <Image
+                  source={{uri: news.image}}
+                  style={{width: 325, height: 185}}/>
                 <Text>sortingPriority: {news.sortingPriority}</Text>
                 <Text>tabTitle: {news.tabTitle}</Text>
                 <Text>titleImage: {news.titleImage}</Text>
@@ -81,6 +84,9 @@ export default function NewsScreen() {
               <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
                 <Text>body: {news.body}</Text>
                 <Text>image: {news.image}</Text>
+                <Image
+                  source={{uri: news.image}}
+                  style={{width: 325, height: 185}}/>
                 <Text>title: {news.title}</Text>
               </Pressable>
             )
