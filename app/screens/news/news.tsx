@@ -1,4 +1,4 @@
-import {Pressable, RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React, {useEffect, useState} from "react";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
@@ -61,26 +61,28 @@ export default function NewsScreen() {
       }}>
         {/*NEWS LIST*/}
         <View style={styles.newsListContainer}>
-          {newsBattleRoyaleList.map((news, index: number) => {
-            return (
-              <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
-                <Text>body: {news.body}</Text>
-                <Text>hidden: {news.hidden ? 'true' : 'false'}</Text>
-                <Text>id: {news.id}</Text>
-                <Text>image: {news.image}</Text>
-                <Text>sortingPriority: {news.sortingPriority}</Text>
-                <Text>tabTitle: {news.tabTitle}</Text>
-                <Text>titleImage: {news.titleImage}</Text>
-                <Text>title: {news.title}</Text>
-              </Pressable>
-            )
-          })}
+          {/*{newsBattleRoyaleList.map((news, index: number) =>*/}
+          {/*   (*/}
+          {/*    <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>*/}
+          {/*      <Text>body: {news.body}</Text>*/}
+          {/*      <Text>hidden: {news.hidden ? 'true' : 'false'}</Text>*/}
+          {/*      <Text>id: {news.id}</Text>*/}
+          {/*      <Text>image: {news.image}</Text>*/}
+          {/*      <Image source={{uri: news.image}} width={250} height={150}/>*/}
+          {/*      <Text>sortingPriority: {news.sortingPriority}</Text>*/}
+          {/*      <Text>tabTitle: {news.tabTitle}</Text>*/}
+          {/*      <Text>titleImage: {news.titleImage}</Text>*/}
+          {/*      <Text>title: {news.title}</Text>*/}
+          {/*    </Pressable>*/}
+          {/*  )*/}
+          {/*)}*/}
           {newsSaveTheWorldList.map((news, index) => {
             console.log(news)
             return (
               <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
                 <Text>body: {news.body}</Text>
                 <Text>image: {news.image}</Text>
+                <Image source={{uri: news.image}} width={250} height={150}/>
                 <Text>title: {news.title}</Text>
               </Pressable>
             )
@@ -96,6 +98,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: Colors.primary,
+    height: '100%'
   },
   scrollReloadContainer: {
     backgroundColor: Colors.primary,

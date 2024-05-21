@@ -87,7 +87,18 @@ export default function RootLayout() {
         <Stack.Screen name="screens/shop/shop" options={{title: 'Shop', headerShown: false, gestureEnabled: false}}
                       component={ShopScreen}/>
         <Stack.Screen name="screens/shop/itemDetail"
-                      options={{title: 'Item Detail', headerShown: false, gestureEnabled: false}}
+                      options={{
+                        title: '',
+                        headerBackTitle: '',
+                        headerShadowVisible: false,
+                        gestureEnabled: true,
+                        headerStyle: {backgroundColor: Colors.primary},
+                        headerLeft: () => (
+                          <Pressable onPress={router.back}>
+                            <AntDesign name="arrowleft" size={35} color="white" style={{paddingLeft: 5}}/>
+                          </Pressable>
+                        ),
+                      }}
                       component={ItemDetailScreen}/>
 
         {/*NEWS*/}
