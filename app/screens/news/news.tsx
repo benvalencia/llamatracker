@@ -57,10 +57,7 @@ export default function NewsScreen() {
         {/* Mapear cada noticia de Battle Royale */}
         {newsBattleRoyaleList.map((news, index) => (
           <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
-            {/* Contenedor del título de la noticia */}
-            <View style={styles.titleContainer}>
-              <Text style={styles.sectionTitle}>{news.body}</Text>
-            </View>
+            
             {/* Contenedor de la imagen */}
             <View style={styles.imageContainer}>
               <Image
@@ -69,7 +66,7 @@ export default function NewsScreen() {
               />
               {/* Superposición de texto sobre la imagen */}
               <View style={styles.overlay}>
-                <Text style={styles.overlayText}>Texto superpuesto</Text>
+                <Text style={styles.overlayText}>{news.body}</Text>
               </View>
             </View>
           </Pressable>
