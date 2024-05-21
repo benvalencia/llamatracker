@@ -51,54 +51,43 @@ export default function NewsScreen() {
         <RefreshControl refreshing={refreshing}
                         onRefresh={onRefresh}
                         style={styles.scrollReloadContainer}/>}>
-      <View style={{
-        backgroundColor: Colors.primary,
-        height: '100%',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'}}
-      > {/*NEWS LIST*/}
-        <View style={styles.newsContainer}>
-          <Text style={styles.sectionTitle}>Battle Royale News</Text>
-               {newsBattleRoyaleList.map((news, index: number) => {
-            return (
-              <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
-                <View style={styles.titleContainer}>
-                   <Text style={styles.sectionTitle}>{news.body}</Text>
-                </View>  
-                <View style={styles.newsImage}>
-                 <Image style={styles.newsImage}
-                   source={{uri: news.image}}/>
-                </View>  
-                    <View style={styles.textContainer}>
-                      <Text style={styles.sectionTitle}>texto</Text>
-
-                    </View>
-                
-                <Text>sortingPriority: {news.sortingPriority}</Text>
-                <Text>tabTitle: {news.tabTitle}</Text>
-                <Text>titleImage: {news.titleImage}</Text>
-                <Text>title: {news.title}</Text>
-              </Pressable>
-            )
-          })}
-          {newsSaveTheWorldList.map((news, index) => {
-            console.log(news)
-            return (
-              <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
-                <Text>body: {news.body}</Text>
-                <Text>image: {news.image}</Text>
-                <Image
-                  source={{uri: news.image}}
-                  style={{width: 640, height: 305}}/>
-                <Text>title: {news.title}</Text>
-              </Pressable>
-            )
-          })}
-        </View>
+     <View style={styles.newsContainer}>
+        {/* Título de la sección de noticias */}
+        <Text style={styles.sectionTitle}>FORTNITE NEWS</Text>
+        {/* Mapear cada noticia de Battle Royale */}
+        {newsBattleRoyaleList.map((news, index) => (
+          <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
+            {/* Contenedor del título de la noticia */}
+            <View style={styles.titleContainer}>
+              <Text style={styles.sectionTitle}>{news.body}</Text>
+            </View>
+            {/* Contenedor de la imagen */}
+            <View style={styles.imageContainer}>
+              <Image
+                source={{ uri: news.image }}
+                style={styles.newsImage}
+              />
+              {/* Superposición de texto sobre la imagen */}
+              <View style={styles.overlay}>
+                <Text style={styles.overlayText}>Texto superpuesto</Text>
+              </View>
+            </View>
+          </Pressable>
+        ))}
+        {/* Mapear cada noticia de Save the World */}
+        {newsSaveTheWorldList.map((news, index) => (
+          <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
+            <Text>body: {news.body}</Text>
+            <Text>image: {news.image}</Text>
+            <Image
+              source={{ uri: news.image }}
+              style={{ width: 640, height: 305 }}
+            />
+            <Text>title: {news.title}</Text>
+          </Pressable>
+        ))}
       </View>
     </ScrollView>
-
   );
 }
 
@@ -114,16 +103,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  textContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: 10,
-  },
   
   sectionTitle: {
+    textAlign: 'center', // Alinear horizontalmente
+    textAlignVertical: 'center', // Alinear verticalmente
     paddingTop: 1,
     fontSize: 18,
     fontWeight: 'bold',
@@ -135,14 +118,23 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   newsImage: {
-    alignContent:'center',
-    marginRight: 10,
     justifyContent: 'center',
+    alignContent:'center',
     width: 410, 
     height: 260,
-    alignSelf: 'center', // Centrar horizontalmente
-    resizeMode: 'cover'
+    
   },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  overlayText: {
+    color: 'white',
+    fontSize: 20,
+  },
+
   newsTitle: {
     fontSize: 16,
     color: Colors.yellow,
@@ -173,5 +165,12 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 1,
     alignItems: 'center',
-  }
+  },
+  imageContainer: {
+    backgroundColor: Colors.yellow,
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
 });
