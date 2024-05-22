@@ -51,17 +51,17 @@ export default function NewsScreen() {
         <RefreshControl refreshing={refreshing}
                         onRefresh={onRefresh}
                         style={styles.scrollReloadContainer}/>}>
-     <View style={styles.newsContainer}>
+      <View style={styles.newsContainer}>
         {/* Título de la sección de noticias */}
         <Text style={styles.sectionTitle}>FORTNITE NEWS</Text>
         {/* Mapear cada noticia de Battle Royale */}
         {newsBattleRoyaleList.map((news, index) => (
           <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
-            
+
             {/* Contenedor de la imagen */}
             <View style={styles.imageContainer}>
               <Image
-                source={{ uri: news.image }}
+                source={{uri: news.image}}
                 style={styles.newsImage}
               />
               {/* Superposición de texto sobre la imagen */}
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  
+
   sectionTitle: {
     textAlign: 'center', // Alinear horizontalmente
     textAlignVertical: 'center', // Alinear verticalmente
@@ -121,10 +121,10 @@ const styles = StyleSheet.create({
   },
   newsImage: {
     justifyContent: 'center',
-    alignContent:'center',
-    width: 410, 
+    alignContent: 'center',
+    width: 410,
     height: 260,
-    
+
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.yellow,
   },
-  
+
   // NEWS LIST CONTAINER
   newsListContainer: {
     backgroundColor: 'red',
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 16,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 1,
