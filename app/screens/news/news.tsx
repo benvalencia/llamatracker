@@ -66,6 +66,7 @@ export default function NewsScreen() {
               />
               {/* Superposición de texto sobre la imagen */}
               <View style={styles.overlay}>
+                <Text style={styles.overlayText}>{news.title}</Text>
                 <Text style={styles.overlayText}>{news.body}</Text>
               </View>
             </View>
@@ -74,13 +75,17 @@ export default function NewsScreen() {
         {/* Mapear cada noticia de Save the World */}
         {newsSaveTheWorldList.map((news, index) => (
           <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
-            <Text>body: {news.body}</Text>
-            <Text>image: {news.image}</Text>
-            <Image
-              source={{ uri: news.image }}
-              style={{ width: 640, height: 305 }}
-            />
-            <Text>title: {news.title}</Text>
+            <View style={styles.imageContainer}>
+              <Image
+                source={{uri: news.image}}
+                style={styles.newsImage}
+              />
+              {/* Superposición de texto sobre la imagen */}
+              <View style={styles.overlay}>
+                <Text style={styles.overlayText}>{news.title}</Text>
+                <Text style={styles.overlayText}>{news.body}</Text>
+              </View>
+            </View>
           </Pressable>
         ))}
       </View>
