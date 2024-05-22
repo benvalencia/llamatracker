@@ -33,6 +33,17 @@ export default function ShopScreen() {
     try {
       const jsonValue = await AsyncStorage.getItem('daily-shop');
       const objToTransform = jsonValue != null ? JSON.parse(jsonValue) : null;
+      if (objToTransform.data.date
+        && new Date(objToTransform.data.date).toDateString() !== new Date().toDateString()) {
+
+        const getShopCombined = await fortniteService.getBatelRoyaleShopCombined();
+
+        const jsonValue = JSON.stringify(getShopCombined);
+        await AsyncStorage.setItem('daily-shop', jsonValue);
+
+        setShopCache(jsonValue as any)
+        setShopRaw(getShopCombined as any)
+      }
       setShopCache(jsonValue as any)
       setShopRaw(objToTransform as any)
     } catch (err) {
@@ -45,19 +56,14 @@ export default function ShopScreen() {
     let tienda: any = []
     // const getShop = await fortniteService.getBatelRoyaleShop();
     // const getShopCombined = await fortniteService.getBatelRoyaleShopCombined();
-    // TODO: validar que la fecha de tienda no sea anterior a hoy
     if (shopCache == null) {
-      console.log("setting cache")
-      console.log(shopCache)
       const getShopCombined = await fortniteService.getBatelRoyaleShopCombined();
 
       try {
         const jsonValue = JSON.stringify(getShopCombined);
         await AsyncStorage.setItem('daily-shop', jsonValue);
         setShopCache(getShopCombined as any)
-        // console.log("setting cache")
-        // console.log("json >>> ", jsonValue)
-        // console.log("getShopCombined >>> ", getShopCombined)
+        setShopRaw(getShopCombined as any)
       } catch (err) {
         // saving error
         console.log(err)
@@ -75,20 +81,42 @@ export default function ShopScreen() {
         ...{finalPrice: entry.finalPrice},
         ...{regularPrice: entry.regularPrice},
         ...{layout: entry.layout},
-        ...{materialInstances: entry.newDisplayAsset ? entry.newDisplayAsset.materialInstances : null}
+        ...{materialInstances: entry.newDisplayAsset ? entry.newDisplayAsset.materialInstances : null},
+        ...{items: entry.items ? entry.items : null}
+
       };
 
       tienda.push(formNewObject);
     })
 
     console.log('---------')
-    console.log('shopRaw instance >>> ', shopRaw.data.featured.entries[10].newDisplayAsset.materialInstances[0].images.Background)
-    console.log('shopRaw instance >>> ', shopRaw.data.featured.entries[10].newDisplayAsset.materialInstances[1].images.Background)
-    // console.log('shopRaw instance >>> ', shopRaw.data.featured.entries[10].newDisplayAsset.materialInstances[2].images.Background)
-    // console.log('shopRaw instance >>> ', shopRaw.data.featured.entries[10].newDisplayAsset.materialInstances[3].images.Background)
+    console.log('items >>> ', shopRaw.data.featured.entries[0].items.length)
+    console.log('items.added >>> ', shopRaw.data.featured.entries[10].items[0].added)
+    console.log('items.description >>> ', shopRaw.data.featured.entries[10].items[0].description)
 
-    console.log('shopList instance >>> ', tienda[0].layout)
+    console.log('items.images.featured >>> ', shopRaw.data.featured.entries[10].items[0].images.featured)
+    console.log('items.images.icon >>> ', shopRaw.data.featured.entries[10].items[0].images.icon)
+    console.log('items.images.lego.small >>> ', shopRaw.data.featured.entries[10].items[0].images.lego.small)
+    console.log('items.images.lego.wide >>> ', shopRaw.data.featured.entries[10].items[0].images.lego.wide)
 
+    console.log('items.images.other >>> ', shopRaw.data.featured.entries[10].items[0].images.other)
+    console.log('items.images.smallIcon >>> ', shopRaw.data.featured.entries[10].items[0].images.smallIcon)
+    console.log('items.introduction.chapter >>> ', shopRaw.data.featured.entries[10].items[0].introduction.chapter)
+    console.log('items.introduction.season >>> ', shopRaw.data.featured.entries[10].items[0].introduction.season)
+    console.log('items.introduction.text >>> ', shopRaw.data.featured.entries[10].items[0].introduction.text)
+    console.log('items.metaTags >>> ', shopRaw.data.featured.entries[10].items[0].metaTags)
+    console.log('items.name >>> ', shopRaw.data.featured.entries[10].items[0].name)
+    console.log('items.rarity.value >>> ', shopRaw.data.featured.entries[10].items[0].rarity.value)
+    console.log('items.rarity.displayValue >>> ', shopRaw.data.featured.entries[10].items[0].rarity.displayValue)
+
+    console.log('items.set.text >>> ', shopRaw.data.featured.entries[10].items[0].set.text)
+    console.log('items.other >>> ', shopRaw.data.featured.entries[10].items[0].set.value)
+    console.log('items.shopHistory >>> ', shopRaw.data.featured.entries[10].items[0].shopHistory)
+
+    console.log('items.type.displayValue >>> ', shopRaw.data.featured.entries[10].items[0].type.displayValue)
+    console.log('items.type.value >>> ', shopRaw.data.featured.entries[10].items[0].type.value)
+
+    console.log('items.variants >>> ', shopRaw.data.featured.entries[10].items[0].variants)
 
     // ESTOS ENTRAN EN EL NUEVO ARRAY DE OBJECTOS
     // console.log('producto.banner = descuento >>> ', getShopCombined.data.featured.entries[0].banner) // para pintar el descuento
@@ -96,8 +124,8 @@ export default function ShopScreen() {
     // console.log('producto.finalPrice = precio actual >>> ', getShopCombined.data.featured.entries[0].finalPrice) // para pintar el precio
     // console.log('producto.regularPrice = precio original >>> ', getShopCombined.data.featured.entries[0].regularPrice) // para pintar el precio
     // console.log('producto.layout = Informacion para pintar seccion - background, categoria (destacados, originales, etc), id, name >>> ', getShopCombined.data.featured.entries[0].layout) // para pintar en la seccion correspondiente
-
     // console.log('producto.newDisplayAsset.materialInstances.images.Background = imagen del paquete >>> ', getShopCombined.data.featured.entries[0].newDisplayAsset.materialInstances[0].images.Background) // para pintar la imagen del paquete
+
     // console.log('producto.items = productos>>> ', getShopCombined.data.featured.entries[0].items[0]) // para pintar un paquete
 
 
@@ -190,8 +218,8 @@ export default function ShopScreen() {
                 {item.materialInstances ?
                   item.materialInstances[0] ?
                     <View>
-                      {/*<Image source={{uri: item.layout.background}} width={150} height={150}/>*/}
-                      <Text>{item.materialInstances[0].images.Background}</Text>
+                      {/*<Text>{item.materialInstances[0].images.Background}</Text>*/}
+                      <Image source={{uri: item.materialInstances[0].images.Background}} width={150} height={150}/>
                     </View>
                     : null
                   : null}
@@ -199,8 +227,8 @@ export default function ShopScreen() {
                 {item.materialInstances ?
                   item.materialInstances[1] ?
                     <View>
-                      {/*<Image source={{uri: item.layout.background}} width={150} height={150}/>*/}
-                      <Text>{item.materialInstances[1].images.Background}</Text>
+                      {/*<Text>{item.materialInstances[1].images.Background}</Text>*/}
+                      <Image source={{uri: item.materialInstances[1].images.Background}} width={150} height={150}/>
                     </View>
                     : null
                   : null}
@@ -208,8 +236,8 @@ export default function ShopScreen() {
                 {item.materialInstances ?
                   item.materialInstances[2] ?
                     <View>
-                      {/*<Image source={{uri: item.layout.background}} width={150} height={150}/>*/}
-                      <Text>{item.materialInstances[2].images.Background}</Text>
+                      {/*<Text>{item.materialInstances[2].images.Background}</Text>*/}
+                      <Image source={{uri: item.materialInstances[2].images.Background}} width={150} height={150}/>
                     </View>
                     : null
                   : null}
@@ -217,8 +245,8 @@ export default function ShopScreen() {
                 {item.materialInstances ?
                   item.materialInstances[3] ?
                     <View>
-                      {/*<Image source={{uri: item.layout.background}} width={150} height={150}/>*/}
-                      <Text>{item.materialInstances[3].images.Background}</Text>
+                      {/*<Text>{item.materialInstances[3].images.Background}</Text>*/}
+                      <Image source={{uri: item.materialInstances[3].images.Background}} width={150} height={150}/>
                     </View>
                     : null
                   : null}
@@ -226,8 +254,8 @@ export default function ShopScreen() {
                 {item.materialInstances ?
                   item.materialInstances[4] ?
                     <View>
-                      {/*<Image source={{uri: item.layout.background}} width={150} height={150}/>*/}
-                      <Text>{item.materialInstances[4].images.Background}</Text>
+                      {/*<Text>{item.materialInstances[4].images.Background}</Text>*/}
+                      <Image source={{uri: item.materialInstances[4].images.Background}} width={150} height={150}/>
                     </View>
                     : null
                   : null}
@@ -235,8 +263,8 @@ export default function ShopScreen() {
                 {item.materialInstances ?
                   item.materialInstances[5] ?
                     <View>
-                      {/*<Image source={{uri: item.layout.background}} width={150} height={150}/>*/}
-                      <Text>{item.materialInstances[5].images.Background}</Text>
+                      {/*<Text>{item.materialInstances[5].images.Background}</Text>*/}
+                      <Image source={{uri: item.materialInstances[5].images.Background}} width={150} height={150}/>
                     </View>
                     : null
                   : null}
@@ -244,8 +272,8 @@ export default function ShopScreen() {
                 {item.materialInstances ?
                   item.materialInstances[6] ?
                     <View>
-                      {/*<Image source={{uri: item.layout.background}} width={150} height={150}/>*/}
-                      <Text>{item.materialInstances[6].images.Background}</Text>
+                      {/*<Text>{item.materialInstances[6].images.Background}</Text>*/}
+                      <Image source={{uri: item.materialInstances[6].images.Background}} width={150} height={150}/>
                     </View>
                     : null
                   : null}
@@ -253,8 +281,8 @@ export default function ShopScreen() {
                 {item.materialInstances ?
                   item.materialInstances[7] ?
                     <View>
-                      {/*<Image source={{uri: item.layout.background}} width={150} height={150}/>*/}
-                      <Text>{item.materialInstances[7].images.Background}</Text>
+                      {/*<Text>{item.materialInstances[7].images.Background}</Text>*/}
+                      <Image source={{uri: item.materialInstances[7].images.Background}} width={150} height={150}/>
                     </View>
                     : null
                   : null}
@@ -262,8 +290,8 @@ export default function ShopScreen() {
                 {item.materialInstances ?
                   item.materialInstances[8] ?
                     <View>
-                      {/*<Image source={{uri: item.layout.background}} width={150} height={150}/>*/}
-                      <Text>{item.materialInstances[8].images.Background}</Text>
+                      {/*<Text>{item.materialInstances[8].images.Background}</Text>*/}
+                      <Image source={{uri: item.materialInstances[8].images.Background}} width={150} height={150}/>
                     </View>
                     : null
                   : null}
@@ -271,8 +299,8 @@ export default function ShopScreen() {
                 {item.materialInstances ?
                   item.materialInstances[9] ?
                     <View>
-                      {/*<Image source={{uri: item.layout.background}} width={150} height={150}/>*/}
-                      <Text>{item.materialInstances[9].images.Background}</Text>
+                      {/*<Text>{item.materialInstances[9].images.Background}</Text>*/}
+                      <Image source={{uri: item.materialInstances[9].images.Background}} width={150} height={150}/>
                     </View>
                     : null
                   : null}
