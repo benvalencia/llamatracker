@@ -180,271 +180,189 @@ export default function ShopScreen() {
 
           {shopList ? shopList.map((item: any, index: number) => {
             return (
-              <View style={{backgroundColor: 'grey', padding: 10, borderRadius: 5}} key={index}>
-                {/*ALERT*/}
-                {item.banner ?
-                  <View style={{
-                    backgroundColor: item.banner.intensity == 'Low' ? 'white' : 'yellow',
-                    padding: 2,
-                    borderRadius: 25,
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                    alignSelf: 'flex-start'
-                  }}>
-                    <Text>{item.banner.value}</Text>
-                  </View>
-                  : null}
+              // IMAGE PRODUCT
+              <View style={{
+                padding: 5,
+                borderRadius: 10,
+                overflow: 'hidden',
+                width: 260,
+                height: 250,
+                alignSelf: 'flex-start',
+                justifyContent: 'space-between'
+              }} key={index}>
+                <View style={{position: 'absolute', zIndex: 0}}>
+                  {item.materialInstances ?
+                    item.materialInstances[0] ?
+                      <View>
+                        <Image source={{uri: item.materialInstances[0].images.Background}} width={260} height={250}/>
+                      </View>
+                      : null
+                    : null}
+                </View>
 
+                {/*PRODUCT OFFER ALERT*/}
+                <View>
+                  {item.banner ?
+                    <View style={{
+                      backgroundColor: item.banner.intensity == 'Low' ? 'white' : 'yellow',
+                      padding: 2,
+                      borderRadius: 25,
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                      alignSelf: 'flex-start'
+                    }}>
+                      <Text>{item.banner.value}</Text>
+                    </View>
+                    : null}
+                </View>
 
-                {item.bundle ?
+                {/*PRODUCT INFORMATION*/}
+                <View style={{}}>
+                  {/*PRODUCT NAME*/}
                   <View>
-                    <Image source={{uri: item.bundle.image}} width={150} height={150}/>
-                    <Text>{item.bundle.name}</Text>
-                    <Text>{item.bundle.info}</Text>
+                    {item.bundle ?
+                      <View>
+                        <Image style={styles.isHidden} source={{uri: item.bundle.image}} width={150} height={150}/>
+                        <Text style={{color: 'white'}}>{item.bundle.name}</Text>
+                        <Text style={{color: 'white'}}>{item.bundle.info}</Text>
+                      </View>
+                      : null}
                   </View>
-                  : null}
-
-                {item.layout ?
+                  {/*PRODUCT PRICE*/}
                   <View>
-                    <Image source={{uri: item.layout.background}} width={150} height={150}/>
-                    {/*<Text>{item.layout.background}</Text>*/}
-                    <Text>{item.layout.category}</Text>
-                    <Text>{item.layout.id}</Text>
-                    <Text>{item.layout.name}</Text>
-                    <Text>{item.layout.showIneligibleOffers}</Text>
+                    <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                      <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                             style={{width: 25, height: 25}}></Image>
+                      <Text style={{color: 'white'}}>{item.finalPrice}</Text>
+                      <Text style={{color: 'white', opacity: .5}}>{item.regularPrice}</Text>
+                    </View>
                   </View>
-                  : null}
+                </View>
 
-                {item.materialInstances ?
-                  item.materialInstances[0] ?
-                    <View>
-                      {/*<Text>{item.materialInstances[0].images.Background}</Text>*/}
-                      <Image source={{uri: item.materialInstances[0].images.Background}} width={150} height={150}/>
-                    </View>
-                    : null
-                  : null}
 
-                {item.materialInstances ?
-                  item.materialInstances[1] ?
-                    <View>
-                      {/*<Text>{item.materialInstances[1].images.Background}</Text>*/}
-                      <Image source={{uri: item.materialInstances[1].images.Background}} width={150} height={150}/>
-                    </View>
-                    : null
-                  : null}
+                {/*{item.bundle ?*/}
+                {/*  <View>*/}
+                {/*    <Image style={styles.isHidden} source={{uri: item.bundle.image}} width={150} height={150}/>*/}
+                {/*    <Text>{item.bundle.name}</Text>*/}
+                {/*    <Text>{item.bundle.info}</Text>*/}
+                {/*  </View>*/}
+                {/*  : null}*/}
 
-                {item.materialInstances ?
-                  item.materialInstances[2] ?
-                    <View>
-                      {/*<Text>{item.materialInstances[2].images.Background}</Text>*/}
-                      <Image source={{uri: item.materialInstances[2].images.Background}} width={150} height={150}/>
-                    </View>
-                    : null
-                  : null}
+                {/*{item.layout ?*/}
+                {/*  <View>*/}
+                {/*    <Image style={styles.isHidden} source={{uri: item.layout.background}} width={150} height={150}/>*/}
+                {/*    /!*<Text>{item.layout.background}</Text>*!/*/}
+                {/*    <Text style={styles.isHidden} >{item.layout.category}</Text>*/}
+                {/*    <Text style={styles.isHidden} >{item.layout.id}</Text>*/}
+                {/*    <Text style={styles.isHidden} >{item.layout.name}</Text>*/}
+                {/*    <Text style={styles.isHidden} >{item.layout.showIneligibleOffers}</Text>*/}
+                {/*  </View>*/}
+                {/*  : null}*/}
 
-                {item.materialInstances ?
-                  item.materialInstances[3] ?
-                    <View>
-                      {/*<Text>{item.materialInstances[3].images.Background}</Text>*/}
-                      <Image source={{uri: item.materialInstances[3].images.Background}} width={150} height={150}/>
-                    </View>
-                    : null
-                  : null}
+                {/*<View style={{backgroundColor: 'red', position: 'absolute', zIndex: 0}}>*/}
+                {/*  {item.materialInstances ?*/}
+                {/*    item.materialInstances[0] ?*/}
+                {/*      <View>*/}
+                {/*        <Image source={{uri: item.materialInstances[0].images.Background}} width={150} height={150}/>*/}
+                {/*      </View>*/}
+                {/*      : null*/}
+                {/*    : null}*/}
+                {/*</View>*/}
 
-                {item.materialInstances ?
-                  item.materialInstances[4] ?
-                    <View>
-                      {/*<Text>{item.materialInstances[4].images.Background}</Text>*/}
-                      <Image source={{uri: item.materialInstances[4].images.Background}} width={150} height={150}/>
-                    </View>
-                    : null
-                  : null}
 
-                {item.materialInstances ?
-                  item.materialInstances[5] ?
-                    <View>
-                      {/*<Text>{item.materialInstances[5].images.Background}</Text>*/}
-                      <Image source={{uri: item.materialInstances[5].images.Background}} width={150} height={150}/>
-                    </View>
-                    : null
-                  : null}
+                {/*{item.materialInstances ?*/}
+                {/*  item.materialInstances[1] ?*/}
+                {/*    <View style={styles.isHidden}>*/}
+                {/*      /!*<Text>{item.materialInstances[1].images.Background}</Text>*!/*/}
+                {/*      <Image source={{uri: item.materialInstances[1].images.Background}} width={150} height={150}/>*/}
+                {/*    </View>*/}
+                {/*    : null*/}
+                {/*  : null}*/}
 
-                {item.materialInstances ?
-                  item.materialInstances[6] ?
-                    <View>
-                      {/*<Text>{item.materialInstances[6].images.Background}</Text>*/}
-                      <Image source={{uri: item.materialInstances[6].images.Background}} width={150} height={150}/>
-                    </View>
-                    : null
-                  : null}
+                {/*{item.materialInstances ?*/}
+                {/*  item.materialInstances[2] ?*/}
+                {/*    <View style={styles.isHidden}>*/}
+                {/*      /!*<Text>{item.materialInstances[2].images.Background}</Text>*!/*/}
+                {/*      <Image source={{uri: item.materialInstances[2].images.Background}} width={150} height={150}/>*/}
+                {/*    </View>*/}
+                {/*    : null*/}
+                {/*  : null}*/}
 
-                {item.materialInstances ?
-                  item.materialInstances[7] ?
-                    <View>
-                      {/*<Text>{item.materialInstances[7].images.Background}</Text>*/}
-                      <Image source={{uri: item.materialInstances[7].images.Background}} width={150} height={150}/>
-                    </View>
-                    : null
-                  : null}
+                {/*{item.materialInstances ?*/}
+                {/*  item.materialInstances[3] ?*/}
+                {/*    <View style={styles.isHidden}>*/}
+                {/*      /!*<Text>{item.materialInstances[3].images.Background}</Text>*!/*/}
+                {/*      <Image source={{uri: item.materialInstances[3].images.Background}} width={150} height={150}/>*/}
+                {/*    </View>*/}
+                {/*    : null*/}
+                {/*  : null}*/}
 
-                {item.materialInstances ?
-                  item.materialInstances[8] ?
-                    <View>
-                      {/*<Text>{item.materialInstances[8].images.Background}</Text>*/}
-                      <Image source={{uri: item.materialInstances[8].images.Background}} width={150} height={150}/>
-                    </View>
-                    : null
-                  : null}
+                {/*{item.materialInstances ?*/}
+                {/*  item.materialInstances[4] ?*/}
+                {/*    <View style={styles.isHidden}>*/}
+                {/*      /!*<Text>{item.materialInstances[4].images.Background}</Text>*!/*/}
+                {/*      <Image source={{uri: item.materialInstances[4].images.Background}} width={150} height={150}/>*/}
+                {/*    </View>*/}
+                {/*    : null*/}
+                {/*  : null}*/}
 
-                {item.materialInstances ?
-                  item.materialInstances[9] ?
-                    <View>
-                      {/*<Text>{item.materialInstances[9].images.Background}</Text>*/}
-                      <Image source={{uri: item.materialInstances[9].images.Background}} width={150} height={150}/>
-                    </View>
-                    : null
-                  : null}
+                {/*{item.materialInstances ?*/}
+                {/*  item.materialInstances[5] ?*/}
+                {/*    <View style={styles.isHidden}>*/}
+                {/*      /!*<Text>{item.materialInstances[5].images.Background}</Text>*!/*/}
+                {/*      <Image source={{uri: item.materialInstances[5].images.Background}} width={150} height={150}/>*/}
+                {/*    </View>*/}
+                {/*    : null*/}
+                {/*  : null}*/}
+
+                {/*{item.materialInstances ?*/}
+                {/*  item.materialInstances[6] ?*/}
+                {/*    <View style={styles.isHidden}>*/}
+                {/*      /!*<Text>{item.materialInstances[6].images.Background}</Text>*!/*/}
+                {/*      <Image source={{uri: item.materialInstances[6].images.Background}} width={150} height={150}/>*/}
+                {/*    </View>*/}
+                {/*    : null*/}
+                {/*  : null}*/}
+
+                {/*{item.materialInstances ?*/}
+                {/*  item.materialInstances[7] ?*/}
+                {/*    <View style={styles.isHidden}>*/}
+                {/*      /!*<Text>{item.materialInstances[7].images.Background}</Text>*!/*/}
+                {/*      <Image source={{uri: item.materialInstances[7].images.Background}} width={150} height={150}/>*/}
+                {/*    </View>*/}
+                {/*    : null*/}
+                {/*  : null}*/}
+
+                {/*{item.materialInstances ?*/}
+                {/*  item.materialInstances[8] ?*/}
+                {/*    <View style={styles.isHidden}>*/}
+                {/*      /!*<Text>{item.materialInstances[8].images.Background}</Text>*!/*/}
+                {/*      <Image source={{uri: item.materialInstances[8].images.Background}} width={150} height={150}/>*/}
+                {/*    </View>*/}
+                {/*    : null*/}
+                {/*  : null}*/}
+
+                {/*{item.materialInstances ?*/}
+                {/*  item.materialInstances[9] ?*/}
+                {/*    <View style={styles.isHidden}>*/}
+                {/*      /!*<Text>{item.materialInstances[9].images.Background}</Text>*!/*/}
+                {/*      <Image source={{uri: item.materialInstances[9].images.Background}} width={150} height={150}/>*/}
+                {/*    </View>*/}
+                {/*    : null*/}
+                {/*  : null}*/}
 
 
                 {/*PRICE*/}
-                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
-                         style={{width: 25, height: 25}}></Image>
-                  <Text style={{color: 'white'}}>{item.finalPrice}</Text>
-                  <Text style={{color: 'white', opacity: .5}}>{item.regularPrice}</Text>
-                </View>
+                {/*<View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>*/}
+                {/*  <Image source={require('../../../assets/images/vbuck/vbuck.png')}*/}
+                {/*         style={{width: 25, height: 25}}></Image>*/}
+                {/*  <Text style={{color: 'white'}}>{item.finalPrice}</Text>*/}
+                {/*  <Text style={{color: 'white', opacity: .5}}>{item.regularPrice}</Text>*/}
+                {/*</View>*/}
 
               </View>
             )
           }) : <Text>test</Text>}
-
-
-          {/*      <Pressable style={styles.itemContainer} key={index} onPress={() => goToItemDetail(item)}>*/}
-          {/*        <Text>categories: {item.layout.category}</Text>*/}
-
-          {/*        /!*<Text>section: {item.section}</Text>*!/*/}
-
-          {/*        /!*<Text>devName: {item.devName}</Text>*!/*/}
-          {/*        /!*<Text>displayAssetPath: {item.displayAssetPath}</Text>*!/*/}
-          {/*        /!*<Text>giftable: {item.giftable ? 'true' : 'false'}</Text>*!/*/}
-          {/*        /!*<Text>newDisplayAssetPath: {item.newDisplayAssetPath}</Text>*!/*/}
-          {/*        /!*<Text>offerId: {item.offerId}</Text>*!/*/}
-          {/*        /!*<Text>refundable: {item.refundable ? 'true' : 'false'}</Text>*!/*/}
-          {/*        /!*<Text>sectionId: {item.sectionId}</Text>*!/*/}
-          {/*        /!*<Text>sortPriority: {item.sortPriority}</Text>*!/*/}
-          {/*        /!*<Text>tileSize: {item.tileSize}</Text>*!/*/}
-
-          {/*        /!*banner INFORMATION*!/*/}
-          {/*        /!*<Text>banner.backendValue: {item.banner?.backendValue}</Text>*!/*/}
-          {/*        /!*<Text>banner.intensity: {item.banner?.intensity}</Text>*!/*/}
-          {/*        /!*<Text>banner.value: {item.banner?.value}</Text>*!/*/}
-
-          {/*        /!*NewDisplayAsset INFORMATION*!/*/}
-          {/*        /!*<Text>newDisplayAsset.id: {item.newDisplayAsset?.id}</Text>*!/*/}
-
-
-          {/*        /!*LAYOUT INFORMATION*!/*/}
-          {/*        /!*<Text>layout.background: {item.layout?.background}</Text>*!/*/}
-          {/*        /!*<Image source={{uri: item.layout?.background}} style={{*!/*/}
-          {/*        /!*  height: 150,*!/*/}
-          {/*        /!*  objectFit: 'contain'*!/*/}
-          {/*        /!*}}></Image>*!/*/}
-          {/*        /!*<Text>layout.category: {item.layout?.category}</Text>*!/*/}
-          {/*        /!*<Text>layout.id: {item.layout?.id}</Text>*!/*/}
-          {/*        /!*<Text>layout.index: {item.layout?.index}</Text>*!/*/}
-          {/*        /!*<Text>layout.name: {item.layout?.name}</Text>*!/*/}
-          {/*        /!*<Text>layout.showIneligibleOffers: {item.layout?.showIneligibleOffers}</Text>*!/*/}
-
-          {/*        /!*BUNDLE INFORMATION*!/*/}
-          {/*        /!*{item.bundle?.info === 'Bundle' ?*!/*/}
-          {/*        /!*  <View>*!/*/}
-          {/*        /!*    <View>*!/*/}
-          {/*        /!*      /!*<Text>bundle.image: {item.bundle?.image}</Text>*!/*!/*/}
-          {/*        /!*      <Image source={{uri: item.bundle?.image}} style={{*!/*/}
-          {/*        /!*        width: 150,*!/*/}
-          {/*        /!*        height: 150,*!/*/}
-          {/*        /!*        zIndex: 1,*!/*/}
-          {/*        /!*        objectFit: 'contain',*!/*/}
-          {/*        /!*        position: 'absolute',*!/*/}
-          {/*        /!*        alignSelf: 'center',*!/*/}
-          {/*        /!*      }}/>*!/*/}
-          {/*        /!*      <Image source={{uri: item.layout?.background}} style={{*!/*/}
-          {/*        /!*        height: 150,*!/*/}
-          {/*        /!*      }}></Image>*!/*/}
-          {/*        /!*    </View>*!/*/}
-          {/*        /!*    /!*<Text>bundle.info: {item.bundle?.info}</Text>*!/*!/*/}
-          {/*        /!*    <Text>bundle.name: {item.bundle?.name}</Text>*!/*/}
-          {/*        /!*  </View> : null*!/*/}
-          {/*        /!*}*!/*/}
-
-          {/*      </Pressable>*/}
-
-          {/*    // <Pressable style={styles.itemContainer} key={index} onPress={() => goToItemDetail(item)}>*/}
-          {/*    //     <Text>categories: {item.categories}</Text>*/}
-          {/*    //     <View style={{display: 'flex', flexDirection: 'row', gap: 5}}>*/}
-          {/*    //       <Image source={{uri: shopList.vbuckIcon}} width={25} height={25}></Image>*/}
-          {/*    //       <Text>{item.finalPrice}</Text>*/}
-          {/*    //       <Text style={{color: 'red'}}>{item.regularPrice}</Text>*/}
-          {/*    //     </View>*/}
-          {/*    //*/}
-          {/*    //     <Text>section: {item.section}</Text>*/}
-          {/*    //*/}
-          {/*    //     /!*<Text>devName: {item.devName}</Text>*!/*/}
-          {/*    //     /!*<Text>displayAssetPath: {item.displayAssetPath}</Text>*!/*/}
-          {/*    //     /!*<Text>giftable: {item.giftable ? 'true' : 'false'}</Text>*!/*/}
-          {/*    //     /!*<Text>newDisplayAssetPath: {item.newDisplayAssetPath}</Text>*!/*/}
-          {/*    //     /!*<Text>offerId: {item.offerId}</Text>*!/*/}
-          {/*    //     /!*<Text>refundable: {item.refundable ? 'true' : 'false'}</Text>*!/*/}
-          {/*    //     /!*<Text>sectionId: {item.sectionId}</Text>*!/*/}
-          {/*    //     /!*<Text>sortPriority: {item.sortPriority}</Text>*!/*/}
-          {/*    //     /!*<Text>tileSize: {item.tileSize}</Text>*!/*/}
-          {/*    //*/}
-          {/*    //     /!*banner INFORMATION*!/*/}
-          {/*    //     /!*<Text>banner.backendValue: {item.banner?.backendValue}</Text>*!/*/}
-          {/*    //     /!*<Text>banner.intensity: {item.banner?.intensity}</Text>*!/*/}
-          {/*    //     /!*<Text>banner.value: {item.banner?.value}</Text>*!/*/}
-          {/*    //*/}
-          {/*    //     /!*NewDisplayAsset INFORMATION*!/*/}
-          {/*    //     /!*<Text>newDisplayAsset.id: {item.newDisplayAsset?.id}</Text>*!/*/}
-          {/*    //*/}
-          {/*    //*/}
-          {/*    //     /!*LAYOUT INFORMATION*!/*/}
-          {/*    //     /!*<Text>layout.background: {item.layout?.background}</Text>*!/*/}
-          {/*    //     /!*<Image source={{uri: item.layout?.background}} style={{*!/*/}
-          {/*    //     /!*  height: 150,*!/*/}
-          {/*    //     /!*  objectFit: 'contain'*!/*/}
-          {/*    //     /!*}}></Image>*!/*/}
-          {/*    //     /!*<Text>layout.category: {item.layout?.category}</Text>*!/*/}
-          {/*    //     /!*<Text>layout.id: {item.layout?.id}</Text>*!/*/}
-          {/*    //     /!*<Text>layout.index: {item.layout?.index}</Text>*!/*/}
-          {/*    //     <Text>layout.name: {item.layout?.name}</Text>*/}
-          {/*    //     <Text>layout.showIneligibleOffers: {item.layout?.showIneligibleOffers}</Text>*/}
-          {/*    //*/}
-          {/*    //     /!*BUNDLE INFORMATION*!/*/}
-          {/*    //     {item.bundle?.info === 'Bundle' ?*/}
-          {/*    //       <View>*/}
-          {/*    //         <View>*/}
-          {/*    //           /!*<Text>bundle.image: {item.bundle?.image}</Text>*!/*/}
-          {/*    //           <Image source={{uri: item.bundle?.image}} style={{*/}
-          {/*    //             width: 150,*/}
-          {/*    //             height: 150,*/}
-          {/*    //             zIndex: 1,*/}
-          {/*    //             objectFit: 'contain',*/}
-          {/*    //             position: 'absolute',*/}
-          {/*    //             alignSelf: 'center',*/}
-          {/*    //           }}/>*/}
-          {/*    //           <Image source={{uri: item.layout?.background}} style={{*/}
-          {/*    //             height: 150,*/}
-          {/*    //           }}></Image>*/}
-          {/*    //         </View>*/}
-          {/*    //         /!*<Text>bundle.info: {item.bundle?.info}</Text>*!/*/}
-          {/*    //         <Text>bundle.name: {item.bundle?.name}</Text>*/}
-          {/*    //       </View> : null*/}
-          {/*    //     }*/}
-          {/*    //*/}
-          {/*    //   </Pressable>*/}
-          {/*    )*/}
-          {/*  })}*/}
         </View>
       </View>
     </ScrollView>
@@ -453,6 +371,10 @@ export default function ShopScreen() {
 }
 
 const styles = StyleSheet.create({
+  isHidden: {
+    display: "none"
+  },
+
   container: {
     alignItems: 'center',
     backgroundColor: Colors.primary,
@@ -469,7 +391,6 @@ const styles = StyleSheet.create({
 
   // SHOP LIST CONTAINER
   shopListContainer: {
-    backgroundColor: 'red',
     gap: 5,
   },
   // NEWS ITEMS CONTAINER
