@@ -18,10 +18,9 @@ export default function NewsScreen() {
     navigation.dispatch(
       CommonActions.navigate({
         name: 'screens/news/newsDetail',
-        params: {
-          newsDetail
-        }
-      }));
+        params: {newsDetail}
+      })
+    );
   }
 
   const getNewsList = async () => {
@@ -52,45 +51,45 @@ export default function NewsScreen() {
         <RefreshControl refreshing={refreshing}
                         onRefresh={onRefresh}
                         style={styles.scrollReloadContainer}/>}>
-      <View style={{
-        backgroundColor: Colors.primary,
-        height: '100%',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        {/*NEWS LIST*/}
-        <View style={styles.newsListContainer}>
-          {/*{newsBattleRoyaleList.map((news, index: number) =>*/}
-          {/*   (*/}
-          {/*    <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>*/}
-          {/*      <Text>body: {news.body}</Text>*/}
-          {/*      <Text>hidden: {news.hidden ? 'true' : 'false'}</Text>*/}
-          {/*      <Text>id: {news.id}</Text>*/}
-          {/*      <Text>image: {news.image}</Text>*/}
-          {/*      <Image source={{uri: news.image}} width={250} height={150}/>*/}
-          {/*      <Text>sortingPriority: {news.sortingPriority}</Text>*/}
-          {/*      <Text>tabTitle: {news.tabTitle}</Text>*/}
-          {/*      <Text>titleImage: {news.titleImage}</Text>*/}
-          {/*      <Text>title: {news.title}</Text>*/}
-          {/*    </Pressable>*/}
-          {/*  )*/}
-          {/*)}*/}
-          {newsSaveTheWorldList.map((news, index) => {
-            console.log(news)
-            return (
-              <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
-                <Text>body: {news.body}</Text>
-                <Text>image: {news.image}</Text>
-                <Image source={{uri: news.image}} width={250} height={150}/>
-                <Text>title: {news.title}</Text>
-              </Pressable>
-            )
-          })}
-        </View>
+      <View style={styles.newsContainer}>
+        {/* Título de la sección de noticias */}
+        <Text style={styles.sectionTitle}>FORTNITE NEWS</Text>
+        {/* Mapear cada noticia de Battle Royale */}
+        {newsBattleRoyaleList.map((news, index) => (
+          <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
+
+            {/* Contenedor de la imagen */}
+            <View style={styles.imageContainer}>
+              <Image
+                source={{uri: news.image}}
+                style={styles.newsImage}
+              />
+              {/* Superposición de texto sobre la imagen */}
+              <View style={styles.overlay}>
+                <Text style={styles.overlayText}>{news.title}</Text>
+                <Text style={styles.overlayText}>{news.body}</Text>
+              </View>
+            </View>
+          </Pressable>
+        ))}
+        {/* Mapear cada noticia de Save the World */}
+        {newsSaveTheWorldList.map((news, index) => (
+          <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
+            <View style={styles.imageContainer}>
+              <Image
+                source={{uri: news.image}}
+                style={styles.newsImage}
+              />
+              {/* Superposición de texto sobre la imagen */}
+              <View style={styles.overlay}>
+                <Text style={styles.overlayText}>{news.title}</Text>
+                <Text style={styles.overlayText}>{news.body}</Text>
+              </View>
+            </View>
+          </Pressable>
+        ))}
       </View>
     </ScrollView>
-
   );
 }
 
@@ -98,10 +97,49 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: Colors.primary,
-    height: '100%'
   },
   scrollReloadContainer: {
     backgroundColor: Colors.primary,
+  },
+  newsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+
+  sectionTitle: {
+    textAlign: 'center', // Alinear horizontalmente
+    textAlignVertical: 'center', // Alinear verticalmente
+    paddingTop: 1,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: Colors.secondary,
+    marginBottom: 10,
+  },
+  newsItem: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  newsImage: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    width: 410,
+    height: 260,
+
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  overlayText: {
+    color: 'white',
+    fontSize: 20,
+  },
+
+  newsTitle: {
+    fontSize: 16,
+    color: Colors.yellow,
   },
 
   // NEWS LIST CONTAINER
@@ -116,5 +154,25 @@ const styles = StyleSheet.create({
   },
   newsItemComponent: {
     backgroundColor: 'pink',
-  }
+  },
+  titleContainer: {
+    width: '100%',
+    backgroundColor: Colors.tertiary,
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+    alignItems: 'center',
+  },
+  imageContainer: {
+    backgroundColor: Colors.yellow,
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
 });

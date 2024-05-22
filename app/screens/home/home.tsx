@@ -158,13 +158,14 @@ export default function HomeScreen() {
           </View>
 
           {/*NEWS */}
-          <Pressable onPress={goToNews}>
-            <Image
-              source={{uri: news?.data.br.image}}
-              style={{width: 325, height: 185}}
-            ></Image>
-          </Pressable>
-
+          < View style={styles.newsGiftBanner}>
+            <Pressable onPress={goToNews}>
+              <Image
+                source={{uri: news?.data.br.image}}
+                style={{width: 325, height: 185,}}
+              ></Image>
+            </Pressable>
+          </View>
           {/* TIMER */}
           <View style={styles.timerContainer}>
             <Text style={styles.timerTitle}>Capitulo 5 en...</Text>
@@ -181,6 +182,7 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     flex: 1,
     backgroundColor: Colors.primary,
+    width: '100%',
   },
 
   // VIEW CONTAINER
@@ -190,6 +192,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 25,
     gap: 15,
+    width: '100%',
+
   },
 
   // IMAGE
@@ -202,6 +206,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     borderRadius: 18,
+    paddingBottom: 0,
   },
   inputComponent: {
     height: 50,
@@ -209,6 +214,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     fontSize: 18,
     backgroundColor: '#fbefff',
+
   },
 
   // RECENT SEARCH CONTAINER
@@ -218,15 +224,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 5,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingTop: 0,
   },
   recentSearchPillContainer: {
     backgroundColor: 'grey',
     paddingLeft: 15,
     paddingRight: 15,
-    paddingTop: 2,
+    paddingTop: 1,
     paddingBottom: 2,
-    borderRadius: 20,
+    borderRadius: 7,
   },
   recentSearchPill: {
     color: 'blue'
@@ -250,7 +257,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
     textAlign: 'center',
-    verticalAlign: 'middle',
   },
   // TIMER CONTAINER
   timerContainer: {
@@ -270,5 +276,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: 'gray',
+  },
+  //BANNER GIFT NEWS
+  newsGiftBanner: {
+    minHeight: 100,
+    width: 325,
+    height: 185,
   },
 });
