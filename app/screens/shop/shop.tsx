@@ -14,6 +14,7 @@ export default function ShopScreen() {
 
   const [shopInformation, setShopInformation] = useState({} as any);
   const [shopList, setShopList] = useState([] as any);
+  const [testShopList, setTestShopList] = useState([] as any);
 
   const [shopRaw, setShopRaw] = useState({} as any);
   const [shopCache, setShopCache] = useState({} as any);
@@ -89,34 +90,111 @@ export default function ShopScreen() {
       tienda.push(formNewObject);
     })
 
+    let testingArray: any = []
+    await shopRaw.data.featured.entries.forEach((entry: any) => {
+      let testingObject: any = {}
+      let sectionObject: any = {}
+      let productObject = {}
+
+      productObject = {
+        ...{banner: entry.banner},
+        ...{bundle: entry.bundle},
+        ...{finalPrice: entry.finalPrice},
+        ...{regularPrice: entry.regularPrice},
+        ...{id: entry.layout.id},
+        ...{index: entry.layout.index},
+        ...{name: entry.layout.name},
+        ...{showIneligibleOffers: entry.layout.showIneligibleOffers},
+        ...{materialInstances: entry.newDisplayAsset ? entry.newDisplayAsset.materialInstances : null},
+
+        // ...{background: entry.layout.background ? entry.layout.background : 'default'},
+        // ...{items: entry.items ? entry.items : null}
+      };
+
+      sectionObject = {
+        // ...{banner: entry.banner},
+        // ...{bundle: entry.bundle},
+        // ...{finalPrice: entry.finalPrice},
+        // ...{regularPrice: entry.regularPrice},
+        ...{id: entry.layout.id},
+        ...{index: entry.layout.index},
+        ...{name: entry.layout.name},
+        ...{showIneligibleOffers: entry.layout.showIneligibleOffers},
+        ...{products: []},
+        // ...{background: entry.layout.background ? entry.layout.background : 'default'},
+        // ...{products: [productObject]},
+        // ...{materialInstances: entry.newDisplayAsset ? entry.newDisplayAsset.materialInstances : null},
+        // ...{items: entry.items ? entry.items : null}
+      };
+      testingObject = {
+        // ...{banner: entry.banner},
+        // ...{bundle: entry.bundle},
+        // ...{finalPrice: entry.finalPrice},
+        // ...{regularPrice: entry.regularPrice},
+        ...{category: entry.layout.category},
+        ...{background: entry.layout.background ? entry.layout.background : 'default'},
+        ...{sections: []},
+        // ...{materialInstances: entry.newDisplayAsset ? entry.newDisplayAsset.materialInstances : null},
+        // ...{items: entry.items ? entry.items : null}
+      };
+
+
+      // TODO: si NO encuentra una category hacer push a testingArray de una categoría
+      // TODO: si encuentra una categoría hacer push a sections de una sección
+      if (testingArray.find((item: any) => item.category == entry.layout.category)) {
+        // console.log('Categoría encontrada', entry.layout.category);
+        // TODO: si encuentra una section ya pues no hacer push a category
+        // TODO: si encuentra una categoria hacer push a product
+        testingArray.forEach((module: any, moduleIndex: number) => {
+
+          const isFound = module.sections.find((section: any) => section.id == entry.layout.id) !== undefined;
+          if (isFound) {
+            testingArray[moduleIndex].sections.forEach((section: any, sectionIndex: number) => {
+              if (section.id === entry.layout.id) {
+                testingArray[moduleIndex].sections[sectionIndex].products.push(productObject);
+              }
+            })
+          } else {
+            testingArray[moduleIndex].sections.push(sectionObject)
+          }
+        })
+      } else {
+        sectionObject.products.push(productObject)
+        testingObject.sections.push(sectionObject);
+        testingArray.push(testingObject);
+      }
+    });
+    console.log('testingArray.section.products >>>', testingArray.length);
+    console.log('testingArray.section.products >>>', testingArray[0].sections.length);
     console.log('---------')
-    console.log('items >>> ', shopRaw.data.featured.entries[0].items.length)
-    console.log('items.added >>> ', shopRaw.data.featured.entries[10].items[0].added)
-    console.log('items.description >>> ', shopRaw.data.featured.entries[10].items[0].description)
 
-    console.log('items.images.featured >>> ', shopRaw.data.featured.entries[10].items[0].images.featured)
-    console.log('items.images.icon >>> ', shopRaw.data.featured.entries[10].items[0].images.icon)
-    console.log('items.images.lego.small >>> ', shopRaw.data.featured.entries[10].items[0].images.lego.small)
-    console.log('items.images.lego.wide >>> ', shopRaw.data.featured.entries[10].items[0].images.lego.wide)
+    // console.log('items >>> ', shopRaw.data.featured.entries[0].items.length)
+    // console.log('items.added >>> ', shopRaw.data.featured.entries[10].items[0].added)
+    // console.log('items.description >>> ', shopRaw.data.featured.entries[10].items[0].description)
+    //
+    // console.log('items.images.featured >>> ', shopRaw.data.featured.entries[10].items[0].images.featured)
+    // console.log('items.images.icon >>> ', shopRaw.data.featured.entries[10].items[0].images.icon)
+    // console.log('items.images.lego.small >>> ', shopRaw.data.featured.entries[10].items[0].images.lego.small)
+    // console.log('items.images.lego.wide >>> ', shopRaw.data.featured.entries[10].items[0].images.lego.wide)
 
-    console.log('items.images.other >>> ', shopRaw.data.featured.entries[10].items[0].images.other)
-    console.log('items.images.smallIcon >>> ', shopRaw.data.featured.entries[10].items[0].images.smallIcon)
-    console.log('items.introduction.chapter >>> ', shopRaw.data.featured.entries[10].items[0].introduction.chapter)
-    console.log('items.introduction.season >>> ', shopRaw.data.featured.entries[10].items[0].introduction.season)
-    console.log('items.introduction.text >>> ', shopRaw.data.featured.entries[10].items[0].introduction.text)
-    console.log('items.metaTags >>> ', shopRaw.data.featured.entries[10].items[0].metaTags)
-    console.log('items.name >>> ', shopRaw.data.featured.entries[10].items[0].name)
-    console.log('items.rarity.value >>> ', shopRaw.data.featured.entries[10].items[0].rarity.value)
-    console.log('items.rarity.displayValue >>> ', shopRaw.data.featured.entries[10].items[0].rarity.displayValue)
-
-    console.log('items.set.text >>> ', shopRaw.data.featured.entries[10].items[0].set.text)
-    console.log('items.other >>> ', shopRaw.data.featured.entries[10].items[0].set.value)
-    console.log('items.shopHistory >>> ', shopRaw.data.featured.entries[10].items[0].shopHistory)
-
-    console.log('items.type.displayValue >>> ', shopRaw.data.featured.entries[10].items[0].type.displayValue)
-    console.log('items.type.value >>> ', shopRaw.data.featured.entries[10].items[0].type.value)
-
-    console.log('items.variants >>> ', shopRaw.data.featured.entries[10].items[0].variants)
+    // console.log('items.images.other >>> ', shopRaw.data.featured.entries[10].items[0].images.other)
+    // console.log('items.images.smallIcon >>> ', shopRaw.data.featured.entries[10].items[0].images.smallIcon)
+    // console.log('items.introduction.chapter >>> ', shopRaw.data.featured.entries[10].items[0].introduction.chapter)
+    // console.log('items.introduction.season >>> ', shopRaw.data.featured.entries[10].items[0].introduction.season)
+    // console.log('items.introduction.text >>> ', shopRaw.data.featured.entries[10].items[0].introduction.text)
+    // console.log('items.metaTags >>> ', shopRaw.data.featured.entries[10].items[0].metaTags)
+    // console.log('items.name >>> ', shopRaw.data.featured.entries[10].items[0].name)
+    // console.log('items.rarity.value >>> ', shopRaw.data.featured.entries[10].items[0].rarity.value)
+    // console.log('items.rarity.displayValue >>> ', shopRaw.data.featured.entries[10].items[0].rarity.displayValue)
+    //
+    // console.log('items.set.text >>> ', shopRaw.data.featured.entries[10].items[0].set.text)
+    // console.log('items.other >>> ', shopRaw.data.featured.entries[10].items[0].set.value)
+    // console.log('items.shopHistory >>> ', shopRaw.data.featured.entries[10].items[0].shopHistory)
+    //
+    // console.log('items.type.displayValue >>> ', shopRaw.data.featured.entries[10].items[0].type.displayValue)
+    // console.log('items.type.value >>> ', shopRaw.data.featured.entries[10].items[0].type.value)
+    //
+    // console.log('items.variants >>> ', shopRaw.data.featured.entries[10].items[0].variants)
 
     // ESTOS ENTRAN EN EL NUEVO ARRAY DE OBJECTOS
     // console.log('producto.banner = descuento >>> ', getShopCombined.data.featured.entries[0].banner) // para pintar el descuento
@@ -135,6 +213,7 @@ export default function ShopScreen() {
     // console.log('getShop >>> ', getShop.data)
 
     setShopList(tienda ? tienda.map((i: any) => i) : null);
+    setTestShopList(testingArray ? testingArray.map((i: any) => i) : null);
     setRefreshing(false);
   };
 
@@ -176,7 +255,54 @@ export default function ShopScreen() {
         </View>
 
         <View style={styles.shopListContainer}>
-          <Text>Spotlight - Destacados</Text>
+          <View>
+            {testShopList[0] ?
+              <View>
+                <Text>
+                  {testShopList[0].category}
+                </Text>
+                <Text>
+                  {testShopList[0].background}
+                </Text>
+              </View>
+              : null}
+          </View>
+          <View>
+            {testShopList[1] ?
+              <View>
+                <Text>
+                  {testShopList[1].category}
+                </Text>
+                <Text>
+                  {testShopList[1].background}
+                </Text>
+              </View>
+              : null}
+          </View>
+          <View>
+            {testShopList[2] ?
+              <View>
+                <Text>
+                  {testShopList[2].category}
+                </Text>
+                <Text>
+                  {testShopList[2].background}
+                </Text>
+              </View>
+              : null}
+          </View>
+          <View>
+            {testShopList[3] ?
+              <View>
+                <Text>
+                  {testShopList[3].category}
+                </Text>
+                <Text>
+                  {testShopList[3].background}
+                </Text>
+              </View>
+              : null}
+          </View>
 
           {shopList ? shopList.map((item: any, index: number) => {
             return (
@@ -234,11 +360,14 @@ export default function ShopScreen() {
                       <Image source={require('../../../assets/images/vbuck/vbuck.png')}
                              style={{width: 25, height: 25}}></Image>
                       <Text style={{color: 'white'}}>{item.finalPrice}</Text>
-                      <Text style={{color: 'white', opacity: .5}}>{item.regularPrice}</Text>
+
+                      {item.finalPrice !== item.regularPrice ?
+                        <Text style={{color: 'white', opacity: .5}}>{item.regularPrice}</Text>
+                        : null
+                      }
                     </View>
                   </View>
                 </View>
-
 
                 {/*{item.bundle ?*/}
                 {/*  <View>*/}
@@ -248,16 +377,16 @@ export default function ShopScreen() {
                 {/*  </View>*/}
                 {/*  : null}*/}
 
-                {/*{item.layout ?*/}
-                {/*  <View>*/}
-                {/*    <Image style={styles.isHidden} source={{uri: item.layout.background}} width={150} height={150}/>*/}
-                {/*    /!*<Text>{item.layout.background}</Text>*!/*/}
-                {/*    <Text style={styles.isHidden} >{item.layout.category}</Text>*/}
-                {/*    <Text style={styles.isHidden} >{item.layout.id}</Text>*/}
-                {/*    <Text style={styles.isHidden} >{item.layout.name}</Text>*/}
-                {/*    <Text style={styles.isHidden} >{item.layout.showIneligibleOffers}</Text>*/}
-                {/*  </View>*/}
-                {/*  : null}*/}
+                {item.layout ?
+                  <View>
+                    <Image style={styles.isHidden} source={{uri: item.layout.background}} width={150} height={150}/>
+                    {/*<Text>{item.layout.background}</Text>*/}
+                    <Text style={{}}>{item.layout.category}</Text>
+                    <Text style={styles.isHidden}>{item.layout.id}</Text>
+                    <Text style={styles.isHidden}>{item.layout.name}</Text>
+                    <Text style={styles.isHidden}>{item.layout.showIneligibleOffers}</Text>
+                  </View>
+                  : null}
 
                 {/*<View style={{backgroundColor: 'red', position: 'absolute', zIndex: 0}}>*/}
                 {/*  {item.materialInstances ?*/}
