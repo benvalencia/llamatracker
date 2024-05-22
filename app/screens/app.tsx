@@ -7,6 +7,7 @@ import HomeScreen from "@/app/screens/home/home";
 import {AntDesign} from "@expo/vector-icons";
 import * as Animatable from 'react-native-animatable'
 import {Colors} from "@/constants/Colors";
+import ChallengesScreen from "@/app/screens/challenges/challenges";
 
 export default function AppScreen() {
 
@@ -15,13 +16,19 @@ export default function AppScreen() {
   const tabRoutes = [
     {
       route: 'screens/home/home',
-      label: 'Home',
+      label: 'Inicio',
       component: HomeScreen,
       icon: 'home',
     },
     {
+      route: 'screens/challenges/challenges',
+      label: 'Misiones',
+      component: ChallengesScreen,
+      icon: 'plus',
+    },
+    {
       route: 'screens/shop/shop',
-      label: 'Shop',
+      label: 'Tienda',
       component: ShopScreen,
       icon: 'shoppingcart',
     },
