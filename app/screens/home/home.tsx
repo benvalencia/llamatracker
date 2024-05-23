@@ -123,22 +123,25 @@ export default function HomeScreen() {
                           behavior='padding' keyboardVerticalOffset={0}
     >
       <ScrollView style={styles.scrollViewContainer} keyboardShouldPersistTaps='handled'
-                  contentContainerStyle={{justifyContent: 'center', paddingTop: top}}>
+                  contentContainerStyle={{alignContent: 'center', paddingTop: top}}>
         <View style={styles.viewContainer}>
 
-          {/*LOGO*/}
-          <View style={styles.imageContainer}>
-            <Image source={require('../../../assets/images/logo/icons8-fortnite-llama-144.png')}/>
+          {/* LOGO Y BARRA DE BÚSQUEDA */}
+          <View style={styles.topContainer}> 
+          
+          {/* Contenedor para el logo y el input */}
+            <View style={styles.imageContainer}>
+                <Image source={require('../../../assets/images/logo/icons8-fortnite-llama-48.png')}/>
+            </View>
+
+            <View style={styles.inputContainer}>
+                <TextInput style={styles.inputComponent}
+                           placeholder={'Buscar perfil'} placeholderTextColor={'#4b4b4b'}
+                           onChangeText={(text) => setUsername(text)}
+                           value={username}/>
+            </View>
           </View>
 
-          {/*SEARCH PROFILE INPUT */}
-          <View style={styles.inputContainer}>
-            <TextInput style={styles.inputComponent}
-                       placeholder={'Buscar perfil'} placeholderTextColor={'#4b4b4b'}
-                       onChangeText={(text) => setUsername(text)}
-                       value={username}>
-            </TextInput>
-          </View>
           {/*RECENT SEARCH PILLS*/}
           <View style={styles.recentSearchContainer}>
             {recentSearch.map((item) => {
@@ -189,16 +192,26 @@ const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     padding: 25,
     gap: 15,
     width: '100%',
 
   },
+    // TOP CONTAINER
+    topContainer: { // Contenedor para el logo y el input
+      flexDirection: 'row',
+      alignItems: 'center',
+      width: '100%',
+      marginBottom: 20,
+    },
 
   // IMAGE
   imageContainer: {
     alignContent: 'center',
+        marginBottom: 10, // Espacio debajo de la imagen
+        
+
   },
 
   // INPUT
