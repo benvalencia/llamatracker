@@ -1,55 +1,46 @@
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
+import {useNavigation} from "@react-navigation/native";
 
 export default function ProfileScreen() {
+  const navigation = useNavigation<any>();
+
   return (
-    <View style={{
-      backgroundColor: Colors.primary,
-      height: '100%',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}>
-      <Text>
-        profile
-      </Text>
-      <TextInput placeholder={'Buscar'}style={styles.input}>
-      </TextInput>
-      <Button title={'Buscar'}></Button>
+    <View style={styles.container}>
+      <Text style={styles.title}>Perfil</Text>
+      <View style={styles.button}>
+        <Pressable onPress={() => navigation.navigate("Login")}>
+          <Text>Iniciar Sesión</Text>
+        </Pressable>
+      </View>
+      <View style={styles.button}>
+        <Pressable onPress={() => navigation.navigate("Register")}>
+          <Text>Registrarse</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    backgroundColor: Colors.light.background,
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'center',
+    padding: 16,
+    margin: 15,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  title: {
+
+    alignContent: 'center',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  button: {
+    width: '80%',
+    marginBottom: 16,
   },
-  input: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 10,
-    width: '80%', // Puedes ajustar el ancho según tu diseño
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
+
 });
