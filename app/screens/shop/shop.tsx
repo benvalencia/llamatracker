@@ -142,7 +142,7 @@ export default function ShopScreen() {
                 testingArray[moduleIndex].sections[sectionIndex].products.push(productObject);
               } else {
                 if (!entry.layout.id) {
-                  console.log(productObject);
+                  console.log('product sin id >>> ', productObject);
                 }
               }
             })
@@ -160,7 +160,7 @@ export default function ShopScreen() {
         testingArray.push(testingObject);
       }
     });
-    console.log('testingArray >>>', testingArray[0].sections[2]);
+    console.log('testingArray >>>', testingArray[0].sections[0]);
     // console.log('testingArray.section >>>', testingArray[0].sections.length);
     // console.log('testingArray.section.product >>>', testingArray[0].sections[0].products.length);
     console.log('---------')
@@ -226,7 +226,6 @@ export default function ShopScreen() {
     }, 1)
   }, []);
 
-
   return (
     <ScrollView
       contentContainerStyle={[styles.container, {paddingTop: top}]}
@@ -242,8 +241,12 @@ export default function ShopScreen() {
         justifyContent: 'center',
         width: '100%'
       }}>
-        <View>
-          <Text>{new Date(shopInformation.date).toLocaleDateString('spanish', {
+        <View style={{marginBottom: 15}}>
+          <Text style={{
+            color: 'white',
+            fontSize: 23,
+            fontWeight: '400'
+          }}>{new Date(shopInformation.date).toLocaleDateString('spanish', {
             weekday: "long",
             year: "numeric",
             month: "short",
@@ -252,274 +255,1876 @@ export default function ShopScreen() {
         </View>
 
         <View style={styles.shopListContainer}>
-          <View style={{backgroundColor: 'white', width: 'auto'}}>
+          <View style={{backgroundColor: 'white', width: 'auto', paddingBottom: 110, gap: 15}}>
+            {/*MODULO 0*/}
             {testShopList[0] ?
-              <View style={{width: 'auto', backgroundColor: 'black'}}>
+              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 15, paddingBottom: 110}}>
                 {/*TITULO MODULO*/}
                 <View>
-                  <Text style={{color: 'white'}}>{testShopList[0].category}</Text>
+                  <Text style={{color: 'white', fontSize: 25, fontWeight: '500'}}>{testShopList[0].category}</Text>
                 </View>
                 {/*BACKGRUND DEL MODULO*/}
                 {testShopList[0].background !== 'default' ?
                   <View>
-                    <Image source={{uri: testShopList[0].background}} width={260} height={250}/>
+                    <Image source={{uri: testShopList[0].background}} width={240} height={230}/>
                   </View>
                   : null}
-                {/*SECCION*/}
+
+                {/*SECCION 0*/}
                 <View>
                   {testShopList[0].sections[0] ?
                     <View style={{width: 'auto'}}>
                       {/*TITULO DE LA SECCION*/}
                       <View>
-                        <Text style={{color: 'white'}}>
-                          {testShopList[0].sections[0].name} - {testShopList[0].sections[0].index}</Text>
-                        {/*<Text style={{color: 'white'}}>{testShopList[0].sections[0].showIneligibleOffers}</Text>*/}
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[0].sections[0].name}
+                          {/*- {testShopList[0].sections[0].index}*/}
+                        </Text>
                       </View>
                     </View>
                     : null}
 
-                  {testShopList[0].sections[0].products ?
-                    testShopList[0].sections[0].products.map((product: any, index: number) => {
-                      return (
-                        <View style={{
-                          padding: 5,
-                          borderRadius: 10,
-                          overflow: 'hidden',
-                          width: 260,
-                          height: 250,
-                          alignSelf: 'flex-start',
-                          justifyContent: 'space-between'
-                        }} key={index}>
-                          {/*IMAGE PRODUCT*/}
-                          <View style={{position: 'absolute', zIndex: 0}}>
-                            {product.materialInstances ?
-                              product.materialInstances[0] ?
-                                <View>
-                                  <Image source={{uri: product.materialInstances[0].images.Background}} width={260}
-                                         height={250}/>
-                                </View>
-                                : null
-                              : null}
-                          </View>
-                          {/*PRODUCT OFFER ALERT*/}
-                          <View>
-                            {product.banner ?
-                              <View style={{
-                                backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
-                                padding: 2,
-                                borderRadius: 25,
-                                paddingLeft: 10,
-                                paddingRight: 10,
-                                alignSelf: 'flex-start'
-                              }}>
-                                <Text>{product.banner.value}</Text>
-                              </View>
-                              : null}
-                          </View>
-                          {/*PRODUCT INFORMATION*/}
-                          <View style={{}}>
-                            {/*PRODUCT NAME*/}
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[0].sections[0] && testShopList[0].sections[0].products ?
+                      testShopList[0].sections[0].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
                             <View>
-                              {product.bundle ?
-                                <View>
-                                  <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={150}
-                                         height={150}/>
-                                  <Text style={{color: 'white'}}>{product.bundle.name}</Text>
-                                  {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
-                                  <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
                                 </View>
                                 : null}
                             </View>
-                            {/*PRODUCT PRICE*/}
-                            <View>
-                              <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-                                <Image source={require('../../../assets/images/vbuck/vbuck.png')}
-                                       style={{width: 25, height: 25}}></Image>
-                                <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
 
-                                {product.finalPrice !== product.regularPrice ?
-                                  <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
-                                  : null
-                                }
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
                               </View>
                             </View>
-                          </View>
 
-                        </View>
-                      )
-                    })
-                    : null}
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
                 </View>
-                {/*SECCION*/}
+
+                {/*SECCION 1*/}
                 <View>
                   {testShopList[0].sections[1] ?
                     <View style={{width: 'auto'}}>
                       {/*TITULO DE LA SECCION*/}
                       <View>
-                        <Text style={{color: 'white'}}>
-                          {testShopList[0].sections[0].name} - {testShopList[0].sections[0].index}</Text>
-                        {/*<Text style={{color: 'white'}}>{testShopList[0].sections[0].showIneligibleOffers}</Text>*/}
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[0].sections[1].name}
+                          {/*- {testShopList[0].sections[1].index}*/}
+                        </Text>
                       </View>
                     </View>
                     : null}
 
-                  {testShopList[0].sections[1].products ?
-                    testShopList[0].sections[1].products.map((product: any, index: number) => {
-                      return (
-                        <View style={{
-                          padding: 5,
-                          borderRadius: 10,
-                          overflow: 'hidden',
-                          width: 260,
-                          height: 250,
-                          alignSelf: 'flex-start',
-                          justifyContent: 'space-between'
-                        }} key={index}>
-                          {/*IMAGE PRODUCT*/}
-                          <View style={{position: 'absolute', zIndex: 0}}>
-                            {product.materialInstances ?
-                              product.materialInstances[0] ?
-                                <View>
-                                  <Image source={{uri: product.materialInstances[0].images.Background}} width={260}
-                                         height={250}/>
-                                </View>
-                                : null
-                              : null}
-                          </View>
-                          {/*PRODUCT OFFER ALERT*/}
-                          <View>
-                            {product.banner ?
-                              <View style={{
-                                backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
-                                padding: 2,
-                                borderRadius: 25,
-                                paddingLeft: 10,
-                                paddingRight: 10,
-                                alignSelf: 'flex-start'
-                              }}>
-                                <Text>{product.banner.value}</Text>
-                              </View>
-                              : null}
-                          </View>
-                          {/*PRODUCT INFORMATION*/}
-                          <View style={{}}>
-                            {/*PRODUCT NAME*/}
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[0].sections[1] && testShopList[0].sections[1].products ?
+                      testShopList[0].sections[1].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
                             <View>
-                              {product.bundle ?
-                                <View>
-                                  <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={150}
-                                         height={150}/>
-                                  <Text style={{color: 'white'}}>{product.bundle.name}</Text>
-                                  {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
-                                  <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
                                 </View>
                                 : null}
                             </View>
-                            {/*PRODUCT PRICE*/}
-                            <View>
-                              <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-                                <Image source={require('../../../assets/images/vbuck/vbuck.png')}
-                                       style={{width: 25, height: 25}}></Image>
-                                <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
 
-                                {product.finalPrice !== product.regularPrice ?
-                                  <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
-                                  : null
-                                }
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
                               </View>
                             </View>
-                          </View>
 
-                        </View>
-                      )
-                    })
-                    : null}
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
                 </View>
-                {/*SECCION*/}
+
+                {/*SECCION 2*/}
                 <View>
                   {testShopList[0].sections[2] ?
                     <View style={{width: 'auto'}}>
                       {/*TITULO DE LA SECCION*/}
                       <View>
-                        <Text style={{color: 'white'}}>
-                          {testShopList[0].sections[0].name} - {testShopList[0].sections[0].index}</Text>
-                        {/*<Text style={{color: 'white'}}>{testShopList[0].sections[0].showIneligibleOffers}</Text>*/}
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[0].sections[2].name}
+                          {/*- {testShopList[0].sections[2].index}*/}
+                        </Text>
                       </View>
                     </View>
                     : null}
 
-                  {testShopList[0].sections[2].products ?
-                    testShopList[0].sections[2].products.map((product: any, index: number) => {
-                      return (
-                        <View style={{
-                          padding: 5,
-                          borderRadius: 10,
-                          overflow: 'hidden',
-                          width: 260,
-                          height: 250,
-                          alignSelf: 'flex-start',
-                          justifyContent: 'space-between'
-                        }} key={index}>
-                          {/*IMAGE PRODUCT*/}
-                          <View style={{position: 'absolute', zIndex: 0}}>
-                            {product.materialInstances ?
-                              product.materialInstances[0] ?
-                                <View>
-                                  <Image source={{uri: product.materialInstances[0].images.Background}} width={260}
-                                         height={250}/>
-                                </View>
-                                : null
-                              : null}
-                          </View>
-                          {/*PRODUCT OFFER ALERT*/}
-                          <View>
-                            {product.banner ?
-                              <View style={{
-                                backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
-                                padding: 2,
-                                borderRadius: 25,
-                                paddingLeft: 10,
-                                paddingRight: 10,
-                                alignSelf: 'flex-start'
-                              }}>
-                                <Text>{product.banner.value}</Text>
-                              </View>
-                              : null}
-                          </View>
-                          {/*PRODUCT INFORMATION*/}
-                          <View style={{}}>
-                            {/*PRODUCT NAME*/}
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[0].sections[2] && testShopList[0].sections[2].products ?
+                      testShopList[0].sections[2].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
                             <View>
-                              {product.bundle ?
-                                <View>
-                                  <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={150}
-                                         height={150}/>
-                                  <Text style={{color: 'white'}}>{product.bundle.name}</Text>
-                                  {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
-                                  <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
                                 </View>
                                 : null}
                             </View>
-                            {/*PRODUCT PRICE*/}
-                            <View>
-                              <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-                                <Image source={require('../../../assets/images/vbuck/vbuck.png')}
-                                       style={{width: 25, height: 25}}></Image>
-                                <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
 
-                                {product.finalPrice !== product.regularPrice ?
-                                  <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
-                                  : null
-                                }
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
                               </View>
                             </View>
-                          </View>
 
-                        </View>
-                      )
-                    })
-                    : null}
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
                 </View>
+
+                {/*SECCION 3*/}
+                <View>
+                  {testShopList[0].sections[3] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[0].sections[3].name}
+                          {/*- {testShopList[0].sections[3].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[0].sections[3] && testShopList[0].sections[3].products ?
+                      testShopList[0].sections[3].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 4*/}
+                <View>
+                  {testShopList[0].sections[4] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[0].sections[4].name}
+                          {/*- {testShopList[0].sections[4].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[0].sections[4] && testShopList[0].sections[4].products ?
+                      testShopList[0].sections[4].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 5*/}
+                <View>
+                  {testShopList[0].sections[5] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[0].sections[5].name}
+                          {/*- {testShopList[0].sections[5].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[0].sections[5] && testShopList[0].sections[5].products ?
+                      testShopList[0].sections[5].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 6*/}
+                <View>
+                  {testShopList[0].sections[6] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[0].sections[6].name}
+                          {/*- {testShopList[0].sections[6].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[0].sections[6] && testShopList[0].sections[6].products ?
+                      testShopList[0].sections[6].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 7*/}
+                <View>
+                  {testShopList[0].sections[7] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[0].sections[7].name}
+                          {/*- {testShopList[0].sections[7].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[0].sections[7] && testShopList[0].sections[7].products ?
+                      testShopList[0].sections[7].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 8*/}
+                <View>
+                  {testShopList[0].sections[8] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[0].sections[8].name}
+                          {/*- {testShopList[0].sections[8].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[0].sections[8] && testShopList[0].sections[8].products ?
+                      testShopList[0].sections[8].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 9*/}
+                <View>
+                  {testShopList[0].sections[9] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[0].sections[9].name}
+                          {/*- {testShopList[0].sections[9].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[0].sections[9] && testShopList[0].sections[9].products ?
+                      testShopList[0].sections[9].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+                </View>
+
+              </View>
+              : null}
+
+            {/*MODULO 1*/}
+            {testShopList[1] ?
+              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 15, paddingBottom: 110}}>
+                {/*TITULO MODULO*/}
+                <View>
+                  <Text style={{color: 'white', fontSize: 25, fontWeight: '500'}}>{testShopList[1].category}</Text>
+                </View>
+                {/*BACKGRUND DEL MODULO*/}
+                {testShopList[1].background !== 'default' ?
+                  <View>
+                    <Image source={{uri: testShopList[1].background}} width={240} height={230}/>
+                  </View>
+                  : null}
+
+                {/*SECCION 0*/}
+                <View>
+                  {testShopList[1].sections[0] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[1].sections[0].name}
+                          {/*- {testShopList[1].sections[0].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[1].sections[0] && testShopList[1].sections[0].products ?
+                      testShopList[1].sections[0].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 1*/}
+                <View>
+                  {testShopList[1].sections[1] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[1].sections[1].name}
+                          {/*- {testShopList[1].sections[1].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[1].sections[1] && testShopList[1].sections[1].products ?
+                      testShopList[1].sections[1].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 2*/}
+                <View>
+                  {testShopList[1].sections[2] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[1].sections[2].name}
+                          {/*- {testShopList[1].sections[2].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[1].sections[2] && testShopList[1].sections[2].products ?
+                      testShopList[1].sections[2].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 3*/}
+                <View>
+                  {testShopList[1].sections[3] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[1].sections[3].name}
+                          {/*- {testShopList[1].sections[3].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[1].sections[3] && testShopList[1].sections[3].products ?
+                      testShopList[1].sections[3].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 4*/}
+                <View>
+                  {testShopList[1].sections[4] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[1].sections[4].name}
+                          {/*- {testShopList[1].sections[4].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[1].sections[4] && testShopList[1].sections[4].products ?
+                      testShopList[1].sections[4].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 5*/}
+                <View>
+                  {testShopList[1].sections[5] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[1].sections[5].name}
+                          {/*- {testShopList[1].sections[5].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[1].sections[5] && testShopList[1].sections[5].products ?
+                      testShopList[1].sections[5].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 6*/}
+                <View>
+                  {testShopList[1].sections[6] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[1].sections[6].name}
+                          {/*- {testShopList[1].sections[6].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[1].sections[6] && testShopList[1].sections[6].products ?
+                      testShopList[1].sections[6].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 7*/}
+                <View>
+                  {testShopList[1].sections[7] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[1].sections[7].name}
+                          {/*- {testShopList[1].sections[7].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[1].sections[7] && testShopList[1].sections[7].products ?
+                      testShopList[1].sections[7].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 8*/}
+                <View>
+                  {testShopList[1].sections[8] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[1].sections[8].name}
+                          {/*- {testShopList[1].sections[8].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[1].sections[8] && testShopList[1].sections[8].products ?
+                      testShopList[1].sections[8].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+
+                </View>
+
+                {/*SECCION 9*/}
+                <View>
+                  {testShopList[1].sections[9] ?
+                    <View style={{width: 'auto'}}>
+                      {/*TITULO DE LA SECCION*/}
+                      <View>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
+                          {testShopList[1].sections[9].name}
+                          {/*- {testShopList[1].sections[9].index}*/}
+                        </Text>
+                      </View>
+                    </View>
+                    : null}
+
+                  {/*PRODUCTS CONTAINER*/}
+                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {testShopList[1].sections[9] && testShopList[1].sections[9].products ?
+                      testShopList[1].sections[9].products.map((product: any, index: number) => {
+                        return (
+                          <View style={{
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            width: 190,
+                            height: 180,
+                            margin: 2,
+                            alignSelf: 'flex-start',
+                            justifyContent: 'space-between'
+                          }} key={index}>
+                            {/*IMAGE PRODUCT*/}
+                            <View style={{position: 'absolute', zIndex: 0}}>
+                              {product.materialInstances ?
+                                product.materialInstances[0] ?
+                                  <View>
+                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
+                                           height={180}/>
+                                  </View>
+                                  : null
+                                : null}
+                            </View>
+                            {/*PRODUCT OFFER ALERT*/}
+                            <View>
+                              {product.banner ?
+                                <View style={{
+                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
+                                  padding: 2,
+                                  borderRadius: 25,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                  alignSelf: 'flex-start'
+                                }}>
+                                  <Text>{product.banner.value}</Text>
+                                </View>
+                                : null}
+                            </View>
+                            {/*PRODUCT INFORMATION*/}
+                            <View style={{}}>
+                              {/*PRODUCT NAME*/}
+                              <View>
+                                {product.bundle ?
+                                  <View>
+                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
+                                           height={150}/>
+                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
+                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
+                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
+                                  </View>
+                                  : null}
+                              </View>
+                              {/*PRODUCT PRICE*/}
+                              <View>
+                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                                         style={{width: 25, height: 25}}></Image>
+                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
+
+                                  {product.finalPrice !== product.regularPrice ?
+                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
+                                    : null
+                                  }
+                                </View>
+                              </View>
+                            </View>
+
+                          </View>
+                        )
+                      })
+                      : null}
+                  </View>
+                </View>
+
               </View>
               : null}
           </View>
