@@ -1,40 +1,72 @@
-import {StyleSheet, View, Text, TextInput, Button} from 'react-native';
+import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
+import React, {useState} from "react";
+
 
 export default function RegisterScreen() {
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleRegister = () => {
+    // Agregar la lógica para registrar al usuario
+    // Por ahora, solo mostraremos un mensaje en la consola
+    console.log('Registrando usuario:', username, password);
+  };
+
   return (
-    <View style={{
-      backgroundColor: Colors.primary,
-      height: '100%',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}>
-      <Text>
-        imagen
-      </Text>
-      <TextInput placeholder={'Buscar'}>
-      </TextInput>
-      <Button title={'Buscar'}></Button>
+    <View style={styles.container}>
+      <Text style={styles.title}>Registro</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Nombre de usuario"
+        value={username}
+        onChangeText={setUsername}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Contraseña"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Confirmar contraseña"
+        secureTextEntry
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+      />
+      <Button
+        title="Registrarse"
+        onPress={handleRegister}
+        color={Colors.primary}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    backgroundColor: Colors.light.background,
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'center',
+    padding: 16,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  input: {
+    width: '100%',
+    height: 40,
+    borderWidth: 1,
+    borderColor: Colors.light.icon,
+    borderRadius: 4,
+    paddingHorizontal: 8,
+    marginBottom: 16,
   },
 });

@@ -1,9 +1,12 @@
 import {Animated, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {useEffect, useRef} from "react";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import ShopScreen from "@/app/screens/shop/shop";
 import ProfileScreen from "@/app/screens/profile/profile";
 import HomeScreen from "@/app/screens/home/home";
+import LoginScreen from "@/app/screens/auth/login";
+import RegisterScreen from './auth/register';
 import {AntDesign} from "@expo/vector-icons";
 import * as Animatable from 'react-native-animatable'
 import {Colors} from "@/constants/Colors";
@@ -12,6 +15,7 @@ import ChallengesScreen from "@/app/screens/challenges/challenges";
 export default function AppScreen() {
 
   const Tab = createBottomTabNavigator();
+  const Stack = createNativeStackNavigator();
 
   const tabRoutes = [
     {
@@ -109,18 +113,28 @@ export default function AppScreen() {
   }
 
   return (
-    <Tab.Navigator screenOptions={{headerShown: false, tabBarStyle: styles.tabNavigatorContainer}}>
-      {tabRoutes.map((tab, index: number) => {
-        return (
-          <Tab.Screen name={tab.route}
-                      key={index}
-                      component={tab.component}
-                      options={{
-                        tabBarButton: (props) => <TabButton {...props} tab={tab}/>
-                      }}
-          ></Tab.Screen>)
-      })}
-    </Tab.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen name="Tab" options={{headerShown: false}}>
+        {() => (
+          <Tab.Navigator screenOptions={{headerShown: false, tabBarStyle: styles.tabNavigatorContainer}}>
+            {tabRoutes.map((tab, index: number) => {
+              return (
+                <Tab.Screen
+                  name={tab.route}
+                  key={index}
+                  component={tab.component}
+                  options={{
+                    tabBarButton: (props) => <TabButton {...props} tab={tab}/>,
+                  }}
+                />
+              );
+            })}
+          </Tab.Navigator>
+        )}
+      </Stack.Screen>
+      <Stack.Screen name="Login" component={LoginScreen}/>
+      <Stack.Screen name="Register" component={RegisterScreen}/>
+    </Stack.Navigator>
   );
 }
 
