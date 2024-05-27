@@ -1,4 +1,14 @@
-import {Animated, Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View, Dimensions} from 'react-native';
+import {
+  Animated,
+  Dimensions,
+  Image,
+  KeyboardAvoidingView,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
+} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React, {useEffect, useState} from "react";
 import {useNavigation} from "expo-router";
@@ -11,7 +21,7 @@ import ScrollView = Animated.ScrollView;
 
 export default function HomeScreen() {
   const screenWidth = Dimensions.get('window').width;
-  
+
   const fortniteService = new FortniteService();
 
   const navigation = useNavigation()
@@ -96,7 +106,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     const updateCountdown = () => {
-      const nextUpdate = new Date('2024-05-24T08:00:00'); // Fecha y hora de la próxima actualización
+      const nextUpdate = new Date('2024-08-16T08:00:00'); // Fecha y hora de la próxima actualización
       const now = new Date();
       const difference = nextUpdate.getTime() - now.getTime();
 
@@ -125,19 +135,20 @@ export default function HomeScreen() {
     >
       <ScrollView style={styles.scrollViewContainer} keyboardShouldPersistTaps='handled'
                   contentContainerStyle={{alignContent: 'center', paddingTop: top}}>
+
         <View style={styles.viewContainer}>
 
-{/* LOGO Y BARRA DE BÚSQUEDA */}
-<View style={styles.topContainer}>
-  {screenWidth > 500}
-   <View style={styles.imageContainer}>
-    <Image source={require('../../../assets/images/logo/icons8-fortnite-llama-48.png')} />
-  </View>
+          {/* LOGO Y BARRA DE BÚSQUEDA */}
+          <View style={styles.topContainer}>
 
-  {/* Contenedor para el input y las pills */}
-  <View style={styles.inputPillsContainer}>
-    {/* Input */}
-    <View style={styles.inputContainer}>
+            <View style={styles.imageContainer}>
+              <Image source={require('../../../assets/images/logo/icons8-fortnite-llama-48.png')}/>
+            </View>
+
+            {/* Contenedor para el input y las pills */}
+            <View style={styles.inputPillsContainer}>
+              {/* Input */}
+              <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.inputComponent}
                   placeholder={'Buscar perfil'}
@@ -147,34 +158,35 @@ export default function HomeScreen() {
                   onSubmitEditing={goToStats}//
                 />
                 <Pressable style={styles.searchIconContainer} onPress={goToStats}>
-                  <Image source={require('../../../assets/images/logo/icons8-fortnite-llama-48.png')} style={styles.searchIcon}/>
+                  <Image source={require('../../../assets/images/logo/icons8-fortnite-llama-48.png')}
+                         style={styles.searchIcon}/>
                 </Pressable>
-     </View>
+              </View>
 
-    {/* Recent Search Pills */}
-    <View style={styles.recentSearchContainer}>
-      {recentSearch.map((item) => {
-        return (
-          <Pressable style={styles.recentSearchPillContainer} key={item} onPress={() => setUsername(item)}>
-            <Text style={styles.recentSearchPill}>{item}</Text>
-          </Pressable>
-        );
-      })}
-    </View>
-  </View>
-</View>
+              {/* Recent Search Pills */}
+              <View style={styles.recentSearchContainer}>
+                {recentSearch.map((item) => {
+                  return (
+                    <Pressable style={styles.recentSearchPillContainer} key={item} onPress={() => setUsername(item)}>
+                      <Text style={styles.recentSearchPill}>{item}</Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            </View>
+          </View>
 
           {/*NEWS */}
-         < View style={styles.newsGiftBanner}>
-             <Pressable onPress={goToNews}>
-               <Image
-               source={{uri: news?.data.br.image}}
-               style={{width: 325, height: 185,}}
+          < View style={styles.newsGiftBanner}>
+            <Pressable onPress={goToNews}>
+              <Image
+                source={{uri: news?.data.br.image}}
+                style={{width: 325, height: 185,}}
               ></Image>
             </Pressable>
-         </View>
+          </View>
           {/* TIMER */}
-         <View style={styles.timerContainer}>
+          <View style={styles.timerContainer}>
             <Text style={styles.timerTitle}>Capitulo 5 en...</Text>
             <Text style={styles.timerText}>{timeRemaining}</Text>
           </View>
@@ -188,89 +200,83 @@ const styles = StyleSheet.create({
   // GENERAL CONTAINER
   scrollViewContainer: {
     backgroundColor: Colors.primary,
-    width: '100%',
   },
 
   // VIEW CONTAINER
   viewContainer: {
+    width: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: 15,
+    padding: 10,
     gap: 15,
-    display:'flex',
-
   },
-    // TOP CONTAINER
-    topContainer: { // Contenedor para el logo y el input
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      alignItems:'center',
-      width:'100%',
-    },
 
-         // IMAGE
-           imageContainer: {
-            flexGrow:0,
-            paddingBottom:25,
-            right:8,
-            transform: [{ translateY: -2 }],
-            
-          
-     },
-         //INPUT Y PILLS CONTAINER
-         inputPillsContainer:{
-          flexGrow:2,
-     },
-           inputContainer: {
-            width:'100%',
+  // TOP CONTAINER
+  topContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+  },
 
-     },
-           inputComponent: {
-            height: 50,
-            borderRadius: 18,
-            paddingLeft: 15,
-            fontSize: 18,
-            backgroundColor: '#fbefff',
-            flexDirection:'row',
-            paddingBottom: 0,
-            
-            
-      },
-           searchIconContainer: {
-            padding: 10,
-            position:'absolute',
-            right: 5,
-            top:'50%',
-            transform: [{ translateY: -22 }], // Ajusta el posicionamiento vertical
-            zIndex: 1, // Asegura que el icono esté por encima del input
-            
+  // IMAGE
+  imageContainer: {},
 
-      },
-           searchIcon: {
-            width: 24,
-            height: 24,
-            tintColor: Colors.secondary,
-      }, 
-      
+  //INPUT Y PILLS CONTAINER
+  inputPillsContainer: {
+    display: 'flex',
+    width: 'auto',
+    flexGrow: 1,
+  },
+
+  inputContainer: {},
+
+  inputComponent: {
+    height: 50,
+    borderRadius: 18,
+    paddingLeft: 15,
+    fontSize: 18,
+    backgroundColor: '#fbefff',
+    paddingBottom: 0,
+  },
+
+  searchIconContainer: {
+    padding: 10,
+    position: 'absolute',
+    right: 5,
+    top: '50%',
+    transform: [{translateY: -22}], // Ajusta el posicionamiento vertical
+    zIndex: 1, // Asegura que el icono esté por encima del input
+  },
+
+  searchIcon: {
+    width: 24,
+    height: 24,
+    tintColor: Colors.secondary,
+  },
 
   // RECENT SEARCH CONTAINER
   recentSearchContainer: {
-    writingDirection:'rtl',
-    flexDirection:'row',
+    display: 'flex',
+    flexDirection: 'row',
     gap: 5,
     paddingTop: 5,
-    flexWrap:'wrap',
+    flexWrap: 'wrap',
+    width: '100%',
   },
+
   recentSearchPillContainer: {
     backgroundColor: 'grey',
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingLeft: 5,
+    paddingRight: 5,
     paddingTop: 2,
     paddingBottom: 2,
     borderRadius: 7,
+    width: 100,
   },
   recentSearchPill: {
-    color: 'blue'
+    color: 'blue',
+    fontWeight: '400',
+    letterSpacing: -1,
+    textAlign: 'center'
   },
 
   // BUTTON
@@ -313,8 +319,8 @@ const styles = StyleSheet.create({
   },
   //BANNER GIFT NEWS
   newsGiftBanner: {
-    minHeight:100,
-    width: 325, 
+    minHeight: 100,
+    width: 325,
     height: 185,
   },
 });

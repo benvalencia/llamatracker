@@ -34,4 +34,7 @@ export const Colors = {
   tertiary: tertiary,
   yellow: yellow,
 
+  screen: {
+    padding: 10,
+  }
 };

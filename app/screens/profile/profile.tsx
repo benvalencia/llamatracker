@@ -1,9 +1,6 @@
-import {Button, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
-import { useNavigation } from "@react-navigation/native";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginScreen from '../auth/login';
-import RegisterScreen from '../auth/register';
+import {useNavigation} from "@react-navigation/native";
 
 export default function ProfileScreen() {
   const navigation = useNavigation<any>();
@@ -12,14 +9,14 @@ export default function ProfileScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Perfil</Text>
       <View style={styles.button}>
-       <Pressable onPress={() => navigation.navigate("Login")}>
-         <button>Iniciar Sesión</button>
-       </Pressable>
+        <Pressable onPress={() => navigation.navigate("Login")}>
+          <Text>Iniciar Sesión</Text>
+        </Pressable>
       </View>
       <View style={styles.button}>
-       <Pressable onPress={() => navigation.navigate("Register")}>
-         <button>Registrarse</button>
-       </Pressable>
+        <Pressable onPress={() => navigation.navigate("Register")}>
+          <Text>Registrarse</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -32,10 +29,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 16,
-    margin:15,
+    margin: 15,
   },
   title: {
-    
+
     alignContent: 'center',
     fontSize: 24,
     fontWeight: 'bold',
