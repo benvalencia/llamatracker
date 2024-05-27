@@ -181,7 +181,7 @@ export default function HomeScreen() {
             <Pressable onPress={goToNews}>
               <Image
                 source={{uri: news?.data.br.image}}
-                style={{width: 325, height: 185,}}
+                style={{height: 210}}
               ></Image>
             </Pressable>
           </View>
@@ -320,7 +320,9 @@ const styles = StyleSheet.create({
   //BANNER GIFT NEWS
   newsGiftBanner: {
     minHeight: 100,
-    width: 325,
-    height: 185,
+    width: '100%',
+    objectFit: 'contain',
+    borderRadius: 10,
+    overflow: 'hidden'
   },
 });
