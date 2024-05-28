@@ -283,7 +283,7 @@ export default function ShopScreen() {
           <View style={{backgroundColor: 'white', width: 'auto', paddingBottom: 110, gap: 15}}>
             {/*MODULO 0*/}
             {testShopList[0] ?
-              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 15, paddingBottom: 110}}>
+              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 15, paddingBottom: 10}}>
                 {/*TITULO MODULO*/}
                 <View>
                   <Text style={{color: 'white', fontSize: 25, fontWeight: '500'}}>{testShopList[0].category}</Text>
@@ -341,23 +341,36 @@ export default function ShopScreen() {
                       {/*TITULO DE LA SECCION*/}
                       <View>
                         <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
-                          {testShopList[0].sections[1].name}
-                          {/*- {testShopList[0].sections[1].index}*/}
+                          {testShopList[0].sections[1].name} - 8hrs 22min 10sec
+                          {/*- {testShopList[0].sections[0].index}*/}
                         </Text>
                       </View>
                     </View>
                     : null}
 
                   {/*PRODUCTS CONTAINER*/}
-                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
-                    {testShopList[0].sections[1] && testShopList[0].sections[1].products ?
-                      testShopList[0].sections[1].products.map((product: any, index: number) => {
-                        return (
-                          <ShopProduct product={product} key={index}></ShopProduct>
-                        )
-                      })
-                      : null}
-                  </View>
+                  <ScrollView
+                    horizontal={true}
+                  >
+                    <View style={{
+                      display: "flex",
+                      flexDirection: 'column',
+                      height: 235,
+                      flexWrap: 'wrap',
+                      paddingLeft: 5,
+                      paddingRight: 5,
+                      paddingBottom: 5,
+                    }}>
+                      {testShopList[0].sections[1] && testShopList[0].sections[1].products ?
+                        testShopList[0].sections[1].products.map((product: any, index: number) => {
+                          return (
+                            <ShopProduct product={product} key={index}></ShopProduct>
+                          )
+                        })
+                        : null}
+                    </View>
+                  </ScrollView>
+
                 </View>
 
                 {/*SECCION 2*/}
@@ -367,23 +380,35 @@ export default function ShopScreen() {
                       {/*TITULO DE LA SECCION*/}
                       <View>
                         <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
-                          {testShopList[0].sections[2].name}
-                          {/*- {testShopList[0].sections[2].index}*/}
+                          {testShopList[0].sections[2].name} - 8hrs 22min 10sec
+                          {/*- {testShopList[0].sections[0].index}*/}
                         </Text>
                       </View>
                     </View>
                     : null}
 
                   {/*PRODUCTS CONTAINER*/}
-                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
-                    {testShopList[0].sections[2] && testShopList[0].sections[2].products ?
-                      testShopList[0].sections[2].products.map((product: any, index: number) => {
-                        return (
-                          <ShopProduct product={product} key={index}></ShopProduct>
-                        )
-                      })
-                      : null}
-                  </View>
+                  <ScrollView
+                    horizontal={true}
+                  >
+                    <View style={{
+                      display: "flex",
+                      flexDirection: 'column',
+                      height: 235,
+                      flexWrap: 'wrap',
+                      paddingLeft: 5,
+                      paddingRight: 5,
+                      paddingBottom: 5,
+                    }}>
+                      {testShopList[0].sections[2] && testShopList[0].sections[2].products ?
+                        testShopList[0].sections[2].products.map((product: any, index: number) => {
+                          return (
+                            <ShopProduct product={product} key={index}></ShopProduct>
+                          )
+                        })
+                        : null}
+                    </View>
+                  </ScrollView>
 
                 </View>
 
@@ -394,23 +419,36 @@ export default function ShopScreen() {
                       {/*TITULO DE LA SECCION*/}
                       <View>
                         <Text style={{color: 'white', fontSize: 18, fontWeight: '300'}}>
-                          {testShopList[0].sections[3].name}
-                          {/*- {testShopList[0].sections[3].index}*/}
+                          {testShopList[0].sections[3].name} - 8hrs 22min 10sec
+                          {/*- {testShopList[0].sections[0].index}*/}
                         </Text>
                       </View>
                     </View>
                     : null}
 
                   {/*PRODUCTS CONTAINER*/}
-                  <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
-                    {testShopList[0].sections[3] && testShopList[0].sections[3].products ?
-                      testShopList[0].sections[3].products.map((product: any, index: number) => {
-                        return (
-                          <ShopProduct product={product} key={index}></ShopProduct>
-                        )
-                      })
-                      : null}
-                  </View>
+                  <ScrollView
+                    horizontal={true}
+                  >
+                    <View style={{
+                      display: "flex",
+                      flexDirection: 'column',
+                      height: 235,
+                      flexWrap: 'wrap',
+                      paddingLeft: 5,
+                      paddingRight: 5,
+                      paddingBottom: 5,
+                    }}>
+                      {testShopList[0].sections[3] && testShopList[0].sections[3].products ?
+                        testShopList[0].sections[3].products.map((product: any, index: number) => {
+                          return (
+                            <ShopProduct product={product} key={index}></ShopProduct>
+                          )
+                        })
+                        : null}
+                    </View>
+                  </ScrollView>
+
                 </View>
               </View>
               : null}
