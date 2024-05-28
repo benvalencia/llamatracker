@@ -3,7 +3,7 @@ import React from "react";
 
 export function ShopProduct(props: any) {
 
-  const {product, key} = props
+  const {product, index} = props
 
   return (
     <View style={[{
@@ -13,11 +13,11 @@ export function ShopProduct(props: any) {
       margin: 2,
       alignSelf: 'flex-start',
       justifyContent: 'space-between',
-    }, product.tile === 'Size_1_x_1' ? {width: 110, height: 110} : null
-      , product.tile === 'Size_1_x_2' ? {width: 150, height: 210} : null
-      , product.tile === 'Size_2_x_2' ? {width: 225, height: 210} : null
+    }, product.tile === 'Size_1_x_1' ? {width: 85, height: 108} : null
+      , product.tile === 'Size_1_x_2' ? {width: 110, height: 220} : null
+      , product.tile === 'Size_2_x_2' ? {width: 210, height: 220} : null
     ]}
-          key={key}>
+          key={index}>
       {/*IMAGE PRODUCT*/}
       <View style={{position: 'absolute', zIndex: 0}}>
         {product.materialInstances ?
@@ -30,9 +30,13 @@ export function ShopProduct(props: any) {
                          width: 150,
                          height: 210,
                          transform: [{scaleX: 1.5}, {scaleY: 1.5}],
-                         top: "20%"
+                         top: "20%",
                        } : null
-                       , product.tile === 'Size_2_x_2' ? {width: 225, height: 210} : null
+                       , product.tile === 'Size_2_x_2' ? {
+                         width: 210,
+                         height: 220,
+                         transform: [{scaleX: 1}, {scaleY: 1.1}],
+                       } : null
                      ]}
               />
             </View>
@@ -58,17 +62,15 @@ export function ShopProduct(props: any) {
       <View style={{}}>
         {/*PRODUCT NAME*/}
         <View>
+          <View>
+            <Text style={{color: 'white', letterSpacing: -.8}}>{product.name}</Text>
+          </View>
           {product.bundle
             ?
             <View>
-              <Text style={{color: 'white', letterSpacing: -.8}}>{product.bundle.name}</Text>
               <Text style={{color: 'white', letterSpacing: -.8}}>{product.bundle.info}</Text>
             </View>
-            :
-            <View>
-              <Text style={{color: 'white', letterSpacing: -.8}}>Nombre producto solo</Text>
-            </View>
-          }
+            : null}
         </View>
         {/*PRODUCT PRICE*/}
         <View>
