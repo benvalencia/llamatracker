@@ -6,6 +6,7 @@ import React, {useEffect, useState} from "react";
 import {CommonActions} from "@react-navigation/native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {ShopProduct} from "@/components/ShopProduct";
 
 export default function ShopScreen() {
   const fortniteService = new FortniteService();
@@ -73,22 +74,65 @@ export default function ShopScreen() {
 
     setShopInformation({date: shopRaw.data ? shopRaw.data.date : null})
 
-    // await shopRaw.data.featured.entries.forEach((entry: any) => {
-    //   let formNewObject = {}
+    const rawShotListGroupedById = await shopRaw.data?.featured.entries.reduce(
+      (result: any, currentValue: any) => {
+
+        // console.log('currentValue >>> ' ,currentValue);
+
+        (result[currentValue.layout ? currentValue.layout.category : 'Uncategorized'] = result[currentValue.layout ? currentValue.layout.category : 'Uncategorized'] || []).push(currentValue);
+        // (result[currentValue.layout ? currentValue.layout.id : 'Unrecognized'] = result[currentValue.layout ? currentValue.layout.id : 'Unrecognized'] || []).push(currentValue);
+        return result;
+      }, {});
+
+
+    console.log(rawShotListGroupedById)
+
+    // let shopListArray: any = [];
+    // await rawShotListGroupedById.forEach((entry: any) => {
+    //   console.log('entry ', entry)
     //
-    //   formNewObject = {
-    //     ...{banner: entry.banner},
-    //     ...{bundle: entry.bundle},
-    //     ...{finalPrice: entry.finalPrice},
-    //     ...{regularPrice: entry.regularPrice},
-    //     ...{layout: entry.layout},
-    //     ...{materialInstances: entry.newDisplayAsset ? entry.newDisplayAsset.materialInstances : null},
-    //     ...{items: entry.items ? entry.items : null}
+    //   // let moduleObject: any = {}
+    //   // let sectionObject: any = {}
+    //   // let productObject = {}
+    //   //
+    //   // productObject = {
+    //   //   ...{banner: entry.banner},
+    //   //   ...{bundle: entry.bundle},
+    //   //   ...{layout: entry.layout},
+    //   //   ...{finalPrice: entry.finalPrice},
+    //   //   ...{regularPrice: entry.regularPrice},
+    //   //   ...{name: entry.layout ? entry.layout.name : null},
+    //   //   ...{showIneligibleOffers: entry.layout ? entry.layout.showIneligibleOffers : null},
+    //   //   ...{materialInstances: entry.newDisplayAsset ? entry.newDisplayAsset.materialInstances : null},
+    //   //
+    //   //   // ...{items: entry.items ? entry.items : null}
+    //   // };
+    //   //
+    //   // sectionObject = {
+    //   //   ...{id: entry.layout ? entry.layout.id : null},
+    //   //   ...{index: entry.layout ? entry.layout.index : null},
+    //   //   ...{name: entry.layout ? entry.layout.name : null},
+    //   //   ...{showIneligibleOffers: entry.layout ? entry.layout.showIneligibleOffers : null},
+    //   //   ...{products: []},
+    //   // };
+    //   // moduleObject = {
+    //   //   ...{category: entry.layout ? entry.layout.category : 'Uncategorized'},
+    //   //   ...{background: entry.layout ? entry.layout.background ? entry.layout.background : 'default' : 'default'},
+    //   //   ...{sections: []},
+    //   // };
+    //   //
+    //   // // TODO: si NO encuentra una category hacer push a testingArray de una categoría
+    //   // // TODO: si encuentra una categoría hacer push a sections de una sección
+    //   // if (testingArray.find((item: any) => item.category == entry.layout?.category)) {
+    //   //
+    //   // } else {
+    //   //   sectionObject.products.push(productObject)
+    //   //   moduleObject.sections.push(sectionObject);
+    //   //   shopListArray.push(moduleObject);
+    //   // }
     //
-    //   };
-    //
-    //   tienda.push(formNewObject);
     // })
+
 
     let testingArray: any = []
     await shopRaw.data?.featured.entries.forEach((entry: any) => {
@@ -99,6 +143,7 @@ export default function ShopScreen() {
       productObject = {
         ...{banner: entry.banner},
         ...{bundle: entry.bundle},
+        ...{tile: entry.tileSize},
         ...{finalPrice: entry.finalPrice},
         ...{regularPrice: entry.regularPrice},
         ...{name: entry.layout ? entry.layout.name : null},
@@ -113,37 +158,25 @@ export default function ShopScreen() {
         ...{index: entry.layout ? entry.layout.index : null},
         ...{name: entry.layout ? entry.layout.name : null},
         ...{showIneligibleOffers: entry.layout ? entry.layout.showIneligibleOffers : null},
-        ...{products: []},
+        ...{products: [productObject]},
       };
       testingObject = {
         ...{category: entry.layout ? entry.layout.category : 'Uncategorized'},
         ...{background: entry.layout ? entry.layout.background ? entry.layout.background : 'default' : 'default'},
-        ...{sections: []},
+        ...{sections: [sectionObject]},
       };
 
 
       // TODO: si NO encuentra una category hacer push a testingArray de una categoría
       // TODO: si encuentra una categoría hacer push a sections de una sección
-      if (testingArray.find((item: any) => item.category == entry.layout?.category)) {
-        // console.log('Categoría encontrada', entry.layout.category);
-
+      if (testingArray.find((item: any) => item.category == entry.layout?.category) !== undefined) {
         // TODO: si encuentra una section ya pues no hacer push a category
         // TODO: si encuentra una categoria hacer push a product
         testingArray.forEach((module: any, moduleIndex: number) => {
-          // console.log('---------- Modulos',module.category, moduleIndex);
-          console.log(entry.bundle ? entry : null)
-
-          const isFound = module.sections.find((section: any) => section.id == entry.layout.id) !== undefined;
-          if (isFound) {
+          if (module.sections.find((section: any) => section.id == entry.layout.id) !== undefined) {
             testingArray[moduleIndex].sections.forEach((section: any, sectionIndex: number) => {
-
               if (section.id === entry.layout.id) {
-                // console.log(sectionIndex, section.id)
                 testingArray[moduleIndex].sections[sectionIndex].products.push(productObject);
-              } else {
-                if (!entry.layout.id) {
-                  console.log('product sin id >>> ', productObject);
-                }
               }
             })
           } else {
@@ -151,19 +184,13 @@ export default function ShopScreen() {
           }
         })
       } else {
-        console.log('-----')
-        console.log('new >>> ', entry.layout ? entry.layout : entry.layout);
-        // console.log('new category >>> ', testingArray);
-        // console.log('entry de layout null >>> ', entry.layout ? null : entry);
-        sectionObject.products.push(productObject)
-        testingObject.sections.push(sectionObject);
         testingArray.push(testingObject);
       }
     });
-    console.log('testingArray >>>', testingArray[0].sections[0]);
-    // console.log('testingArray.section >>>', testingArray[0].sections.length);
-    // console.log('testingArray.section.product >>>', testingArray[0].sections[0].products.length);
-    console.log('---------')
+    // console.log('testingArray >>>', testingArray.length);
+    // console.log('testingArray 0 >>>', testingArray[0].category);
+    //
+    console.log('testingArray.section >>>', testingArray[0].sections[3]);
 
 
     // console.log('items.description >>> ', shopRaw.data.featured.entries[10].items[0].description)
@@ -220,10 +247,8 @@ export default function ShopScreen() {
   };
 
   useEffect(() => {
-    getStoreShop().then()
-    setTimeout(() => {
+    getStoreShop().then();
       getShopList().then();
-    }, 1)
   }, []);
 
   return (
@@ -289,72 +314,7 @@ export default function ShopScreen() {
                     {testShopList[0].sections[0] && testShopList[0].sections[0].products ?
                       testShopList[0].sections[0].products.map((product: any, index: number) => {
                         return (
-                          <View style={{
-                            padding: 5,
-                            borderRadius: 10,
-                            overflow: 'hidden',
-                            width: 190,
-                            height: 180,
-                            margin: 2,
-                            alignSelf: 'flex-start',
-                            justifyContent: 'space-between'
-                          }} key={index}>
-                            {/*IMAGE PRODUCT*/}
-                            <View style={{position: 'absolute', zIndex: 0}}>
-                              {product.materialInstances ?
-                                product.materialInstances[0] ?
-                                  <View>
-                                    <Image source={{uri: product.materialInstances[0].images.Background}} width={190}
-                                           height={180}/>
-                                  </View>
-                                  : null
-                                : null}
-                            </View>
-                            {/*PRODUCT OFFER ALERT*/}
-                            <View>
-                              {product.banner ?
-                                <View style={{
-                                  backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
-                                  padding: 2,
-                                  borderRadius: 25,
-                                  paddingLeft: 10,
-                                  paddingRight: 10,
-                                  alignSelf: 'flex-start'
-                                }}>
-                                  <Text>{product.banner.value}</Text>
-                                </View>
-                                : null}
-                            </View>
-                            {/*PRODUCT INFORMATION*/}
-                            <View style={{}}>
-                              {/*PRODUCT NAME*/}
-                              <View>
-                                {product.bundle ?
-                                  <View>
-                                    <Image style={styles.isHidden} source={{uri: product.bundle.image}} width={120}
-                                           height={150}/>
-                                    <Text style={{color: 'white'}}>{product.bundle.name}</Text>
-                                    {/*<Text style={{color: 'white'}}>{product.index}</Text>*/}
-                                    <Text style={{color: 'white'}}>{product.bundle.info}</Text>
-                                  </View>
-                                  : null}
-                              </View>
-                              {/*PRODUCT PRICE*/}
-                              <View>
-                                <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-                                  <Image source={require('../../../assets/images/vbuck/vbuck.png')}
-                                         style={{width: 25, height: 25}}></Image>
-                                  <Text style={{color: 'white'}}>{product.finalPrice}</Text>
-
-                                  {product.finalPrice !== product.regularPrice ?
-                                    <Text style={{color: 'white', opacity: .5}}>{product.regularPrice}</Text>
-                                    : null
-                                  }
-                                </View>
-                              </View>
-                            </View>
-
-                          </View>
+                          <ShopProduct product={product} key={index}></ShopProduct>
                         )
                       })
                       : null}
@@ -2155,6 +2115,19 @@ const styles = StyleSheet.create({
     gap: 8,
   },
 
+  // TILE SIZES
+  Size_2_x_2: {
+    backgroundColor: 'red',
+    padding: 2,
+  },
+  Size_1_x_2: {
+    backgroundColor: 'blue',
+    padding: 2,
+  },
+  Size_1_x_1: {
+    backgroundColor: 'pink',
+    padding: 2,
+  },
   // SHOP LIST CONTAINER
   shopListContainer: {
     width: '100%',
