@@ -10,8 +10,6 @@ export function ShopProduct(props: any) {
       padding: 5,
       borderRadius: 10,
       overflow: 'hidden',
-      // width: 190,
-      // height: 180,
       margin: 2,
       alignSelf: 'flex-start',
       justifyContent: 'space-between',
