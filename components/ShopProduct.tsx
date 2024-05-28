@@ -27,10 +27,10 @@ export function ShopProduct(props: any) {
                      style={[
                        product.tile === 'Size_1_x_1' ? {width: 110, height: 110} : null
                        , product.tile === 'Size_1_x_2' ? {
-                         width: 150,
+                         width: 115,
                          height: 210,
-                         transform: [{scaleX: 1.5}, {scaleY: 1.5}],
-                         top: "20%",
+                         transform: [{scaleX: 1.3}, {scaleY: 1.3}],
+                         top: "15%",
                        } : null
                        , product.tile === 'Size_2_x_2' ? {
                          width: 210,
