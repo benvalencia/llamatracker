@@ -256,10 +256,10 @@ export default function ShopScreen() {
         </View>
 
         <View style={styles.shopListContainer}>
-          <View style={{backgroundColor: 'white', width: 'auto', paddingBottom: 110, gap: 15}}>
+          <View style={{width: 'auto'}}>
             {/*MODULO 0*/}
             {testShopList[0] ?
-              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 15, paddingBottom: 10}}>
+              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 5}}>
                 {/*TITULO MODULO*/}
                 <View>
                   <Text style={{color: 'white', fontSize: 25, fontWeight: '500'}}>{testShopList[0].category}</Text>
@@ -667,7 +667,7 @@ export default function ShopScreen() {
 
             {/*MODULO 1*/}
             {testShopList[1] ?
-              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 15, paddingBottom: 10}}>
+              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 5}}>
                 {/*TITULO MODULO*/}
                 <View>
                   <Text style={{color: 'white', fontSize: 25, fontWeight: '500'}}>{testShopList[1].category}</Text>
@@ -1074,7 +1074,7 @@ export default function ShopScreen() {
 
             {/*MODULO 2*/}
             {testShopList[2] ?
-              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 15, paddingBottom: 10}}>
+              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 5}}>
                 {/*TITULO MODULO*/}
                 <View>
                   <Text style={{color: 'white', fontSize: 25, fontWeight: '500'}}>{testShopList[2].category}</Text>
@@ -1481,7 +1481,7 @@ export default function ShopScreen() {
 
             {/*MODULO 3*/}
             {testShopList[3] ?
-              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 15, paddingBottom: 10}}>
+              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 5}}>
                 {/*TITULO MODULO*/}
                 <View>
                   <Text style={{color: 'white', fontSize: 25, fontWeight: '500'}}>{testShopList[3].category}</Text>
@@ -1888,7 +1888,7 @@ export default function ShopScreen() {
 
             {/*MODULO 4*/}
             {testShopList[4] ?
-              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 15, paddingBottom: 10}}>
+              <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 5}}>
                 {/*TITULO MODULO*/}
                 <View>
                   <Text style={{color: 'white', fontSize: 25, fontWeight: '500'}}>{testShopList[4].category}</Text>
@@ -2292,9 +2292,7 @@ export default function ShopScreen() {
                 </View>
               </View>
               : null}
-
           </View>
-
         </View>
       </View>
     </ScrollView>
@@ -2338,6 +2336,7 @@ const styles = StyleSheet.create({
   shopListContainer: {
     width: '100%',
     gap: 5,
+    paddingBottom: 60,
   },
   // NEWS ITEMS CONTAINER
   itemContainer: {
