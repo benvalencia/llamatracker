@@ -1,7 +1,6 @@
-import {StyleSheet, View, Text, TextInput, Button} from 'react-native';
+import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React, {useState} from "react";
-
 
 
 export default function RegisterScreen() {
@@ -18,34 +17,34 @@ export default function RegisterScreen() {
 
   return (
     <View style={styles.container}>
-    <Text style={styles.title}>Registro</Text>
-    <TextInput
-      style={styles.input}
-      placeholder="Nombre de usuario"
-      value={username}
-      onChangeText={setUsername}
-    />
-    <TextInput
-      style={styles.input}
-      placeholder="Contraseña"
-      secureTextEntry
-      value={password}
-      onChangeText={setPassword}
-    />
-    <TextInput
-      style={styles.input}
-      placeholder="Confirmar contraseña"
-      secureTextEntry
-      value={confirmPassword}
-      onChangeText={setConfirmPassword}
-    />
-    <Button
-      title="Registrarse"
-      onPress={handleRegister}
-      color={Colors.primary}
-    />
-  </View>
-);
+      <Text style={styles.title}>Registro</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Nombre de usuario"
+        value={username}
+        onChangeText={setUsername}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Contraseña"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Confirmar contraseña"
+        secureTextEntry
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+      />
+      <Button
+        title="Registrarse"
+        onPress={handleRegister}
+        color={Colors.primary}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

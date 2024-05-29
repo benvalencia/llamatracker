@@ -60,7 +60,7 @@ export default function HomeScreen() {
 
   const storeRecentSearch = async (username: string) => {
     const isInArray = recentSearch.find((recentUserprofile) => recentUserprofile === username) !== undefined;
-    const isArrayFull = recentSearch.length > 3;
+    const isArrayFull = recentSearch.length > 4;
 
     if (isArrayFull) {
       const recentSearchArrayCut = recentSearch.filter((recentUserprofile, index) => index !== 0);

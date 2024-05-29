@@ -1,4 +1,4 @@
-import {StyleSheet, View, Text, TextInput, Button, Pressable} from 'react-native';
+import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React, {useState} from "react";
 
@@ -34,8 +34,8 @@ export default function LoginScreen() {
           backgroundColor: Colors.primary,
           padding: 10,
           borderRadius: 5,
-        }} >
-        <Text style={{ color: "white" }}>Iniciar Sesión</Text>
+        }}>
+        <Text style={{color: "white"}}>Iniciar Sesión</Text>
 
       </Pressable>
     </View>
