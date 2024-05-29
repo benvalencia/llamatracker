@@ -673,11 +673,11 @@ export default function ShopScreen() {
                   <Text style={{color: 'white', fontSize: 25, fontWeight: '500'}}>{testShopList[1].category}</Text>
                 </View>
                 {/*BACKGRUND DEL MODULO*/}
-                {testShopList[1].background !== 'default' ?
-                  <View>
-                    <Image source={{uri: testShopList[1].background}} width={240} height={230}/>
-                  </View>
-                  : null}
+                {/*{testShopList[1].background !== 'default' ?*/}
+                {/*  <View>*/}
+                {/*    <Image source={{uri: testShopList[1].background}} width={240} height={230}/>*/}
+                {/*  </View>*/}
+                {/*  : null}*/}
 
                 {/*SECCION 0*/}
                 <View>
