@@ -154,7 +154,8 @@ export default function ShopScreen() {
         justifyContent: 'center',
         width: '100%'
       }}>
-        <View style={{marginBottom: 15}}>
+        {shopList[0] ?
+          <View style={{marginBottom: 15, paddingTop: top}}>
           <Text style={{
             color: 'white',
             fontSize: 23,
@@ -166,9 +167,26 @@ export default function ShopScreen() {
             day: "numeric"
           })}</Text>
         </View>
+          : null
+        }
 
         <View style={styles.shopListContainer}>
           <View style={{width: 'auto'}}>
+            {shopList[0] == undefined ?
+              <View style={{
+                backgroundColor: Colors.primary,
+                height: '100%',
+                width: '100%',
+              }}>
+                <Text style={{
+                  color: 'white',
+                  fontSize: 30,
+                  fontWeight: '400',
+                  margin: 'auto'
+                }}>Loading...</Text>
+              </View>
+              : null}
+
             {/*MODULO 0*/}
             {shopList[0] ?
               <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 5}}>
@@ -2245,6 +2263,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: Colors.primary,
+    minHeight: '100%',
   },
   scrollReloadContainer: {
     backgroundColor: Colors.primary,
@@ -2259,8 +2278,9 @@ const styles = StyleSheet.create({
   // SHOP LIST CONTAINER
   shopListContainer: {
     width: '100%',
+    height: '100%',
     gap: 5,
-    paddingBottom: 75,
+    paddingBottom: 35,
   },
   // NEWS ITEMS CONTAINER
   itemContainer: {
