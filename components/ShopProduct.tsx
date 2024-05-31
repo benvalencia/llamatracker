@@ -16,6 +16,7 @@ export function ShopProduct(props: any) {
     }, product.tile === 'Size_1_x_1' ? {width: 85, height: 108} : null
       , product.tile === 'Size_1_x_2' ? {width: 110, height: 220} : null
       , product.tile === 'Size_2_x_2' ? {width: 210, height: 220} : null
+      , product.tile === 'Size_5_x_2' ? {width: 290, height: 220} : null
     ]}
           key={index}>
       {/*IMAGE PRODUCT*/}
@@ -36,6 +37,12 @@ export function ShopProduct(props: any) {
                          width: 210,
                          height: 220,
                          transform: [{scaleX: 1}, {scaleY: 1.1}],
+                       } : null
+                       , product.tile === 'Size_5_x_2' ? {
+                         width: 290,
+                         height: 220,
+                         top: 0,
+                         transform: [{scaleX: 1.5}, {scaleY: 1.5}, {translateY: 37}],
                        } : null
                      ]}
               />
