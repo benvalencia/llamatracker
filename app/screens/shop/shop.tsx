@@ -2251,7 +2251,6 @@ export default function ShopScreen() {
         </View>
       </View>
     </ScrollView>
-
   );
 }
 
