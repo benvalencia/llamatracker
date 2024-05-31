@@ -88,11 +88,12 @@ export default function ShopScreen() {
         ...{tile: entry.tileSize},
         ...{finalPrice: entry.finalPrice},
         ...{regularPrice: entry.regularPrice},
-        ...{name: entry.bundle ? entry.bundle.name : entry.layout ? entry.layout.name : 'unnamed'},
+        ...{name: entry.bundle ? entry.bundle.name : entry.items[0].name ? entry.items[0].name : entry.layout ? entry.layout.name : 'unnamed'},
         ...{showIneligibleOffers: entry.layout ? entry.layout.showIneligibleOffers : null},
         ...{materialInstances: entry.newDisplayAsset ? entry.newDisplayAsset.materialInstances : null},
+        ...{image: entry.items[0].images ? entry.items[0].images.featured : null},
 
-        // ...{items: entry.items ? entry.items : null}
+        ...{items: entry.items ? entry.items : null}
       };
 
       sectionObject = {
@@ -126,6 +127,8 @@ export default function ShopScreen() {
     });
 
     setShopList(shopListArrayBuilder ? shopListArrayBuilder.map((i: any) => i) : null);
+
+    console.log(shopListArrayBuilder[2].sections[0].products[12])
     setRefreshing(false);
   };
 

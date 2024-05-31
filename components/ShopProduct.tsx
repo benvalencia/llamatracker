@@ -24,9 +24,15 @@ export function ShopProduct(props: any) {
         {product.materialInstances ?
           product.materialInstances[0] ?
             <View>
-              <Image source={{uri: product.materialInstances[0].images.Background}}
+              {/*<Text>{product.image}</Text>*/}
+              <Image
+                source={{uri: product.materialInstances[0].images.Background ? product.materialInstances[0].images.Background : product.image}}
                      style={[
-                       product.tile === 'Size_1_x_1' ? {width: 110, height: 110} : null
+                       product.tile === 'Size_1_x_1' ? {
+                         width: 110, height: 110,
+                         transform: [{translateX: -15}],
+
+                       } : null
                        , product.tile === 'Size_1_x_2' ? {
                          width: 115,
                          height: 210,
