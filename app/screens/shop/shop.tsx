@@ -127,8 +127,6 @@ export default function ShopScreen() {
     });
 
     setShopList(shopListArrayBuilder ? shopListArrayBuilder.map((i: any) => i) : null);
-
-    console.log(shopListArrayBuilder[2].sections[0].products[12])
     setRefreshing(false);
   };
 
