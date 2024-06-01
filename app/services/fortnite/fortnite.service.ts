@@ -2,8 +2,6 @@ import {Client, ClientConfig, Language} from "fnapicom";
 import {
   AESKeysRequestParams,
   AESKeysResponseData,
-  BannerColorsRequestParams,
-  BannerColorsResponseData,
   BannersRequestParams,
   BannersResponseData,
   BRMapRequestParams,
@@ -122,23 +120,24 @@ export class FortniteService {
     return response
   }
 
-  /**
-   * Returns an array of all banner colors
-   * @param options Options for this endpoint
-   */
-  public async getBannerColors(options?: BannerColorsRequestParams): Promise<BannerColorsResponseData> {
-    let response: any;
-
-    await this.fortniteClient.bannerColors(options)
-      .then((res) => {
-        response = res
-      })
-      .catch((err) => {
-        console.log('err', err)
-      })
-
-    return response
-  }
+  // NO SENSE
+  // /**
+  //  * Returns an array of all banner colors
+  //  * @param options Options for this endpoint
+  //  */
+  // public async getBannerColors(options?: BannerColorsRequestParams): Promise<BannerColorsResponseData> {
+  //   let response: any;
+  //
+  //   await this.fortniteClient.bannerColors(options)
+  //     .then((res) => {
+  //       response = res
+  //     })
+  //     .catch((err) => {
+  //       console.log('err', err)
+  //     })
+  //
+  //   return response
+  // }
 
   /**
    * Returns an array of all battle royale cosmetics
@@ -147,7 +146,7 @@ export class FortniteService {
   public async getCosmeticsList(options?: CosmeticsListRequestParams): Promise<CosmeticsListResponseData> {
     let response: any;
 
-    await this.fortniteClient.bannerColors(options)
+    await this.fortniteClient.cosmeticsList(options)
       .then((res) => {
         response = res
       })
