@@ -24,7 +24,6 @@ export function ShopProduct(props: any) {
         {product.materialInstances ?
           product.materialInstances[0] ?
             <View>
-              {/*<Text>{product.image}</Text>*/}
               <Image
                 source={{uri: product.materialInstances[0].images.Background ? product.materialInstances[0].images.Background : product.image}}
                      style={[

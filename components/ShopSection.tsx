@@ -1,10 +1,24 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from "react";
 import {ShopProduct} from "@/components/ShopProduct";
+import {CommonActions} from "@react-navigation/native";
+import {useNavigation} from "expo-router";
 
 export function ShopSection(props: any) {
 
   const {section, index} = props
+
+  const navigation = useNavigation()
+
+  const goToProductDetail = (product: any) => {
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: 'screens/shop/itemDetail',
+        params: {
+          product
+        }
+      }));
+  }
 
   return (
     <View style={{}}
@@ -34,7 +48,9 @@ export function ShopSection(props: any) {
             {
               section.products.map((product: any, index: number) => {
                 return (
-                  <ShopProduct product={product} key={index}></ShopProduct>
+                  <Pressable onPress={() => goToProductDetail(product)} key={index}>
+                    <ShopProduct product={product} key={index}></ShopProduct>
+                  </Pressable>
                 )
               })}
           </View>
