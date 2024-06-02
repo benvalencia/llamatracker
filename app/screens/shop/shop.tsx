@@ -1,16 +1,13 @@
 import {RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
-import {useNavigation} from "expo-router";
 import React, {useEffect, useState} from "react";
-import {CommonActions} from "@react-navigation/native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {ShopModule} from "@/components/ShopModule";
 
 export default function ShopScreen() {
   const fortniteService = new FortniteService();
-  const navigation = useNavigation()
   const {top, bottom} = useSafeAreaInsets()
 
   const [shopInformation, setShopInformation] = useState({} as any);
@@ -20,15 +17,6 @@ export default function ShopScreen() {
   const [shopCache, setShopCache] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  const goToItemDetail = (item: any) => {
-    navigation.dispatch(
-      CommonActions.navigate({
-        name: 'screens/shop/itemDetail',
-        params: {
-          item
-        }
-      }));
-  }
 
   const getStoreShop = async () => {
     try {

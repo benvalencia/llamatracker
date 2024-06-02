@@ -13,7 +13,7 @@ import RegisterScreen from "@/app/screens/auth/register";
 import LoginScreen from "@/app/screens/auth/login";
 import ProfileScreen from "@/app/screens/profile/profile";
 import StatsScreen from "@/app/screens/profile/stats";
-import {Pressable} from "react-native";
+import {Button, Pressable} from "react-native";
 import {router} from "expo-router";
 import {AntDesign} from "@expo/vector-icons";
 import {Colors} from "@/constants/Colors";
@@ -89,6 +89,10 @@ export default function RootLayout() {
         <Stack.Screen name="screens/shop/itemDetail"
                       options={{
                         title: '',
+                        presentation: 'modal',
+                        cardStyle: {marginTop: 50, borderRadius: 15},
+                        gestureResponseDistance: 380,
+                        headerShown: false,
                         headerBackTitle: '',
                         headerShadowVisible: false,
                         gestureEnabled: true,
@@ -96,6 +100,11 @@ export default function RootLayout() {
                         headerLeft: () => (
                           <Pressable onPress={router.back}>
                             <AntDesign name="arrowleft" size={35} color="white" style={{paddingLeft: 5}}/>
+                          </Pressable>
+                        ),
+                        headerRight: () => (
+                          <Pressable onPress={router.back}>
+                            <Button title={'campana'}></Button>
                           </Pressable>
                         ),
                       }}
