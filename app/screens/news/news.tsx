@@ -12,6 +12,7 @@ export default function NewsScreen() {
 
   const [newsBattleRoyaleList, setNewsBattleRoyaleList] = useState([] as any[]);
   const [newsSaveTheWorldList, setNewsSaveTheWorldList] = useState([] as any[]);
+  const [fortniteNewsList, setFortniteNewsList] = useState([] as any[]);
   const [refreshing, setRefreshing] = useState(false);
 
   const goToNewsDetail = (newsDetail: any) => {
@@ -27,6 +28,10 @@ export default function NewsScreen() {
     const getBatelRoyaleNews = await fortniteService.getBatelRoyaleNews();
     const getSaveTheWorldNews = await fortniteService.getSaveTheWorldNews();
 
+    const getFortniteNews = await fortniteService.getFortniteNews();
+
+
+    setFortniteNewsList(getFortniteNews);
     setNewsBattleRoyaleList(getBatelRoyaleNews.data.motds);
     setNewsSaveTheWorldList(getSaveTheWorldNews.data.messages);
 
@@ -54,6 +59,26 @@ export default function NewsScreen() {
       <View style={styles.newsContainer}>
         {/* Título de la sección de noticias */}
         <Text style={styles.sectionTitle}>FORTNITE NEWS</Text>
+
+        {/* Mapear cada noticia de Fortnite Web */}
+        {fortniteNewsList.map((news, index) => (
+          <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
+
+            {/* Contenedor de la imagen */}
+            <View style={styles.imageContainer}>
+              <Image
+                source={{uri: news.image}}
+                style={styles.newsImage}
+              />
+              {/* Superposición de texto sobre la imagen */}
+              <View style={styles.overlay}>
+                <Text style={styles.overlayText}>{news.title}</Text>
+                <Text style={styles.overlayText}>{news.body}</Text>
+              </View>
+            </View>
+          </Pressable>
+        ))}
+
         {/* Mapear cada noticia de Battle Royale */}
         {newsBattleRoyaleList.map((news, index) => (
           <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
