@@ -360,6 +360,26 @@ export class FortniteService {
   }
 
   /**
+   * Returns stats of the requested player account
+   * Note: trios stats will always be null
+   * @param username username for this endpoint
+   */
+  public async getFortniteNews(username?: string): Promise<any> {
+    let response: any;
+
+    await fetch(`https://www.fortnite.com/api/blog/getPosts?category=&postsPerPage=0&offset=0&locale=es-ES&rootPageSlug=blog`)
+      .then((res: any) => res.json())
+      .then((responseJson: any) => {
+        response = responseJson.blogList
+      })
+      .catch((err) => {
+        console.log('err', err)
+      });
+
+    return response;
+  }
+
+  /**
    * Returns an array of all playlists
    * @param options Options for this endpoint
    */
