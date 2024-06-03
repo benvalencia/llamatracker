@@ -8,9 +8,9 @@ export function ShopProductImage(props: any) {
   const animation = useRef(new Animated.Value(0)).current;
   const [imageIndex, setImageIndex] = useState(0);
 
-  const imageSource = assets[imageIndex].images.Background;
+  const imageSource = assets[imageIndex].background;
 
-  const ANIMATION_DURATION = 9500; // you can add your own animation time in ms
+  const ANIMATION_DURATION = 15000; // you can add your own animation time in ms
 
   useEffect(() => {
     Animated.loop(

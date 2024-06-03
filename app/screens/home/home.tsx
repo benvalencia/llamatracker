@@ -104,6 +104,12 @@ export default function HomeScreen() {
     setNews(news)
   };
 
+  // const getSome = async () => {
+  //   const some = await fortniteService.getSomething();
+  //   console.log('some >> ',some)
+  // };
+
+
   useEffect(() => {
     const updateCountdown = () => {
       const nextUpdate = new Date('2024-08-16T08:00:00'); // Fecha y hora de la próxima actualización
@@ -120,6 +126,8 @@ export default function HomeScreen() {
         setTimeRemaining('¡La actualización ha llegado!');
       }
     };
+
+    // getSome();
 
     getNews();
     getStoreRecentSearch()
