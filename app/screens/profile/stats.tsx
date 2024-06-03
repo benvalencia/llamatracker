@@ -74,23 +74,23 @@ export default function StatsScreen({route}: any) {
   }
 
   return (
-    <ScrollView
+<ScrollView
       contentContainerStyle={styles.container}
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-  <View style={styles.profileSection}>
+ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+    <View style={styles.profileSection}>
          {/* Sección ACCOUNT y IMAGE */}
-     <View style={styles.topContainer}>     
-       <View style={styles.cardCentered}>
-        <View style={styles.row}>
-        <View style={styles.card}>
-            <Text style={styles.cardTitle}>Image</Text>
-            <View style={styles.cardContent}>
-              <View style={styles.cardTextContainer}>
-                <Text style={styles.cardText}>Image: {fortniteProfile.image}</Text>
-              </View>
+       <View style={styles.topContainer}>     
+         <View style={styles.cardCentered}>
+           <View style={styles.row}>
+            <View style={styles.card}>
+               <Text style={styles.cardTitle}>Image</Text>
+              <View style={styles.cardContent}>
+                 <View style={styles.cardTextContainer}>
+                    <Text style={styles.cardText}>Image: {fortniteProfile.image}</Text>
+                 </View>
               </View> 
-              </View>   
+            </View>   
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Account</Text>
             <View style={styles.cardContent}>
@@ -143,7 +143,6 @@ export default function StatsScreen({route}: any) {
         <Ionicons name="speedometer-outline" size={24} color={Colors.yellow} />
         <Text style={styles.cardText}>KD: {fortniteProfile.stats?.all?.overall?.kd}</Text>
       </View>
-      
     </View>
     <View style={styles.statsRow}>
       <View style={styles.statItem}>
@@ -158,9 +157,62 @@ export default function StatsScreen({route}: any) {
       <Ionicons name="people-outline" size={24} color={Colors.yellow} />
       <Text style={styles.cardText}>Top 10: {fortniteProfile.stats?.all?.overall?.top10}</Text>
     </View>
+    
+</View>
+
+</View>
+<View style={styles.cardCentered}>
+      <View style={styles.statsRow}>
+          <Text style={styles.cardTitle}>Solo Stats</Text>
+          <Text style={styles.cardText}>Last Modified: {formatDateDifference(fortniteProfile.stats?.all?.solo?.lastModified)}</Text>
+      </View>
+      <View style={styles.statsRow}>
+        <View style={styles.statItem}>
+         <Ionicons name="trophy-outline" size={24} color={Colors.yellow} />
+         <Text style={styles.cardText}>Wins: {fortniteProfile.stats?.all?.solo?.wins}</Text>
+      </View>
+    
+    <View style={styles.statItem}>
+        <Ionicons name="checkmark-done-outline" size={24} color={Colors.yellow} />
+        <Text style={styles.cardText}>Win Rate: {fortniteProfile.stats?.all?.solo?.winRate}</Text>
+    </View>
+    <View style={styles.statItem}>
+       <Ionicons name="game-controller-outline" size={24} color={Colors.yellow} />
+       <Text style={styles.cardText}>Matches: {fortniteProfile.stats?.all?.solo?.matches}</Text>
+    </View>
+    </View>
+    <View style={styles.statsRow}>
+      <View style={styles.statItem}>
+        <Ionicons name="skull-outline" size={24} color={Colors.yellow} />
+        <Text style={styles.cardText}>Kills: {fortniteProfile.stats?.all?.solo?.kills}</Text>
+      </View>
+      <View style={styles.statItem}>
+        <Ionicons name="skull-outline" size={24} color={Colors.yellow} />
+        <Text style={styles.cardText}>Deaths: {fortniteProfile.stats?.all?.solo?.deaths}</Text>
+      </View>
+      <View style={styles.statItem}>
+        <Ionicons name="speedometer-outline" size={24} color={Colors.yellow} />
+        <Text style={styles.cardText}>KD: {fortniteProfile.stats?.all?.solo?.kd}</Text>
+      </View>
+    </View>
+    <View style={styles.statsRow}>
+      <View style={styles.statItem}>
+        <Ionicons name="hourglass-outline" size={24} color={Colors.yellow} />
+        <Text style={styles.cardText}>Minutes Played: {fortniteProfile.stats?.all?.solo?.minutesPlayed}</Text>
+      </View>
+      <View style={styles.statItem}>
+      <Ionicons name="podium-outline" size={24} color={Colors.yellow} />
+      <Text style={styles.cardText}>Top 3: {fortniteProfile.stats?.all?.solo?.top3}</Text>
+    </View>
+      <View style={styles.statItem}>
+      <Ionicons name="people-outline" size={24} color={Colors.yellow} />
+      <Text style={styles.cardText}>Top 10: {fortniteProfile.stats?.all?.solo?.top10}</Text>
+    </View>
 </View>
 </View>
+
 </View>
+
     </ScrollView>
   );
 }
