@@ -10,7 +10,6 @@ export function ShopModule(props: any) {
   return (
     <View style={{}}
           key={index}>
-
       <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 5}}>
         {/*TITULO MODULO*/}
         <View>
@@ -21,14 +20,7 @@ export function ShopModule(props: any) {
             paddingLeft: 5
           }}>{module.category}</Text>
         </View>
-        {/*BACKGRUND DEL MODULO*/}
-        {/*{shopList[0].background !== 'default' ?*/}
-        {/*  <View>*/}
-        {/*    <Image source={{uri: shopList[0].background}} width={240} height={230}/>*/}
-        {/*  </View>*/}
-        {/*  : null}*/}
-
-        {/*SECTION TEST*/}
+        {/*SECTIONS*/}
         {module.sections.map((section: any, index: number) => {
           return (
             <ShopSection section={section} key={index}></ShopSection>

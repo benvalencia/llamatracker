@@ -25,11 +25,10 @@ export function ShopSection(props: any) {
           key={index}>
 
       <View style={{width: 'auto'}}>
-        {/*TITULO DE LA SECCION*/}
+        {/*TITULO DE LA SECTION*/}
         <View>
           <Text style={{color: 'white', fontSize: 18, fontWeight: '300', paddingLeft: 5}}>
             {section.name}
-            {/*- {section.index}*/}
           </Text>
         </View>
 

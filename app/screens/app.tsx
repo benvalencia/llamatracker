@@ -10,7 +10,8 @@ import RegisterScreen from './auth/register';
 import {AntDesign} from "@expo/vector-icons";
 import * as Animatable from 'react-native-animatable'
 import {Colors} from "@/constants/Colors";
-import ChallengesScreen from "@/app/screens/challenges/challenges";
+import IslandScreen from "@/app/screens/island/island";
+import NewsScreen from "@/app/screens/news/news";
 
 export default function AppScreen() {
 
@@ -25,15 +26,21 @@ export default function AppScreen() {
       icon: 'home',
     },
     {
-      route: 'screens/challenges/challenges',
-      label: 'Misiones',
-      component: ChallengesScreen,
+      route: 'screens/news/news',
+      label: 'Noticias',
+      component: NewsScreen,
       icon: 'plus',
     },
     {
       route: 'screens/shop/shop',
       label: 'Tienda',
       component: ShopScreen,
+      icon: 'shoppingcart',
+    },
+    {
+      route: 'screens/island/island',
+      label: 'Isla',
+      component: IslandScreen,
       icon: 'shoppingcart',
     },
     {

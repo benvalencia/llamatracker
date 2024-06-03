@@ -11,6 +11,10 @@ const secondary = '#4c51f7';
 const tertiary = '#3d02bd';
 const yellow = '#FFD700';
 
+
+// DATE FORMAT
+const dayInMilliseconds = 86400000;
+
 export const Colors = {
   light: {
     text: '#11181C',

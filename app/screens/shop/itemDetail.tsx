@@ -2,43 +2,15 @@ import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React from "react";
 import {ShopProductImage} from "@/components/shopComponents/ShopProductImage";
+import {ShopProductBanner} from "@/components/shopComponents/ShopProductBanner";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function ItemDetailScreen({route}: any) {
   const {product} = route.params;
 
-  // console.log('items.description >>> ', shopRaw.data.featured.entries[10].items[0].description)
-  // console.log('items.images.icon >>> ', shopRaw.data.featured.entries[10].items[0].images.icon)
-  // console.log('items.images.lego.small >>> ', shopRaw.data.featured.entries[10].items[0].images.lego.small)
-  // console.log('items.images.lego.wide >>> ', shopRaw.data.featured.entries[10].items[0].images.lego.wide)
+  const {bottom} = useSafeAreaInsets()
 
-  // console.log('items.images.other >>> ', shopRaw.data.featured.entries[10].items[0].images.other)
-  // console.log('items.images.smallIcon >>> ', shopRaw.data.featured.entries[10].items[0].images.smallIcon)
-  // console.log('items.introduction.chapter >>> ', shopRaw.data.featured.entries[10].items[0].introduction.chapter)
-  // console.log('items.introduction.season >>> ', shopRaw.data.featured.entries[10].items[0].introduction.season)
-  // console.log('items.introduction.text >>> ', shopRaw.data.featured.entries[10].items[0].introduction.text)
-  // console.log('items.metaTags >>> ', shopRaw.data.featured.entries[10].items[0].metaTags)
-  // console.log('items.name >>> ', shopRaw.data.featured.entries[10].items[0].name)
-  // console.log('items.rarity.value >>> ', shopRaw.data.featured.entries[10].items[0].rarity.value)
-  // console.log('items.rarity.displayValue >>> ', shopRaw.data.featured.entries[10].items[0].rarity.displayValue)
-  //
-  // console.log('items.set.text >>> ', shopRaw.data.featured.entries[10].items[0].set.text)
-  // console.log('items.other >>> ', shopRaw.data.featured.entries[10].items[0].set.value)
-  // console.log('items.shopHistory >>> ', shopRaw.data.featured.entries[10].items[0].shopHistory)
-  //
-  // console.log('items.type.displayValue >>> ', shopRaw.data.featured.entries[10].items[0].type.displayValue)
-  // console.log('items.type.value >>> ', shopRaw.data.featured.entries[10].items[0].type.value)
-  //
-  // console.log('items.variants >>> ', shopRaw.data.featured.entries[10].items[0].variants)
-
-  // console.log('producto.newDisplayAsset.materialInstances.images.Background = imagen del paquete >>> ', getShopCombined.data.featured.entries[0].newDisplayAsset.materialInstances[0].images.Background) // para pintar la imagen del paquete
-
-// ...{banner: entry.banner},
-// ...{bundle: entry.bundle},
-// ...{showIneligibleOffers: entry.layout ? entry.layout.showIneligibleOffers : null},
-// ...{materialInstances: entry.newDisplayAsset ? entry.newDisplayAsset.materialInstances : null},
-// ...{image: entry.items[0].images ? entry.items[0].images.featured : null},
-
-  console.log(product.items);
+  const daysLeft = Math.trunc(((Number(new Date(product.out)) - Number(new Date())) / 86400000));
 
   return (
     <View style={{
@@ -46,85 +18,129 @@ export default function ItemDetailScreen({route}: any) {
       height: '100%',
       width: '100%',
     }}>
-      <View style={{width: '100%', height: 290, overflow: 'hidden'}}>
-        {/*<View style={{width: '100%', height: 380, overflow: 'hidden'}}>*/}
-        {
-          <ShopProductImage assets={product.materialInstances} size={product.title}></ShopProductImage>
-        }
+      <View style={{width: '100%', height: 270, overflow: 'hidden'}}>
+        {/*PRODUCT IMAGE*/}
+        <ShopProductImage assets={product.assets} size={product.size}></ShopProductImage>
+        {/*PRODUCT BANNER*/}
+        {product.banner.display
+          ? <View style={{position: 'absolute', padding: 5, bottom: 0}}>
+            <ShopProductBanner banner={product.banner}></ShopProductBanner>
+          </View>
+          : null}
       </View>
-      <ScrollView>
-        {/*PRODUCT NAME*/}
-        <Text style={{fontSize: 23}}>{product.name}</Text>
-        {/*PRODUCT PRICE*/}
-        <View>
-          <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-            <Image source={require('../../../assets/images/vbuck/vbuck.png')}
-                   style={{width: 25, height: 25}}></Image>
-            <Text style={{color: 'white', letterSpacing: -.8}}>{product.finalPrice}</Text>
 
-            {product.finalPrice !== product.regularPrice ?
-              <View style={{position: 'relative', opacity: .5}}>
-                <Text style={{color: 'white', letterSpacing: -.8}}>{product.regularPrice}</Text>
-                <View style={{
-                  backgroundColor: 'white',
-                  width: '110%',
-                  height: 2,
-                  transform: [{rotate: '-10deg'}],
-                  position: 'absolute',
-                  top: '30%',
-                  left: -2,
-                  opacity: .6
-                }}></View>
+      <ScrollView>
+        <View style={{alignItems: 'center'}}>
+          {/*PRODUCT NAME*/}
+          <Text style={{fontSize: 24, color: 'white', width: '100%', padding: 5}}>{product.name}</Text>
+          {/*PRODUCT INFO*/}
+          <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
+            {/*PRODUCT DETAILS*/}
+            <View style={{maxWidth: 245, padding: 5, gap: 10}}>
+              <View style={{gap: 5}}>
+                {/*PRODUCT RARITY & TYPE*/}
+                <Text style={{fontSize: 18, color: 'white'}}>{product.rarity.name} {product.type}</Text>
+                {/*PRODUCT SERIES & TYPE*/}
+                {product.series
+                  ? <Text style={{fontSize: 18, color: 'white'}}>{product.series.name}</Text> : null}
+                {/*PRODUCT RELEASED*/}
+                <Text style={{fontSize: 18, color: 'white'}}>Lanzado
+                  el {new Date(product.in).toLocaleDateString()}</Text>
+                {/*PRODUCT DAYS LEFT*/}
+                <Text style={{fontSize: 18, color: 'white'}}>Se
+                  va {daysLeft ? 'en ' + daysLeft + (daysLeft > 1 ? ' días' : ' día') : 'hoy'}</Text>
               </View>
-              : null
-            }
+            </View>
+            {/*PRODUCT PRICE*/}
+            <View style={{maxWidth: 145, padding: 5}}>
+              <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+                <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                       style={{width: 25, height: 25}}></Image>
+                <Text style={{color: 'white', letterSpacing: -.8, fontSize: 20}}>{product.finalPrice}</Text>
+
+                {product.finalPrice !== product.regularPrice ?
+                  <View style={{position: 'relative', opacity: .5}}>
+                    <Text style={{color: 'white', letterSpacing: -.8, fontSize: 20}}>{product.regularPrice}</Text>
+                    <View style={{
+                      backgroundColor: 'white',
+                      width: '110%',
+                      height: 2,
+                      transform: [{rotate: '-10deg'}],
+                      position: 'absolute',
+                      top: '30%',
+                      left: -2,
+                      opacity: .6
+                    }}></View>
+                  </View>
+                  : null
+                }
+              </View>
+            </View>
+          </View>
+          {/*PRODUCT DESCRIPTION*/}
+          {product.description
+            ? <View style={{
+              padding: 10,
+              margin: 10,
+              borderRadius: 10,
+              borderStyle: 'dashed',
+              borderWidth: 1,
+              borderColor: 'white'
+            }}>
+              <Text style={{fontSize: 18, color: 'white', textAlign: 'center'}}>{product.description}</Text>
+            </View>
+            : null}
+        </View>
+
+        <View style={{padding: 5, gap: 5, paddingBottom: bottom}}>
+          <Text style={{fontSize: 23, color: 'white'}}>Incluye:</Text>
+          <View style={{gap: 5}}>
+            {product.items.map((item: any, index: number) => {
+              return (
+                <View key={index} style={{
+                  backgroundColor: 'grey',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  borderRadius: 10,
+                  overflow: 'hidden',
+                  height: 130,
+                }}>
+                  <View>
+                    <Image source={{uri: item.images.background}}
+                           style={{width: 130, height: 130}}></Image>
+
+                  </View>
+                  <View style={{padding: 5, gap: 2, alignSelf: 'center'}}>
+                    <Text style={{fontSize: 14}}>{item.name}</Text>
+
+                    <Text style={{fontSize: 14}}>{item.rarity.name} {item.type.name}</Text>
+                    <Text style={{fontSize: 14}}>{item.series ? item.series.name : 'no series'}</Text>
+
+                    <Text style={{fontSize: 14}}>{item.set ? item.set.partOf : 'no part of'}</Text>
+
+                    {item.description
+                      ? <View style={{
+                        padding: 5,
+                        borderRadius: 10,
+                        borderStyle: 'dashed',
+                        borderWidth: 1,
+                        borderColor: 'white',
+                        justifyContent: 'flex-start'
+                      }}>
+                        <Text style={{
+                          fontSize: 14,
+                          color: 'white',
+                          textAlign: 'center',
+                          maxWidth: 200
+                        }}>{item.description}</Text>
+                      </View>
+                      : null}
+                  </View>
+                </View>
+              )
+            })}
           </View>
         </View>
-
-        {/*PRODUCT BANNER*/}
-        <View style={{
-          backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
-          padding: 2,
-          borderRadius: 25,
-          paddingLeft: 10,
-          paddingRight: 10,
-          alignSelf: 'flex-start'
-        }}>
-          <Text>{product.banner.value}</Text>
-        </View>
-
-        <Text>bundle.info: {product.bundle ? product.bundle.info : null}</Text>
-
-        {product.items.map((item: any, index: number) => {
-          return (
-            <View key={index}>
-              <Text>///////////</Text>
-              <Text>{index}</Text>
-              <Text>name: {item.name}</Text>
-              <Text>description: {item.description}</Text>
-              <Text>added: {item.added}</Text>
-              <Text>rarity.value: {item.rarity.value}</Text>
-              <Text>rarity.displayValue: {item.rarity.displayValue}</Text>
-              <Text>set.value: {item.set.value}</Text>
-              <Text>set.text: {item.set.text}</Text>
-              <Text>showcaseVideo: {item.showcaseVideo}</Text>
-              <Text>type.value: {item.type.value}</Text>
-              <Text>type.displayValue: {item.type.displayValue}</Text>
-              <Text>introduction.text: {item.introduction.text}</Text>
-              <Text>introduction.chapter: {item.introduction.chapter}</Text>
-              <Text>introduction.season: {item.introduction.season}</Text>
-
-
-              <Text>images.featured: {item.images.featured}</Text>
-              <Text>images.icon: {item.images.icon}</Text>
-              <Text>images.smallIcon: {item.images.smallIcon}</Text>
-
-              <Text>images.lego: {item.images.lego ? item.images.lego.length : null}</Text>
-              <Text>shopHistory Array count: {item.shopHistory ? item.shopHistory.length : null}</Text>
-              <Text>variants Array count: {item.variants ? item.variants.length : null}</Text>
-            </View>
-          )
-        })}
       </ScrollView>
     </View>
   );

@@ -17,15 +17,14 @@ export default function ShopScreen() {
   const [shopCache, setShopCache] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
-
   const getStoreShop = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('daily-shop');
       const objToTransform = jsonValue != null ? JSON.parse(jsonValue) : null;
-      if (objToTransform.data.date
-        && new Date(objToTransform.data.date).toDateString() !== new Date().toDateString()) {
+      if (objToTransform.lastUpdate.date
+        && new Date(objToTransform.lastUpdate.date).toDateString() !== new Date().toDateString()) {
 
-        const getShopCombined = await fortniteService.getBatelRoyaleShopCombined();
+        const getShopCombined = await fortniteService.getDailyShop();
 
         const jsonValue = JSON.stringify(getShopCombined);
         await AsyncStorage.setItem('daily-shop', jsonValue);
@@ -43,14 +42,8 @@ export default function ShopScreen() {
   }
 
   const getShopList = async () => {
-    let tienda: any = []
-
-    // const getShop = await fortniteService.getBatelRoyaleShop();
-    // const getShopPlaylist = await fortniteService.getMap();
-    // console.log('testing >> ', getShopPlaylist.data.pois)
-
     if (shopCache == null) {
-      const getShopCombined = await fortniteService.getBatelRoyaleShopCombined();
+      const getShopCombined = await fortniteService.getDailyShop();
 
       try {
         const jsonValue = JSON.stringify(getShopCombined);
@@ -63,48 +56,50 @@ export default function ShopScreen() {
       }
     }
 
-    setShopInformation({date: shopRaw.data ? shopRaw.data.date : null})
+    setShopInformation({date: shopRaw ? shopRaw.lastUpdate?.date : null})
 
     let shopListArrayBuilder: any = []
-    await shopRaw.data?.featured.entries.forEach((entry: any) => {
-      let moduleObject: any = {}
-      let sectionObject: any = {}
-      let productObject = {}
+    await shopRaw.shop.forEach((entry: any) => {
+      let productObject = {
+        ...{
+          banner: {
+            display: !!entry.banner,
+            intensity: entry.banner ? entry.banner.intensity : null,
+            name: entry.banner ? entry.banner.name : null,
+          }
+        },
+        ...{name: entry.displayName},
+        ...{description: entry.displayDescription},
+        ...{size: entry.tileSize},
+        ...{finalPrice: entry.price.finalPrice},
+        ...{regularPrice: entry.price.regularPrice},
+        ...{in: entry.offerDates.in},
+        ...{out: entry.offerDates.out},
+        ...{series: entry.series ? entry.series : null},
+        ...{rarity: entry.rarity},
+        ...{type: entry.displayType},
+        ...{set: entry.set},
+        ...{offerId: entry.offerId},
+        ...{id: entry.mainId},
+        ...{assets: entry.displayAssets},
 
-      productObject = {
-        ...{banner: entry.banner},
-        ...{bundle: entry.bundle},
-        ...{tile: entry.tileSize},
-        ...{finalPrice: entry.finalPrice},
-        ...{regularPrice: entry.regularPrice},
-        ...{name: entry.bundle ? entry.bundle.name : entry.items[0].name ? entry.items[0].name : entry.layout ? entry.layout.name : 'unnamed'},
-        ...{showIneligibleOffers: entry.layout ? entry.layout.showIneligibleOffers : null},
-        ...{materialInstances: entry.newDisplayAsset ? entry.newDisplayAsset.materialInstances : null},
-        ...{image: entry.items[0].images ? entry.items[0].images.featured : null},
-
-        ...{items: entry.items ? entry.items : null}
+        ...{items: entry.granted ? entry.granted : null}
       };
 
-      sectionObject = {
-        ...{id: entry.layout ? entry.layout.id : null},
-        ...{index: entry.layout ? entry.layout.index : null},
-        ...{name: entry.layout ? entry.layout.name : null},
-        ...{showIneligibleOffers: entry.layout ? entry.layout.showIneligibleOffers : null},
+      let sectionObject = {
+        ...{id: entry.section.id},
+        ...{name: entry.section.name},
         ...{products: [productObject]},
       };
 
-      moduleObject = {
-        ...{category: entry.layout ? entry.layout.category : 'Uncategorized'},
-        ...{background: entry.layout ? entry.layout.background ? entry.layout.background : 'default' : 'default'},
+      let moduleObject = {
+        ...{category: entry.section ? entry.section.category : 'Uncategorized'},
         ...{sections: [sectionObject]},
       };
 
-
-      const module = shopListArrayBuilder.find((element: any) => element.category === entry.layout.category);
+      const module = shopListArrayBuilder.find((element: any) => element.category === entry.section.category);
       if (module) {
-
-        const section = module.sections.find((element: any) => element.id === entry.layout.id);
-        // const section = module.sections.find((element: any) => element.id === entry.sectionId);
+        const section = module.sections.find((element: any) => element.name === entry.section.name);
         if (section) {
           section.products.push(productObject)
         } else {
@@ -115,7 +110,8 @@ export default function ShopScreen() {
       }
     });
 
-    setShopList(shopListArrayBuilder ? shopListArrayBuilder.map((i: any) => i) : null);
+
+    setShopList(shopListArrayBuilder ? shopListArrayBuilder.reverse().map((i: any) => i) : null);
     setRefreshing(false);
   };
 
@@ -146,17 +142,17 @@ export default function ShopScreen() {
       }}>
         {shopList[0] ?
           <View style={{marginBottom: 15, paddingTop: top}}>
-          <Text style={{
-            color: 'white',
-            fontSize: 23,
-            fontWeight: '400'
-          }}>{new Date(shopInformation.date).toLocaleDateString('spanish', {
-            weekday: "long",
-            year: "numeric",
-            month: "short",
-            day: "numeric"
-          })}</Text>
-        </View>
+            <Text style={{
+              color: 'white',
+              fontSize: 23,
+              fontWeight: '400'
+            }}>{new Date(shopInformation.date).toLocaleDateString('spanish', {
+              weekday: "long",
+              year: "numeric",
+              month: "short",
+              day: "numeric"
+            })}</Text>
+          </View>
           : null
         }
 

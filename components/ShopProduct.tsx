@@ -1,9 +1,14 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React from "react";
+import {ShopProductBanner} from "@/components/shopComponents/ShopProductBanner";
 
 export function ShopProduct(props: any) {
 
   const {product, index} = props
+
+  const findImage = () => {
+    return product.assets.find((asset: any) => (asset.primaryMode === 'MAX'))
+  }
 
   return (
     <View style={[{
@@ -13,63 +18,93 @@ export function ShopProduct(props: any) {
       margin: 2,
       alignSelf: 'flex-start',
       justifyContent: 'space-between',
-    }, product.tile === 'Size_1_x_1' ? {width: 85, height: 108} : null
-      , product.tile === 'Size_1_x_2' ? {width: 110, height: 220} : null
-      , product.tile === 'Size_2_x_2' ? {width: 210, height: 220} : null
-      , product.tile === 'Size_5_x_2' ? {width: 290, height: 220} : null
+    }, product.size === 'Size_1_x_1' ? {width: 85, height: 108} : null
+      , product.size === 'Size_1_x_2' ? {width: 110, height: 220} : null
+      , product.size === 'Size_3_x_2' ? {width: 245, height: 220} : null
+      , product.size === 'Size_2_x_2' ? {width: 210, height: 220} : null
+      , product.size === 'Size_5_x_2' ? {width: 290, height: 220} : null
     ]}
           key={index}>
       {/*IMAGE PRODUCT*/}
       <View style={{position: 'absolute', zIndex: 0}}>
-        {product.materialInstances ?
-          product.materialInstances[0] ?
+        {product.assets ?
+          findImage() !== undefined ?
             <View>
               <Image
-                source={{uri: product.materialInstances[0].images.Background ? product.materialInstances[0].images.Background : product.image}}
-                     style={[
-                       product.tile === 'Size_1_x_1' ? {
-                         width: 110, height: 110,
-                         transform: [{translateX: -15}],
+                source={{uri: findImage().background}}
+                style={[
+                  product.size === 'Size_1_x_1' ? {
+                    width: 110, height: 110,
+                    transform: [{translateX: -15}],
 
-                       } : null
-                       , product.tile === 'Size_1_x_2' ? {
-                         width: 115,
-                         height: 210,
-                         transform: [{scaleX: 1.3}, {scaleY: 1.3}],
-                         top: "15%",
-                       } : null
-                       , product.tile === 'Size_2_x_2' ? {
-                         width: 210,
-                         height: 220,
-                         transform: [{scaleX: 1}, {scaleY: 1.1}],
-                       } : null
-                       , product.tile === 'Size_5_x_2' ? {
-                         width: 290,
-                         height: 220,
-                         top: 0,
-                         transform: [{scaleX: 1.5}, {scaleY: 1.5}, {translateY: 37}],
-                       } : null
-                     ]}
+                  } : null
+                  , product.size === 'Size_1_x_2' ? {
+                    width: 115,
+                    height: 210,
+                    transform: [{scaleX: 1.3}, {scaleY: 1.3}],
+                    top: "15%",
+                  } : null
+                  , product.size === 'Size_2_x_2' ? {
+                    width: 210,
+                    height: 220,
+                    transform: [{scaleX: 1}, {scaleY: 1.1}],
+                  } : null
+                  , product.size === 'Size_3_x_2' ? {
+                    width: 245,
+                    height: 220,
+                    transform: [{scaleX: 1}, {scaleY: 1.1}],
+                  } : null
+                  , product.size === 'Size_5_x_2' ? {
+                    width: 290,
+                    height: 220,
+                    top: 0,
+                    transform: [{scaleX: 1.5}, {scaleY: 1.5}, {translateY: 37}],
+                  } : null
+                ]}
               />
             </View>
-            : null
+            : <View>
+              <Image
+                source={{uri: product.assets[0].background}}
+                style={[
+                  product.size === 'Size_1_x_1' ? {
+                    width: 110, height: 110,
+                    transform: [{translateX: -15}],
+
+                  } : null
+                  , product.size === 'Size_1_x_2' ? {
+                    width: 115,
+                    height: 210,
+                    transform: [{scaleX: 1.3}, {scaleY: 1.3}],
+                    top: "15%",
+                  } : null
+                  , product.size === 'Size_2_x_2' ? {
+                    width: 210,
+                    height: 220,
+                    transform: [{scaleX: 1}, {scaleY: 1.1}],
+                  } : null
+                  , product.size === 'Size_3_x_2' ? {
+                    width: 245,
+                    height: 220,
+                    transform: [{scaleX: 1}, {scaleY: 1.1}],
+                  } : null
+                  , product.size === 'Size_5_x_2' ? {
+                    width: 290,
+                    height: 220,
+                    top: 0,
+                    transform: [{scaleX: 1.5}, {scaleY: 1.5}, {translateY: 37}],
+                  } : null
+                ]}
+              />
+            </View>
           : null}
       </View>
+
       {/*PRODUCT OFFER ALERT*/}
-      <View>
-        {product.banner ?
-          <View style={{
-            backgroundColor: product.banner.intensity == 'Low' ? 'white' : 'yellow',
-            padding: 2,
-            borderRadius: 25,
-            paddingLeft: 10,
-            paddingRight: 10,
-            alignSelf: 'flex-start'
-          }}>
-            <Text>{product.banner.value}</Text>
-          </View>
-          : null}
-      </View>
+      {product.banner.display ?
+        <ShopProductBanner banner={product.banner}></ShopProductBanner>
+        : <View></View>}
+
       {/*PRODUCT INFORMATION*/}
       <View style={{}}>
         {/*PRODUCT NAME*/}
@@ -77,10 +112,10 @@ export function ShopProduct(props: any) {
           <View>
             <Text style={{color: 'white', letterSpacing: -.8}}>{product.name}</Text>
           </View>
-          {product.bundle
+          {product.type
             ?
             <View>
-              <Text style={{color: 'white', letterSpacing: -.8}}>{product.bundle.info}</Text>
+              <Text style={{color: 'white', letterSpacing: -.8}}>{product.type}</Text>
             </View>
             : null}
         </View>
