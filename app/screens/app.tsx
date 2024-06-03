@@ -21,31 +21,26 @@ export default function AppScreen() {
   const tabRoutes = [
     {
       route: 'screens/home/home',
-      // label: 'Inicio',
       component: HomeScreen,
       icon: 'home',
     },
     {
       route: 'screens/news/news',
-      // label: 'Noticias',
       component: NewsScreen,
-      icon: 'plus',
+      icon: 'notification',
     },
     {
       route: 'screens/shop/shop',
-      // label: 'Tienda',
       component: ShopScreen,
-      icon: 'shoppingcart',
+      icon: 'isv',
     },
     {
       route: 'screens/island/island',
-      // label: 'Isla',
       component: IslandScreen,
-      icon: 'shoppingcart',
+      icon: 'tool',
     },
     {
       route: 'screens/profile/profile',
-      // label: 'Profile',
       component: ProfileScreen,
       icon: 'user',
     },
@@ -110,12 +105,7 @@ export default function AppScreen() {
           <Animated.View style={[styles.animatedViewCircle, scaleStyles]}></Animated.View>
           <AntDesign name={tab.icon} size={25} color={colorIcon}/>
         </Animatable.View>
-        {/*<Animatable.Text*/}
-        {/*  style={[styles.animatedText, {*/}
-        {/*    opacity: scale*/}
-        {/*  }]}>{tab.label}</Animatable.Text>*/}
-
-      </TouchableOpacity>
+        9 </TouchableOpacity>
     )
   }
 
@@ -162,19 +152,17 @@ const styles = StyleSheet.create({
 
   // ANIMATED CONTAINER
   animatedView: {
-    width: 60,
-    height: 60,
-    borderRadius: 25,
-    borderWidth: 4,
-    borderColor: 'white',
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    marginTop: 5,
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
   },
   animatedViewCircle: {
-    width: 60,
-    height: 60,
-    borderRadius: 100,
+    width: 50,
+    height: 50,
     position: 'absolute',
     backgroundColor: Colors.secondary
   },
