@@ -2,8 +2,8 @@ import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React from "react";
 import {ShopProductImage} from "@/components/shopComponents/ShopProductImage";
-import {ShopProductBanner} from "@/components/shopComponents/ShopProductBanner";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {ShopProductBanner} from "@/components/shopComponents/ShopProductBanner";
 
 export default function ItemDetailScreen({route}: any) {
   const {product} = route.params;
