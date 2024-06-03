@@ -83,7 +83,7 @@ export default function StatsScreen({route}: any) {
        <View style={styles.topContainer}>     
          <View style={styles.cardCentered}>
            <View style={styles.row}>
-            <View style={styles.card}>
+            <View style={[styles.card, styles.flexCard]}>
                <Text style={styles.cardTitle}>Image</Text>
               <View style={styles.cardContent}>
                  <View style={styles.cardTextContainer}>
@@ -91,7 +91,7 @@ export default function StatsScreen({route}: any) {
                  </View>
               </View> 
             </View>   
-          <View style={styles.card}>
+          <View style={[styles.card, styles.flexCard]}>
             <Text style={styles.cardTitle}>Account</Text>
             <View style={styles.cardContent}>
               <View style={styles.cardTextContainer}>
@@ -99,12 +99,12 @@ export default function StatsScreen({route}: any) {
               </View>
             </View> 
           </View>
+         </View>
         <View style={styles.card}>         
           <Text style={styles.cardTitle}>Battle Pass</Text>
           <Text style={styles.cardText}>Level: {fortniteProfile.battlePass?.level}</Text>
           <Text style={styles.cardText}>Progress: {fortniteProfile.battlePass?.progress}</Text>
-         </View>        
-          </View>          
+         </View>                   
         </View>
        </View>       
       
@@ -202,11 +202,11 @@ export default function StatsScreen({route}: any) {
       </View>
       <View style={styles.statItem}>
       <Ionicons name="podium-outline" size={24} color={Colors.yellow} />
-      <Text style={styles.cardText}>Top 3: {fortniteProfile.stats?.all?.solo?.top3}</Text>
+      <Text style={styles.cardText}>Top 10: {fortniteProfile.stats?.all?.solo?.top10}</Text>
     </View>
       <View style={styles.statItem}>
       <Ionicons name="people-outline" size={24} color={Colors.yellow} />
-      <Text style={styles.cardText}>Top 10: {fortniteProfile.stats?.all?.solo?.top10}</Text>
+      <Text style={styles.cardText}>Top 25: {fortniteProfile.stats?.all?.solo?.top25}</Text>
     </View>
 </View>
 </View>
@@ -237,9 +237,7 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     width: '100%',
-    marginBottom: 16,
     flexGrow:1,
-    color: 'green',
   },
   profileSection: {
     margin: 16,
@@ -247,6 +245,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondary,
     borderRadius: 8,
     justifyContent:'space-between',
+    width:"95%"
 
   },
   sectionTitle: {
@@ -260,34 +259,40 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flexWrap:'wrap',
+    width: "100%",
     
   },
   card: {
-    alignContent: 'center',
-    width:'100%',
-    backgroundColor: Colors.secondary,
+
+    backgroundColor: 'purple',
     borderRadius: 8,
     padding: 20,
     marginBottom: 16,
-    marginHorizontal: 16,
+    marginHorizontal: 1,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 1,
-    flex:1,
+    flex: 1,
+    width:"100%",
+  },
+  flexCard: {
+    flex: 1,
+    marginHorizontal: 8, // Optional: Add some horizontal margin to space them out
+    width:"100%"
   },
   cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: Colors.yellow,
     marginBottom: 8,
+    flexDirection:'column',
   },
   cardText: {
     fontSize: 16,
     color: Colors.primary,
-    marginBottom: 4,
+    marginBottom: 5,
   },
   cardContent: {
     flexDirection: 'row',
@@ -297,7 +302,7 @@ const styles = StyleSheet.create({
   cardTextContainer: {
     alignContent:'center',
     alignItems:'center',
-    flex: 1,
+    padding: 2,
   },
   cardCentered: {
     width: '100%',
@@ -321,18 +326,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    marginBottom: 16,
+    marginBottom: 10,
   },
   statItem: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 8,
-  },
-  radarChartContainer: {
-    marginTop: 20,
-    marginBottom: 20,
-    alignItems: 'center',
   },
 });
 
