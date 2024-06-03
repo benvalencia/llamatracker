@@ -105,7 +105,7 @@ export default function AppScreen() {
           <Animated.View style={[styles.animatedViewCircle, scaleStyles]}></Animated.View>
           <AntDesign name={tab.icon} size={25} color={colorIcon}/>
         </Animatable.View>
-        9 </TouchableOpacity>
+      </TouchableOpacity>
     )
   }
 
