@@ -10,40 +10,37 @@ import * as Animatable from 'react-native-animatable'
 import {Colors} from "@/constants/Colors";
 import IslandScreen from "@/app/screens/island/island";
 import NewsScreen from "@/app/screens/news/news";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function AppScreen() {
 
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
+  const {bottom} = useSafeAreaInsets()
 
   const tabRoutes = [
     {
       route: 'screens/home/home',
-      label: 'Inicio',
       component: HomeScreen,
       icon: 'home',
     },
     {
       route: 'screens/news/news',
-      label: 'Noticias',
       component: NewsScreen,
-      icon: 'plus',
+      icon: 'notification',
     },
     {
       route: 'screens/shop/shop',
-      label: 'Tienda',
       component: ShopScreen,
-      icon: 'shoppingcart',
+      icon: 'isv',
     },
     {
       route: 'screens/island/island',
-      label: 'Isla',
       component: IslandScreen,
-      icon: 'shoppingcart',
+      icon: 'tool',
     },
     {
       route: 'screens/profile/profile',
-      label: 'Profile',
       component: ProfileScreen,
       icon: 'user',
     },
@@ -83,7 +80,7 @@ export default function AppScreen() {
       transform: [{
         translateY: translate.interpolate({
           inputRange: [0, 1],
-          outputRange: [0, -30],
+          outputRange: [0, 1],
           extrapolate: 'clamp',
         })
       }]
@@ -108,11 +105,6 @@ export default function AppScreen() {
           <Animated.View style={[styles.animatedViewCircle, scaleStyles]}></Animated.View>
           <AntDesign name={tab.icon} size={25} color={colorIcon}/>
         </Animatable.View>
-        <Animatable.Text
-          style={[styles.animatedText, {
-            opacity: scale
-          }]}>{tab.label}</Animatable.Text>
-
       </TouchableOpacity>
     )
   }
@@ -121,7 +113,8 @@ export default function AppScreen() {
     <Stack.Navigator>
       <Stack.Screen name="Tab" options={{headerShown: false}}>
         {() => (
-          <Tab.Navigator screenOptions={{headerShown: false, tabBarStyle: styles.tabNavigatorContainer}}>
+          <Tab.Navigator
+            screenOptions={{headerShown: false, tabBarStyle: [styles.tabNavigatorContainer, {paddingBottom: bottom}]}}>
             {tabRoutes.map((tab, index: number) => {
               return (
                 <Tab.Screen
@@ -146,31 +139,23 @@ export default function AppScreen() {
 const styles = StyleSheet.create({
   // NAVIGATOR CONTAINER
   tabNavigatorContainer: {
-    height: 60,
     position: 'absolute',
-    bottom: 25,
-    right: 15,
-    left: 15,
-    borderRadius: 15,
     backgroundColor: 'white'
   },
 
   // TAB CONTAINER
   tabContainer: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    height: 65,
-    alignSelf: 'stretch'
+    height: 60,
   },
 
   // ANIMATED CONTAINER
   animatedView: {
-    width: 55,
-    height: 55,
-    borderRadius: 25,
-    borderWidth: 4,
-    borderColor: 'white',
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    marginTop: 5,
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
@@ -178,15 +163,7 @@ const styles = StyleSheet.create({
   animatedViewCircle: {
     width: 50,
     height: 50,
-    borderRadius: 100,
     position: 'absolute',
     backgroundColor: Colors.secondary
   },
-  animatedText: {
-    fontSize: 12,
-    color: Colors.secondary,
-    textAlign: 'center',
-    position: 'absolute',
-    bottom: 20
-  }
 });
