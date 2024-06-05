@@ -745,6 +745,7 @@ export class FortniteService {
    * Returns Api configuration objects depend on the request
    * Note: client is undefined as default
    * @param client client type for requests
+   * @param newApi newApi type for requests
    */
   private ApiConfig(client = false, newApi?: boolean): string | IFortniteApiConfig | ClientOptions {
     const fortniteApiIoConfig: string = "cdea95c0-f20fbd17-1d88e5b9-1b216e0e";

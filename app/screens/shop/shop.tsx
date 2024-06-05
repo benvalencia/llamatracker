@@ -8,7 +8,7 @@ import {ShopModule} from "@/components/shopComponents/ShopModule";
 
 export default function ShopScreen() {
   const fortniteService = new FortniteService();
-  const {top, bottom} = useSafeAreaInsets()
+  const {top} = useSafeAreaInsets()
 
   const [shopInformation, setShopInformation] = useState({} as any);
   const [shopList, setShopList] = useState([] as any);

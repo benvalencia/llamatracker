@@ -1,11 +1,11 @@
-import {ScrollView, StyleSheet, Text, useWindowDimensions, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React from "react";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function NewsDetailScreen({route}: any) {
-  const {top, bottom} = useSafeAreaInsets()
-  const {width} = useWindowDimensions();
+  const {bottom} = useSafeAreaInsets()
+  // const {width} = useWindowDimensions();
 
   const {newsDetail} = route.params;
 
