@@ -4,11 +4,11 @@ import {FortniteService} from "@/app/services/fortnite/fortnite.service";
 import React, {useEffect, useState} from "react";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {ShopModule} from "@/components/ShopModule";
+import {ShopModule} from "@/components/shopComponents/ShopModule";
 
 export default function ShopScreen() {
   const fortniteService = new FortniteService();
-  const {top, bottom} = useSafeAreaInsets()
+  const {top} = useSafeAreaInsets()
 
   const [shopInformation, setShopInformation] = useState({} as any);
   const [shopList, setShopList] = useState([] as any);
@@ -59,7 +59,8 @@ export default function ShopScreen() {
     setShopInformation({date: shopRaw ? shopRaw.lastUpdate?.date : null})
 
     let shopListArrayBuilder: any = []
-    await shopRaw.shop.forEach((entry: any) => {
+    shopRaw.shop
+      ? await shopRaw.shop.forEach((entry: any) => {
       let productObject = {
         ...{
           banner: {
@@ -108,7 +109,8 @@ export default function ShopScreen() {
       } else {
         shopListArrayBuilder.push(moduleObject);
       }
-    });
+      })
+      : null
 
 
     setShopList(shopListArrayBuilder ? shopListArrayBuilder.reverse().map((i: any) => i) : null);

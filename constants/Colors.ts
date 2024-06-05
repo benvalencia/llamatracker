@@ -11,6 +11,9 @@ const secondary = '#4c51f7';
 const tertiary = '#3d02bd';
 const yellow = '#FFD700';
 
+// fortnite colors
+const fortniteLightBlue = '#1db8f3'
+
 
 // DATE FORMAT
 const dayInMilliseconds = 86400000;
