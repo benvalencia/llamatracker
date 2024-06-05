@@ -75,7 +75,7 @@ export class FortniteService {
   public async getCurrentPOI(options?: BannersRequestParams): Promise<any> {
     let response: any;
 
-    await this.fortniteApiIOClient.v2.listCurrentPOI()
+    await this.fortniteApiIOClient.v2.listCurrentPOI(options)
       .then((res: any) => {
         response = res
       })
@@ -91,10 +91,10 @@ export class FortniteService {
    * This endpoint is FortniteApiIo
    * @param options Options for this endpoint
    */
-  public async getItemsList(options?: BannersRequestParams): Promise<any> {
+  public async getAllLootList(options?: BannersRequestParams): Promise<any> {
     let response: any;
 
-    await this.fortniteApiIOClient.v2.listItems()
+    await this.fortniteApiIOClient.listLoot(options)
       .then((res: any) => {
         response = res
       })
@@ -292,9 +292,8 @@ export class FortniteService {
   /**
    * Returns an array of all challenges
    * This endpoint is FortniteApiIo
-   * @param options Options for this endpoint
    */
-  public async getShopVoting(options?: BannersRequestParams): Promise<any> {
+  public async getMapsItems(): Promise<any> {
     let response: any;
     // 'e02ac7cd49c24631bfe5aba8571b8d8f'
     await this.fortniteApiIOClient.v2.getMapsItems()
