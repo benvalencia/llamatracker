@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from "react";
 import {Colors} from "@/constants/Colors";
-import {ShopSection} from "@/components/ShopSection";
+import {ShopSection} from "@/components/shopComponents/ShopSection";
 
 export function ShopModule(props: any) {
 
@@ -23,7 +23,7 @@ export function ShopModule(props: any) {
         {/*SECTIONS*/}
         {module.sections.map((section: any, index: number) => {
           return (
-            <ShopSection section={section} key={index}></ShopSection>
+            <ShopSection module={module.category} section={section} key={index}></ShopSection>
           )
         })}
       </View>

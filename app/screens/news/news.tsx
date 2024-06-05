@@ -4,15 +4,19 @@ import React, {useEffect, useState} from "react";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
 import {CommonActions} from "@react-navigation/native";
 import {useNavigation} from "expo-router";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function NewsScreen() {
 
   const fortniteService = new FortniteService();
   const navigation = useNavigation()
+  const {top, bottom} = useSafeAreaInsets()
+
 
   const [newsBattleRoyaleList, setNewsBattleRoyaleList] = useState([] as any[]);
   const [newsSaveTheWorldList, setNewsSaveTheWorldList] = useState([] as any[]);
   const [fortniteNewsList, setFortniteNewsList] = useState([] as any[]);
+  const [fortniteIONewsList, setFortniteIONewsList] = useState([] as any[]);
   const [refreshing, setRefreshing] = useState(false);
 
   const goToNewsDetail = (newsDetail: any) => {
@@ -28,10 +32,12 @@ export default function NewsScreen() {
     const getBatelRoyaleNews = await fortniteService.getBatelRoyaleNews();
     const getSaveTheWorldNews = await fortniteService.getSaveTheWorldNews();
 
-    const getFortniteNews = await fortniteService.getFortniteNews();
+    // const getFortniteNews = await fortniteService.getFortniteNews();
+    const getFortniteIONews = await fortniteService.getNewsV2();
 
-
-    setFortniteNewsList(getFortniteNews);
+    // console.log(getFortniteIONews);
+    setFortniteIONewsList(getFortniteIONews.news);
+    // setFortniteNewsList(getFortniteNews);
     setNewsBattleRoyaleList(getBatelRoyaleNews.data.motds);
     setNewsSaveTheWorldList(getSaveTheWorldNews.data.messages);
 
@@ -56,60 +62,76 @@ export default function NewsScreen() {
         <RefreshControl refreshing={refreshing}
                         onRefresh={onRefresh}
                         style={styles.scrollReloadContainer}/>}>
-      <View style={styles.newsContainer}>
-        {/* Título de la sección de noticias */}
-        <Text style={styles.sectionTitle}>FORTNITE NEWS</Text>
+      <View style={[styles.newsContainer, {paddingTop: top, paddingBottom: bottom + 60, width: '100%'}]}>
+
+        {/* Mapear cada noticia de Fortnite Web */}
+        {fortniteIONewsList.map((news, index) => (
+          <Pressable key={index} onPress={() => goToNewsDetail(news)}>
+            {/* Contenedor de la imagen */}
+            <View style={{backgroundColor: 'red'}}>
+              <Image
+                source={{uri: news.image}}
+                style={styles.newsImage}/>
+            </View>
+            {/* Superposición de texto sobre la imagen */}
+            <View style={{backgroundColor: 'white', padding: 10}}>
+              <Text
+                style={{fontSize: 15, color: '#1db8f3', fontWeight: 700}}>{new Date(news.date).toDateString()}</Text>
+              <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{news.title}</Text>
+            </View>
+          </Pressable>
+        ))}
 
         {/* Mapear cada noticia de Fortnite Web */}
         {fortniteNewsList.map((news, index) => (
-          <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
-
+          <Pressable key={index} onPress={() => goToNewsDetail(news)}>
             {/* Contenedor de la imagen */}
-            <View style={styles.imageContainer}>
+            <View style={{backgroundColor: 'red'}}>
               <Image
                 source={{uri: news.image}}
-                style={styles.newsImage}
-              />
-              {/* Superposición de texto sobre la imagen */}
-              <View style={styles.overlay}>
-                <Text style={styles.overlayText}>{news.title}</Text>
-                <Text style={styles.overlayText}>{news.body}</Text>
-              </View>
+                style={styles.newsImage}/>
+            </View>
+            {/* Superposición de texto sobre la imagen */}
+            <View style={{backgroundColor: 'white', padding: 10}}>
+              <Text
+                style={{fontSize: 15, color: '#1db8f3', fontWeight: 700}}>{new Date(news.date).toDateString()}</Text>
+              <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{news.title}</Text>
             </View>
           </Pressable>
         ))}
 
-        {/* Mapear cada noticia de Battle Royale */}
+        {/* Mapear cada noticia de Fortnite Web */}
         {newsBattleRoyaleList.map((news, index) => (
-          <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
-
+          <Pressable key={index} onPress={() => goToNewsDetail(news)}>
             {/* Contenedor de la imagen */}
-            <View style={styles.imageContainer}>
+            <View style={{backgroundColor: 'red'}}>
               <Image
                 source={{uri: news.image}}
-                style={styles.newsImage}
-              />
-              {/* Superposición de texto sobre la imagen */}
-              <View style={styles.overlay}>
-                <Text style={styles.overlayText}>{news.title}</Text>
-                <Text style={styles.overlayText}>{news.body}</Text>
-              </View>
+                style={styles.newsImage}/>
+            </View>
+            {/* Superposición de texto sobre la imagen */}
+            <View style={{backgroundColor: 'white', padding: 10}}>
+              <Text
+                style={{fontSize: 15, color: '#1db8f3', fontWeight: 700}}>{new Date(news.date).toDateString()}</Text>
+              <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{news.title}</Text>
             </View>
           </Pressable>
         ))}
+
         {/* Mapear cada noticia de Save the World */}
         {newsSaveTheWorldList.map((news, index) => (
-          <Pressable style={styles.newsItemContainer} key={index} onPress={() => goToNewsDetail(news)}>
-            <View style={styles.imageContainer}>
+          <Pressable key={index} onPress={() => goToNewsDetail(news)}>
+            {/* Contenedor de la imagen */}
+            <View style={{backgroundColor: 'red'}}>
               <Image
                 source={{uri: news.image}}
-                style={styles.newsImage}
-              />
-              {/* Superposición de texto sobre la imagen */}
-              <View style={styles.overlay}>
-                <Text style={styles.overlayText}>{news.title}</Text>
-                <Text style={styles.overlayText}>{news.body}</Text>
-              </View>
+                style={styles.newsImage}/>
+            </View>
+            {/* Superposición de texto sobre la imagen */}
+            <View style={{backgroundColor: 'white', padding: 10}}>
+              <Text
+                style={{fontSize: 15, color: '#1db8f3', fontWeight: 700}}>{new Date(news.date).toDateString()}</Text>
+              <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{news.title}</Text>
             </View>
           </Pressable>
         ))}
@@ -127,8 +149,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   newsContainer: {
-    flex: 1,
-    justifyContent: 'center',
+    padding: 10,
+    gap: 15,
   },
 
   sectionTitle: {
@@ -140,31 +162,9 @@ const styles = StyleSheet.create({
     color: Colors.secondary,
     marginBottom: 10,
   },
-  newsItem: {
-    alignItems: 'center',
-    marginBottom: 20,
-  },
   newsImage: {
-    justifyContent: 'center',
-    alignContent: 'center',
-    width: 410,
-    height: 260,
-
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  overlayText: {
-    color: 'white',
-    fontSize: 20,
-  },
-
-  newsTitle: {
-    fontSize: 16,
-    color: Colors.yellow,
+    objectFit: 'fill',
+    height: 230,
   },
 
   // NEWS LIST CONTAINER
@@ -174,9 +174,6 @@ const styles = StyleSheet.create({
   },
 
   // NEWS ITEMS CONTAINER
-  newsItemContainer: {
-    backgroundColor: 'blue',
-  },
   newsItemComponent: {
     backgroundColor: 'pink',
   },
@@ -192,12 +189,5 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 1,
     alignItems: 'center',
-  },
-  imageContainer: {
-    backgroundColor: Colors.yellow,
-    alignContent: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-
   },
 });

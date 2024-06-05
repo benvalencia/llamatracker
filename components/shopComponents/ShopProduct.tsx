@@ -23,6 +23,10 @@ export function ShopProduct(props: any) {
       , product.size === 'Size_3_x_2' ? {width: 245, height: 220} : null
       , product.size === 'Size_2_x_2' ? {width: 210, height: 220} : null
       , product.size === 'Size_5_x_2' ? {width: 290, height: 220} : null
+      , product.size === 'Doublewide' ? {
+        width: 245,
+        height: 220
+      } : null
     ]}
           key={index}>
       {/*IMAGE PRODUCT*/}
@@ -30,6 +34,7 @@ export function ShopProduct(props: any) {
         {product.assets ?
           findImage() !== undefined ?
             <View>
+              {/*<Text>{product.size}</Text>*/}
               <Image
                 source={{uri: findImage().background}}
                 style={[
@@ -59,6 +64,10 @@ export function ShopProduct(props: any) {
                     height: 220,
                     top: 0,
                     transform: [{scaleX: 1.5}, {scaleY: 1.5}, {translateY: 37}],
+                  } : null
+                  , product.size === 'Doublewide' ? {
+                    width: 245,
+                    height: 220,
                   } : null
                 ]}
               />
@@ -94,6 +103,10 @@ export function ShopProduct(props: any) {
                     top: 0,
                     transform: [{scaleX: 1.5}, {scaleY: 1.5}, {translateY: 37}],
                   } : null
+                  , product.size === 'Doublewide' ? {
+                    width: 245,
+                    height: 220,
+                  } : null
                 ]}
               />
             </View>
@@ -122,7 +135,7 @@ export function ShopProduct(props: any) {
         {/*PRODUCT PRICE*/}
         <View>
           <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-            <Image source={require('../assets/images/vbuck/vbuck.png')}
+            <Image source={require('../../assets/images/vbuck/vbuck.png')}
                    style={{width: 25, height: 25}}></Image>
             <Text style={{color: 'white', letterSpacing: -.8}}>{product.finalPrice}</Text>
 

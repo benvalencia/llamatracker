@@ -1,7 +1,23 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
+import {FortniteService} from "@/app/services/fortnite/fortnite.service";
+import {useEffect} from "react";
 
 export default function IslandScreen() {
+  const fortniteService = new FortniteService();
+
+  const getResponse = async () => {
+
+    const res = await fortniteService.getShopVoting();
+
+    console.log('res >>> ', res)
+  };
+
+  useEffect(() => {
+    getResponse();
+  }, []);
+
+
   return (
     <View style={{
       backgroundColor: Colors.primary,
