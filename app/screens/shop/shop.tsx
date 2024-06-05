@@ -1,13 +1,13 @@
 import {RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {ShopModule} from "@/components/ShopModule";
 
 export default function ShopScreen() {
-  const fortniteService = new FortniteService();
+  const fortniteService = useMemo (() => new FortniteService(),[]);
   const {top, bottom} = useSafeAreaInsets()
 
   const [shopInformation, setShopInformation] = useState({} as any);
