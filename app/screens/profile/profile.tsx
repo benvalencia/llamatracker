@@ -1,23 +1,25 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import {useNavigation} from "@react-navigation/native";
+import LoginScreen from "@/app/screens/auth/login";
 
 export default function ProfileScreen() {
   const navigation = useNavigation<any>();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Perfil</Text>
-      <View style={styles.button}>
-        <Pressable onPress={() => navigation.navigate("Login")}>
-          <Text>Iniciar Sesión</Text>
-        </Pressable>
-      </View>
-      <View style={styles.button}>
-        <Pressable onPress={() => navigation.navigate("Register")}>
-          <Text>Registrarse</Text>
-        </Pressable>
-      </View>
+      {/*<Text style={styles.title}>Perfil</Text>*/}
+      {/*<View style={styles.button}>*/}
+      {/*  <Pressable onPress={() => navigation.navigate("Login")}>*/}
+      {/*    <Text>Iniciar Sesión</Text>*/}
+      {/*  </Pressable>*/}
+      {/*</View>*/}
+      {/*<View style={styles.button}>*/}
+      {/*  <Pressable onPress={() => navigation.navigate("Register")}>*/}
+      {/*    <Text>Registrarse</Text>*/}
+      {/*  </Pressable>*/}
+      {/*</View>*/}
+      <LoginScreen></LoginScreen>
     </View>
   );
 }

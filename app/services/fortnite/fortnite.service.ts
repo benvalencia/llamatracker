@@ -41,8 +41,296 @@ import {
 import {ClientOptions} from "fnapicom/dist/resources/structs";
 import {IFortniteApiConfig, IUserProfile} from "@/app/services/fortnite/fortnite.interface";
 
+const FortniteAPI: any = require('./../../../node_modules/fortnite-api-io')
+
 export class FortniteService {
+
   private fortniteClient = new Client(this.ApiConfig(true) as ClientConfig)
+  private fortniteApiIOClient = new FortniteAPI(this.ApiConfig(true, true) as ClientConfig)
+
+  /**
+   * Returns an array of all items of today
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getDailyShop(options?: BannersRequestParams): Promise<any> {
+    let response: any;
+
+    await this.fortniteApiIOClient.v2.getDailyShop()
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all Points of interest
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getCurrentPOI(options?: BannersRequestParams): Promise<any> {
+    let response: any;
+
+    await this.fortniteApiIOClient.v2.listCurrentPOI()
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all items
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getItemsList(options?: BannersRequestParams): Promise<any> {
+    let response: any;
+
+    await this.fortniteApiIOClient.v2.listItems()
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all challenges
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getChallengesList(season = "current", options?: BannersRequestParams): Promise<any> {
+    let response: any;
+
+    await this.fortniteApiIOClient.v2.listChallenges(season)
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all challenges
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getBattlepassRewards(season = "current", options?: BannersRequestParams): Promise<any> {
+    let response: any;
+
+    await this.fortniteApiIOClient.v2.getBattlepassRewards(season)
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all challenges
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getAccountIdByUsername(username: string, options?: BannersRequestParams): Promise<any> {
+    let response: any;
+
+    await this.fortniteApiIOClient.searchAccountId(username)
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all challenges
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getPlayerStats(accountId: string, options?: BannersRequestParams): Promise<any> {
+    let response: any;
+
+    await this.fortniteApiIOClient.getGlobalPlayerStats(accountId)
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all challenges
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getNewsV2(options?: BannersRequestParams): Promise<any> {
+    let response: any;
+    await this.fortniteApiIOClient.getNews()
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all challenges
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getTournaments(options?: BannersRequestParams): Promise<any> {
+    let response: any;
+    await this.fortniteApiIOClient.getTournaments()
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all challenges
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getTournamentSessionDetails(windowId: string, options?: BannersRequestParams): Promise<any> {
+    let response: any;
+    await this.fortniteApiIOClient.getTournamentSessionDetails(windowId)
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all challenges
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getTournamentScores(eventId: string, options?: BannersRequestParams): Promise<any> {
+    let response: any;
+    await this.fortniteApiIOClient.getTournamentScores(eventId)
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all challenges
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async listPreviousMaps(options?: BannersRequestParams): Promise<any> {
+    let response: any;
+    await this.fortniteApiIOClient.listPreviousMaps()
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all challenges
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getRarities(options?: BannersRequestParams): Promise<any> {
+    let response: any;
+    await this.fortniteApiIOClient.getRarities()
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all challenges
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getShopVoting(options?: BannersRequestParams): Promise<any> {
+    let response: any;
+    // 'e02ac7cd49c24631bfe5aba8571b8d8f'
+    await this.fortniteApiIOClient.v2.getMapsItems()
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+
+  /**
+   * Returns an array of an item detail
+   * This endpoint is FortniteApiIo
+   * @param id id for this endpoint
+   */
+  public async getItemDetails(id: string): Promise<any> {
+    let response: any;
+
+    await this.fortniteApiIOClient.getItemDetails(id)
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+
+
+
 
   /**
    * Returns stats of the requested player account
@@ -52,7 +340,7 @@ export class FortniteService {
   public async getProfileByUsername(username: string): Promise<IUserProfile> {
     let response: any;
 
-    await fetch(`https://fortnite-api.com/v2/stats/br/v2?name=${encodeURIComponent(username)}`, this.ApiConfig() as RequestInit)
+    await fetch(`https://fortnite-api.com/v2/stats/br/v2?name=${encodeURIComponent(username)}`, this.ApiConfig(false) as RequestInit)
       .then((res: any) => res.json())
       .then((responseJson: BRStatsByAccountIDResponseData) => {
         response = responseJson.data
@@ -457,18 +745,22 @@ export class FortniteService {
    * Returns Api configuration objects depend on the request
    * Note: client is undefined as default
    * @param client client type for requests
+   * @param newApi newApi type for requests
    */
-  private ApiConfig(client?: boolean): IFortniteApiConfig | ClientOptions {
+  private ApiConfig(client = false, newApi?: boolean): string | IFortniteApiConfig | ClientOptions {
+    const fortniteApiIoConfig: string = "cdea95c0-f20fbd17-1d88e5b9-1b216e0e";
+
     const fortniteApiConfig: IFortniteApiConfig = {
       headers: {
         Authorization: "442ebed4-083d-4e07-af54-2f6ba429a4a9",
       },
     }
+
     const fortniteClientApiConfig: ClientOptions = {
       language: Language.Spanish,
       apiKey: '442ebed4-083d-4e07-af54-2f6ba429a4a9',
     }
-    return (client ? fortniteClientApiConfig : fortniteApiConfig)
+    return (client ? newApi ? fortniteApiIoConfig : fortniteClientApiConfig : fortniteApiConfig)
   }
 }
 

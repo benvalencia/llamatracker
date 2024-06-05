@@ -1,12 +1,12 @@
 import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from "react";
-import {ShopProduct} from "@/components/ShopProduct";
 import {CommonActions} from "@react-navigation/native";
 import {useNavigation} from "expo-router";
+import {ShopProduct} from "@/components/shopComponents/ShopProduct";
 
 export function ShopSection(props: any) {
 
-  const {section, index} = props
+  const {module, section, index} = props
 
   const navigation = useNavigation()
 
@@ -25,13 +25,14 @@ export function ShopSection(props: any) {
           key={index}>
 
       <View style={{width: 'auto'}}>
-        {/*TITULO DE LA SECCION*/}
-        <View>
-          <Text style={{color: 'white', fontSize: 18, fontWeight: '300', paddingLeft: 5}}>
-            {section.name}
-            {/*- {section.index}*/}
-          </Text>
-        </View>
+        {/*TITULO DE LA SECTION*/}
+        {module !== section.name
+          ? <View>
+            <Text style={{color: 'white', fontSize: 18, fontWeight: '300', paddingLeft: 5}}>
+              {section.name}
+            </Text>
+          </View>
+          : null}
 
         <ScrollView
           horizontal={true}

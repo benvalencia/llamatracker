@@ -24,4 +24,6 @@ expo-env.d.ts
 /.idea/llamatracker.iml
 /.idea/.gitignore
 /.idea/git_toolbox_prj.xml
-package-lock.json
+
+/package-lock.json
+

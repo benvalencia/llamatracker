@@ -1,29 +1,42 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React from "react";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function NewsDetailScreen({route}: any) {
+  const {bottom} = useSafeAreaInsets()
+  // const {width} = useWindowDimensions();
+
   const {newsDetail} = route.params;
 
+  // console.log('newsDetail >> ',newsDetail)
   return (
-    <View style={{
+    <ScrollView style={{
       backgroundColor: Colors.primary,
       height: '100%',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
+      paddingBottom: bottom,
     }}>
-      <View>
-        <Text>body: {newsDetail.body}</Text>
-        <Text>hidden: {newsDetail.hidden ? 'true' : 'false'}</Text>
-        <Text>id: {newsDetail.id}</Text>
-        <Text>image: {newsDetail.image}</Text>
-        <Text>sortingPriority: {newsDetail.sortingPriority}</Text>
-        <Text>tabTitle: {newsDetail.tabTitle}</Text>
-        <Text>titleImage: {newsDetail.titleImage}</Text>
+      <View style={{paddingBottom: bottom}}>
+        <Text>author: {newsDetail.author}</Text>
+        <Text>cat: {newsDetail.cat}</Text>
+        <Text>category: {newsDetail.category}</Text>
+        <Text>date: {newsDetail.date}</Text>
         <Text>title: {newsDetail.title}</Text>
+        <Text>gridTitle: {newsDetail.gridTitle}</Text>
+        <Text>type: {newsDetail._type}</Text>
+        <Text>image: {newsDetail.image}</Text>
+        {/*CON MÁS CALIDAD*/}
+        <Text>shareImage: {newsDetail.shareImage}</Text>
+
+
+        {/*<Text>content: {newsDetail.content}</Text>*/}
+
+        {/*<RenderHTML*/}
+        {/*  contentWidth={width}*/}
+        {/*  source={{html: newsDetail.content}}*/}
+        {/*/>*/}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

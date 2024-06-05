@@ -1,16 +1,29 @@
 import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React, {useState} from "react";
+import {FIREBASE_AUTH} from "@/firebase.config";
+import {signInWithEmailAndPassword} from "@firebase/auth";
 
 export default function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
-    // Agregar la lógica para iniciar sesion
-    // Por ahora, solo mostraremos un mensaje en la consola
-    console.log("Iniciando usuario:", username, password);
-  };
+  const auth = FIREBASE_AUTH;
+
+  const singIn = async () => {
+    setLoading(true);
+    try {
+      const response = await signInWithEmailAndPassword(auth, username, password)
+      console.log(response)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setLoading(false)
+    }
+
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Iniciar Sesión</Text>
@@ -28,8 +41,7 @@ export default function LoginScreen() {
         onChangeText={setPassword}
       />
       <Pressable
-
-        onPress={handleLogin}
+        onPress={singIn}
         style={{
           backgroundColor: Colors.primary,
           padding: 10,
@@ -69,3 +81,8 @@ const styles = StyleSheet.create({
     width: '80%',
   }
 });
+
+function getAuth(app: any) {
+  throw new Error('Function not implemented.');
+}
+
