@@ -1,13 +1,13 @@
 import {RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {ShopModule} from "@/components/shopComponents/ShopModule";
 
 export default function ShopScreen() {
-  const fortniteService = new FortniteService();
+  const fortniteService = useMemo (() => new FortniteService(),[]);
   const {top} = useSafeAreaInsets()
 
   const [shopInformation, setShopInformation] = useState({} as any);
@@ -61,44 +61,44 @@ export default function ShopScreen() {
     let shopListArrayBuilder: any = []
     shopRaw.shop
       ? await shopRaw.shop.forEach((entry: any) => {
-      let productObject = {
-        ...{
-          banner: {
-            display: !!entry.banner,
-            intensity: entry.banner ? entry.banner.intensity : null,
-            name: entry.banner ? entry.banner.name : null,
-          }
-        },
-        ...{name: entry.displayName},
-        ...{description: entry.displayDescription},
-        ...{size: entry.tileSize},
-        ...{finalPrice: entry.price.finalPrice},
-        ...{regularPrice: entry.price.regularPrice},
-        ...{in: entry.offerDates.in},
-        ...{out: entry.offerDates.out},
-        ...{series: entry.series ? entry.series : null},
-        ...{rarity: entry.rarity},
-        ...{type: entry.displayType},
-        ...{set: entry.set},
-        ...{offerId: entry.offerId},
-        ...{id: entry.mainId},
-        ...{assets: entry.displayAssets},
+        let productObject = {
+          ...{
+            banner: {
+              display: !!entry.banner,
+              intensity: entry.banner ? entry.banner.intensity : null,
+              name: entry.banner ? entry.banner.name : null,
+            }
+          },
+          ...{name: entry.displayName},
+          ...{description: entry.displayDescription},
+          ...{size: entry.tileSize},
+          ...{finalPrice: entry.price.finalPrice},
+          ...{regularPrice: entry.price.regularPrice},
+          ...{in: entry.offerDates.in},
+          ...{out: entry.offerDates.out},
+          ...{series: entry.series ? entry.series : null},
+          ...{rarity: entry.rarity},
+          ...{type: entry.displayType},
+          ...{set: entry.set},
+          ...{offerId: entry.offerId},
+          ...{id: entry.mainId},
+          ...{assets: entry.displayAssets},
 
-        ...{items: entry.granted ? entry.granted : null}
+          ...{items: entry.granted ? entry.granted : null}
       };
 
-      let sectionObject = {
-        ...{id: entry.section.id},
-        ...{name: entry.section.name},
+        let sectionObject = {
+          ...{id: entry.section.id},
+          ...{name: entry.section.name},
         ...{products: [productObject]},
       };
 
-      let moduleObject = {
-        ...{category: entry.section ? entry.section.category : 'Uncategorized'},
+        let moduleObject = {
+          ...{category: entry.section ? entry.section.category : 'Uncategorized'},
         ...{sections: [sectionObject]},
       };
 
-      const module = shopListArrayBuilder.find((element: any) => element.category === entry.section.category);
+        const module = shopListArrayBuilder.find((element: any) => element.category === entry.section.category);
       if (module) {
         const section = module.sections.find((element: any) => element.name === entry.section.name);
         if (section) {
