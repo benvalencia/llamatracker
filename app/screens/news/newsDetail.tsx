@@ -16,7 +16,8 @@ export default function NewsDetailScreen({route}: any) {
       ></Image>
       <ScrollView style={{padding: 10, height: '100%'}}>
         <View style={{gap: 15}}>
-          <Text style={{fontSize: 15, color: '#1db8f3', fontWeight: 700}}>{newsDetail.date}</Text>
+          <Text
+            style={{fontSize: 15, color: '#1db8f3', fontWeight: 700}}>{new Date(newsDetail.date).toDateString()}</Text>
           <Text style={{
             fontSize: 20,
             fontWeight: 400,

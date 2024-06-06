@@ -1,16 +1,23 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 export default function IslandScreen() {
   const fortniteService = new FortniteService();
+  const [mapImage, setMapImage] = useState({} as any);
+  const [mapPoisPositions, setMapPoisPositions] = useState([] as any);
 
   const getResponse = async () => {
+    const currentPOI = await fortniteService.getCurrentPOI();
+    const allItemsList = await fortniteService.getAllLootList();
 
-    const res = await fortniteService.getShopVoting();
+    const map = await fortniteService.getMap();
 
-    console.log('res >>> ', res)
+
+    setMapImage(map.data.images);
+    setMapPoisPositions(map.data.pois)
+
   };
 
   useEffect(() => {
@@ -19,20 +26,34 @@ export default function IslandScreen() {
 
 
   return (
-    <View style={{
+    <ScrollView style={{
       backgroundColor: Colors.primary,
       height: '100%',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
     }}>
-      <Text>
-        Aqui mostraremos:
-      </Text>
-      <Text>
-        Armas, Items, Mapa
-      </Text>
-    </View>
+      <View style={{width: '100%'}}>
+        <Image
+          source={{uri: mapImage.blank}}
+          style={{objectFit: 'cover', height: 400}}
+        ></Image>
+        <Image
+          source={{uri: mapImage.pois}}
+          style={{objectFit: 'cover', height: 400}}
+        ></Image>
+      </View>
+      <View style={{gap: 10}}>
+        {mapPoisPositions.map((poi: any, index: number) => {
+          return (
+            <View key={index} style={{backgroundColor: 'grey', padding: 10, borderRadius: 10}}>
+              <Text>id: {poi.id}</Text>
+              <Text>x: {poi.location.x}</Text>
+              <Text>y: {poi.location.y}</Text>
+              <Text>z: {poi.location.z}</Text>
+              <Text>name: {poi.name}</Text>
+            </View>
+          )
+        })}
+      </View>
+    </ScrollView>
   );
 }
 
