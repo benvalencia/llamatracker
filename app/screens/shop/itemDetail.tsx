@@ -54,7 +54,7 @@ export default function ItemDetailScreen({route}: any) {
             {/*PRODUCT PRICE*/}
             <View style={{maxWidth: 145, padding: 5}}>
               <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-                <Image source={require('../../../assets/images/vbuck/vbuck.png')}
+                <Image source={require('../../../assets/images/vbuck/vbuck_80x80.webp')}
                        style={{width: 25, height: 25}}></Image>
                 <Text style={{color: 'white', letterSpacing: -.8, fontSize: 20}}>{product.finalPrice}</Text>
 
