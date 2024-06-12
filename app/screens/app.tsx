@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import ShopScreen from "@/app/screens/shop/shop";
 import ProfileScreen from "@/app/screens/profile/profile";
 import HomeScreen from "@/app/screens/home/home";
-import {AntDesign} from "@expo/vector-icons";
+import {Ionicons} from "@expo/vector-icons";
 import * as Animatable from 'react-native-animatable'
 import {Colors} from "@/constants/Colors";
 import IslandScreen from "@/app/screens/island/island";
@@ -27,24 +27,23 @@ export default function AppScreen() {
     {
       route: 'screens/news/news',
       component: NewsScreen,
-      icon: 'notification',
+      icon: 'notifications',
     },
     {
       route: 'screens/shop/shop',
       component: ShopScreen,
-      icon: 'isv',
+      icon: 'bag',
     },
     {
       route: 'screens/island/island',
       component: IslandScreen,
-      icon: 'tool',
+      icon: 'hammer',
     },
     {
       route: 'screens/profile/profile',
       component: ProfileScreen,
-      icon: 'user',
+      icon: 'person-circle',
     },
-
   ];
 
   const TabButton = ({tab, onPress, accessibilityState}: any) => {
@@ -55,6 +54,8 @@ export default function AppScreen() {
 
     const {translate, scale} = animatedValues;
     const colorIcon = accessibilityState.selected ? 'white' : Colors.secondary;
+    const outlineIcon = !accessibilityState.selected ? '-outline' : '';
+
 
     useEffect(() => {
       handleAnimated()
@@ -102,8 +103,8 @@ export default function AppScreen() {
                         activeOpacity={1}
                         style={styles.tabContainer}>
         <Animatable.View style={[styles.animatedView, translateStyles]}>
-          <Animated.View style={[styles.animatedViewCircle, scaleStyles]}></Animated.View>
-          <AntDesign name={tab.icon} size={25} color={colorIcon}/>
+          {/*<Animated.View style={[styles.animatedViewCircle, scaleStyles]}></Animated.View>*/}
+          <Ionicons name={tab.icon + outlineIcon as any} size={25}/>
         </Animatable.View>
       </TouchableOpacity>
     )
