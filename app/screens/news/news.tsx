@@ -15,7 +15,7 @@ export default function NewsScreen() {
 
   const [newsBattleRoyaleList, setNewsBattleRoyaleList] = useState([] as any[]);
   const [newsSaveTheWorldList, setNewsSaveTheWorldList] = useState([] as any[]);
-  // const [fortniteNewsList, setFortniteNewsList] = useState([] as any[]);
+  const [fortniteNewsList, setFortniteNewsList] = useState([] as any[]);
   const [fortniteIONewsList, setFortniteIONewsList] = useState([] as any[]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -32,12 +32,12 @@ export default function NewsScreen() {
     const getBatelRoyaleNews = await fortniteService.getBatelRoyaleNews();
     const getSaveTheWorldNews = await fortniteService.getSaveTheWorldNews();
 
-    // const getFortniteNews = await fortniteService.getFortniteNews();
+    const getFortniteNews = await fortniteService.getFortniteNews();
     const getFortniteIONews = await fortniteService.getNewsV2();
 
     // console.log(getFortniteIONews);
     setFortniteIONewsList(getFortniteIONews.news);
-    // setFortniteNewsList(getFortniteNews);
+    setFortniteNewsList(getFortniteNews);
     setNewsBattleRoyaleList(getBatelRoyaleNews.data.motds);
     setNewsSaveTheWorldList(getSaveTheWorldNews.data.messages);
 
@@ -64,8 +64,9 @@ export default function NewsScreen() {
                         style={styles.scrollReloadContainer}/>}>
       <View style={[styles.newsContainer, {paddingTop: top, paddingBottom: bottom + 60, width: '100%'}]}>
 
+
         {/* Mapear cada noticia de Fortnite Web */}
-        {fortniteIONewsList.map((news, index) => (
+        {fortniteNewsList.map((news, index) => (
           <Pressable key={index} onPress={() => goToNewsDetail(news)}>
             {/* Contenedor de la imagen */}
             <View style={{backgroundColor: 'red'}}>
@@ -82,25 +83,23 @@ export default function NewsScreen() {
           </Pressable>
         ))}
 
-
-        {/*/!* Mapear cada noticia de Fortnite Web *!/*/}
-        {/*{fortniteNewsList.map((news, index) => (*/}
-        {/*  <Pressable key={index} onPress={() => goToNewsDetail(news)}>*/}
-        {/*    /!* Contenedor de la imagen *!/*/}
-        {/*    <View style={{backgroundColor: 'red'}}>*/}
-        {/*      <Image*/}
-        {/*        source={{uri: news.image}}*/}
-        {/*        style={styles.newsImage}/>*/}
-        {/*    </View>*/}
-        {/*    /!* Superposición de texto sobre la imagen *!/*/}
-        {/*    <View style={{backgroundColor: 'white', padding: 10}}>*/}
-        {/*      <Text*/}
-        {/*        style={{fontSize: 15, color: '#1db8f3', fontWeight: 700}}>{new Date(news.date).toDateString()}</Text>*/}
-        {/*      <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{news.title}</Text>*/}
-        {/*    </View>*/}
-        {/*  </Pressable>*/}
-        {/*))}*/}
-
+        {/* Mapear cada noticia de Fortnite IO */}
+        {fortniteIONewsList.map((news, index) => (
+          <Pressable key={index} onPress={() => goToNewsDetail(news)}>
+            {/* Contenedor de la imagen */}
+            <View style={{backgroundColor: 'red'}}>
+              <Image
+                source={{uri: news.image}}
+                style={styles.newsImage}/>
+            </View>
+            {/* Superposición de texto sobre la imagen */}
+            <View style={{backgroundColor: 'white', padding: 10}}>
+              <Text
+                style={{fontSize: 15, color: '#1db8f3', fontWeight: 700}}>{new Date(news.date).toDateString()}</Text>
+              <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{news.title}</Text>
+            </View>
+          </Pressable>
+        ))}
 
         {/* Mapear cada noticia de Fortnite Web */}
         {newsBattleRoyaleList.map((news, index) => (
