@@ -1,5 +1,4 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {Colors} from "@/constants/Colors";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
 import {useEffect, useState} from "react";
 
@@ -27,7 +26,6 @@ export default function IslandScreen() {
 
   return (
     <ScrollView style={{
-      backgroundColor: Colors.primary,
       height: '100%',
     }}>
       <View style={{width: '100%'}}>

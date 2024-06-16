@@ -16,7 +16,6 @@ import StatsScreen from "@/app/screens/profile/stats";
 import {Button, Pressable} from "react-native";
 import {router} from "expo-router";
 import {AntDesign} from "@expo/vector-icons";
-import {Colors} from "@/constants/Colors";
 import ShopScreen from "@/app/screens/shop/shop";
 import AppScreen from "@/app/screens/app";
 import NewsScreen from "@/app/screens/news/news";
@@ -65,7 +64,6 @@ export default function RootLayout() {
                         title: '',
                         headerBackTitle: '',
                         headerShadowVisible: false,
-                        headerStyle: {backgroundColor: Colors.primary},
                         headerLeft: () => (
                           <Pressable onPress={router.back}>
                             <AntDesign name="arrowleft" size={35} color="white" style={{paddingLeft: 5}}/>
@@ -96,7 +94,6 @@ export default function RootLayout() {
                         headerBackTitle: '',
                         headerShadowVisible: false,
                         gestureEnabled: true,
-                        headerStyle: {backgroundColor: Colors.primary},
                         headerLeft: () => (
                           <Pressable onPress={router.back}>
                             <AntDesign name="arrowleft" size={35} color="white" style={{paddingLeft: 5}}/>
@@ -115,7 +112,6 @@ export default function RootLayout() {
           title: '',
           headerBackTitle: '',
           headerShadowVisible: false,
-          headerStyle: {backgroundColor: Colors.primary},
           // headerLeft: () => (
           //   <Pressable onPress={router.back}>
           //     <AntDesign name="arrowleft" size={35} color="white" style={{paddingLeft: 5}}/>
@@ -134,12 +130,6 @@ export default function RootLayout() {
                         headerBackTitle: '',
                         headerShadowVisible: false,
                         gestureEnabled: true,
-                        headerStyle: {backgroundColor: Colors.primary},
-
-                        // title: '',
-                        // headerBackTitle: '',
-                        // headerShadowVisible: false,
-                        // headerStyle: {backgroundColor: Colors.primary},
                         headerLeft: () => (
                           <Pressable onPress={router.back}>
                             <AntDesign name="arrowleft" size={35} color="white" style={{paddingLeft: 5}}/>

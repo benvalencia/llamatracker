@@ -207,7 +207,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   // GENERAL CONTAINER
   scrollViewContainer: {
-    backgroundColor: Colors.primary,
+    // backgroundColor: Colors.primary,
   },
 
   // VIEW CONTAINER

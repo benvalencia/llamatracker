@@ -69,7 +69,7 @@ export default function NewsScreen() {
         {fortniteNewsList.map((news, index) => (
           <Pressable key={index} onPress={() => goToNewsDetail(news)}>
             {/* Contenedor de la imagen */}
-            <View style={{backgroundColor: 'red'}}>
+            <View style={{}}>
               <Image
                 source={{uri: news.image}}
                 style={styles.newsImage}/>
@@ -87,7 +87,7 @@ export default function NewsScreen() {
         {fortniteIONewsList.map((news, index) => (
           <Pressable key={index} onPress={() => goToNewsDetail(news)}>
             {/* Contenedor de la imagen */}
-            <View style={{backgroundColor: 'red'}}>
+            <View style={{}}>
               <Image
                 source={{uri: news.image}}
                 style={styles.newsImage}/>
@@ -144,11 +144,10 @@ export default function NewsScreen() {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: Colors.primary,
   },
   scrollReloadContainer: {
-    backgroundColor: Colors.primary,
   },
+
   newsContainer: {
     padding: 10,
     gap: 15,
@@ -170,13 +169,11 @@ const styles = StyleSheet.create({
 
   // NEWS LIST CONTAINER
   newsListContainer: {
-    backgroundColor: 'red',
     gap: 5,
   },
 
   // NEWS ITEMS CONTAINER
   newsItemComponent: {
-    backgroundColor: 'pink',
   },
   titleContainer: {
     width: '100%',

@@ -14,7 +14,6 @@ const yellow = '#FFD700';
 // fortnite colors
 const fortniteLightBlue = '#1db8f3'
 
-
 // DATE FORMAT
 const dayInMilliseconds = 86400000;
 
