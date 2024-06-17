@@ -1,4 +1,4 @@
-import {Pressable, RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React, {useEffect, useState} from "react";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
@@ -64,7 +64,12 @@ export default function NewsScreen() {
         <RefreshControl refreshing={refreshing}
                         onRefresh={onRefresh}
                         style={styles.scrollReloadContainer}/>}>
-      <View style={[styles.newsContainer, {paddingTop: top, paddingBottom: bottom + 60, width: '100%'}]}>
+      <View style={[styles.newsContainer, {
+        paddingTop: top,
+        paddingBottom: bottom + 60,
+        width: Dimensions.get("screen").width,
+        minHeight: 300
+      }]}>
 
 
         <FlashList
@@ -90,7 +95,8 @@ export default function NewsScreen() {
               </Pressable>
             );
           }}
-          estimatedItemSize={20}
+          estimatedItemSize={30}
+          estimatedListSize={{height: 300, width: Dimensions.get("screen").width}}
           data={fortniteNewsList}
           collapsable={true}
           horizontal={false}
@@ -119,7 +125,8 @@ export default function NewsScreen() {
               </Pressable>
             );
           }}
-          estimatedItemSize={20}
+          estimatedItemSize={30}
+          estimatedListSize={{height: 300, width: Dimensions.get("screen").width}}
           data={fortniteIONewsList}
           collapsable={true}
           horizontal={false}
@@ -148,7 +155,8 @@ export default function NewsScreen() {
               </Pressable>
             );
           }}
-          estimatedItemSize={20}
+          estimatedItemSize={30}
+          estimatedListSize={{height: 300, width: Dimensions.get("screen").width}}
           data={newsBattleRoyaleList}
           collapsable={true}
           horizontal={false}
@@ -177,7 +185,8 @@ export default function NewsScreen() {
               </Pressable>
             );
           }}
-          estimatedItemSize={20}
+          estimatedItemSize={30}
+          estimatedListSize={{height: 300, width: Dimensions.get("screen").width}}
           data={newsSaveTheWorldList}
           collapsable={true}
           horizontal={false}

@@ -143,7 +143,7 @@ export default function ItemDetailScreen({route}: any) {
                   </View>
                 );
               }}
-              estimatedItemSize={20}
+              estimatedItemSize={10}
               data={product.items}
               collapsable={true}
               horizontal={false}
