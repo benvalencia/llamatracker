@@ -1,7 +1,8 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {Colors} from "@/constants/Colors";
+import {Dimensions, ScrollView, Text, View} from 'react-native';
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
+import {Img} from "@/components/elements/Img";
+import {FlashList} from "@shopify/flash-list";
 
 export default function IslandScreen() {
   const fortniteService = new FortniteService();
@@ -27,66 +28,40 @@ export default function IslandScreen() {
 
   return (
     <ScrollView style={{
-      backgroundColor: Colors.primary,
       height: '100%',
     }}>
       <View style={{width: '100%'}}>
-        <Image
+        <Img
           source={{uri: mapImage.blank}}
           style={{objectFit: 'cover', height: 400}}
-        ></Image>
-        <Image
+        ></Img>
+        <Img
           source={{uri: mapImage.pois}}
           style={{objectFit: 'cover', height: 400}}
-        ></Image>
+        ></Img>
       </View>
-      <View style={{gap: 10}}>
-        {mapPoisPositions.map((poi: any, index: number) => {
-          return (
-            <View key={index} style={{backgroundColor: 'grey', padding: 10, borderRadius: 10}}>
-              <Text>id: {poi.id}</Text>
-              <Text>x: {poi.location.x}</Text>
-              <Text>y: {poi.location.y}</Text>
-              <Text>z: {poi.location.z}</Text>
-              <Text>name: {poi.name}</Text>
-            </View>
-          )
-        })}
+      <View style={{
+        gap: 10, width: Dimensions.get("screen").width,
+        minHeight: 300
+      }}>
+        <FlashList
+          renderItem={({item}: any) => {
+            return (
+              <View style={{backgroundColor: 'grey', padding: 10, borderRadius: 10}}>
+                <Text>id: {item.id}</Text>
+                <Text>x: {item.location.x}</Text>
+                <Text>y: {item.location.y}</Text>
+                <Text>z: {item.location.z}</Text>
+                <Text>name: {item.name}</Text>
+              </View>
+            );
+          }}
+          estimatedItemSize={20}
+          data={mapPoisPositions}
+          collapsable={true}
+          horizontal={false}
+        />
       </View>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-  input: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 10,
-    width: '80%', // Puedes ajustar el ancho según tu diseño
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-});

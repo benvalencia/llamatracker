@@ -1,12 +1,14 @@
-import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Pressable, Text, View} from 'react-native';
 import React from "react";
-import {CommonActions} from "@react-navigation/native";
+import {CommonActions, useTheme} from "@react-navigation/native";
 import {useNavigation} from "expo-router";
 import {ShopProduct} from "@/components/shopComponents/ShopProduct";
+import {FlashList} from "@shopify/flash-list";
 
 export function ShopSection(props: any) {
+  const {colors} = useTheme();
 
-  const {module, section, index} = props
+  const {module, section} = props
 
   const navigation = useNavigation()
 
@@ -20,53 +22,48 @@ export function ShopSection(props: any) {
       }));
   }
 
+  let size1x1Counter = 0;
+  let isAlone = false;
+  const isJamTracks = section.name === 'Jam Tracks';
+
   return (
-    <View style={{}}
-          key={index}>
+    <View style={{width: 'auto'}}>
+      {/*TITULO DE LA SECTION*/}
+      {module !== section.name
+        ? <Text style={{color: colors.text, fontSize: 18, fontWeight: '300', paddingLeft: 5}}>
+          {section.name}
+        </Text>
+        : null}
 
-      <View style={{width: 'auto'}}>
-        {/*TITULO DE LA SECTION*/}
-        {module !== section.name
-          ? <View>
-            <Text style={{color: 'white', fontSize: 18, fontWeight: '300', paddingLeft: 5}}>
-              {section.name}
-            </Text>
-          </View>
-          : null}
+      {/*300*/}
+      <FlashList
+        renderItem={({item, index}: any) => {
+          if (!isJamTracks) {
+            if (item.size === 'Size_1_x_1') {
+              size1x1Counter = size1x1Counter + 1
 
-        <ScrollView
-          horizontal={true}
-        >
-          <View style={{
-            display: "flex",
-            flexDirection: 'column',
-            height: 235,
-            flexWrap: 'wrap',
-            paddingLeft: 5,
-            paddingRight: 5,
-            paddingBottom: 5,
-          }}>
-            {
-              section.products.map((product: any, index: number) => {
-                return (
-                  <Pressable onPress={() => goToProductDetail(product)} key={index}>
-                    <ShopProduct product={product} key={index}></ShopProduct>
-                  </Pressable>
-                )
-              })}
-          </View>
-        </ScrollView>
+              if (section.products[index + 1]?.size !== 'Size_1_x_1') {
+                isAlone = !(size1x1Counter % 2 === 0)
+              } else {
+                isAlone = false;
+              }
+            } else {
+              size1x1Counter = 0;
+            }
+          }
 
-      </View>
+          return (<Pressable onPress={() => goToProductDetail(item)} key={index}>
+              <ShopProduct isJamTracks={isJamTracks} isAlone={isAlone} product={item}
+                           key={index}></ShopProduct>
+            </Pressable>
+          );
+        }}
+        estimatedItemSize={20}
+        estimatedListSize={{height: isJamTracks ? 155 : 250, width: Dimensions.get("screen").width}}
+        data={section.products}
+        collapsable={true}
+        horizontal={true}
+      />
     </View>
-
   );
 }
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 28,
-    lineHeight: 32,
-    marginTop: -6,
-  },
-});

@@ -3,7 +3,7 @@ import {Colors} from "@/constants/Colors";
 import React, {useCallback, useEffect, useState} from "react";
 import {IUserProfile} from "@/app/services/fortnite/fortnite.interface";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
-import { Ionicons } from '@expo/vector-icons';
+import {Ionicons} from '@expo/vector-icons';
 
 
 export default function StatsScreen({route}: any) {
@@ -219,17 +219,14 @@ export default function StatsScreen({route}: any) {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: Colors.primary,
     paddingBottom: 16,
   },
   scrollReloadContainer: {
-    backgroundColor: Colors.primary,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.primary,
   },
   errorText: {
     color: Colors.secondary,
@@ -242,7 +239,6 @@ const styles = StyleSheet.create({
   profileSection: {
     margin: 16,
     padding: 16,
-    backgroundColor: Colors.secondary,
     borderRadius: 8,
     justifyContent:'space-between',
     width:"95%"

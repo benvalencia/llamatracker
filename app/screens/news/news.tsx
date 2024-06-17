@@ -1,10 +1,12 @@
-import {Image, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React, {useEffect, useState} from "react";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
 import {CommonActions} from "@react-navigation/native";
 import {useNavigation} from "expo-router";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {Img} from "@/components/elements/Img";
+import {FlashList} from "@shopify/flash-list";
 
 export default function NewsScreen() {
 
@@ -62,80 +64,133 @@ export default function NewsScreen() {
         <RefreshControl refreshing={refreshing}
                         onRefresh={onRefresh}
                         style={styles.scrollReloadContainer}/>}>
-      <View style={[styles.newsContainer, {paddingTop: top, paddingBottom: bottom + 60, width: '100%'}]}>
+      <View style={[styles.newsContainer, {
+        paddingTop: top,
+        paddingBottom: bottom + 60,
+        width: Dimensions.get("screen").width,
+        minHeight: 300
+      }]}>
 
 
-        {/* Mapear cada noticia de Fortnite Web */}
-        {fortniteNewsList.map((news, index) => (
-          <Pressable key={index} onPress={() => goToNewsDetail(news)}>
-            {/* Contenedor de la imagen */}
-            <View style={{backgroundColor: 'red'}}>
-              <Image
-                source={{uri: news.image}}
-                style={styles.newsImage}/>
-            </View>
-            {/* Superposición de texto sobre la imagen */}
-            <View style={{backgroundColor: 'white', padding: 10}}>
-              <Text
-                style={{fontSize: 15, color: '#1db8f3', fontWeight: 700}}>{new Date(news.date).toDateString()}</Text>
-              <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{news.title}</Text>
-            </View>
-          </Pressable>
-        ))}
+        <FlashList
+          renderItem={({item}: any) => {
+            return (
+              <Pressable onPress={() => goToNewsDetail(item)}>
+                {/* Contenedor de la imagen */}
+                <View style={{backgroundColor: 'red'}}>
+                  <Img
+                    source={{uri: item.image}}
+                    style={styles.newsImage}/>
+                </View>
+                {/* Superposición de texto sobre la imagen */}
+                <View style={{backgroundColor: 'white', padding: 10}}>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: '#1db8f3',
+                      fontWeight: 700
+                    }}>{new Date(item.date).toDateString()}</Text>
+                  <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{item.title}</Text>
+                </View>
+              </Pressable>
+            );
+          }}
+          estimatedItemSize={30}
+          estimatedListSize={{height: 300, width: Dimensions.get("screen").width}}
+          data={fortniteNewsList}
+          collapsable={true}
+          horizontal={false}
+        />
 
-        {/* Mapear cada noticia de Fortnite IO */}
-        {fortniteIONewsList.map((news, index) => (
-          <Pressable key={index} onPress={() => goToNewsDetail(news)}>
-            {/* Contenedor de la imagen */}
-            <View style={{backgroundColor: 'red'}}>
-              <Image
-                source={{uri: news.image}}
-                style={styles.newsImage}/>
-            </View>
-            {/* Superposición de texto sobre la imagen */}
-            <View style={{backgroundColor: 'white', padding: 10}}>
-              <Text
-                style={{fontSize: 15, color: '#1db8f3', fontWeight: 700}}>{new Date(news.date).toDateString()}</Text>
-              <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{news.title}</Text>
-            </View>
-          </Pressable>
-        ))}
+        <FlashList
+          renderItem={({item}: any) => {
+            return (
+              <Pressable onPress={() => goToNewsDetail(item)}>
+                {/* Contenedor de la imagen */}
+                <View style={{backgroundColor: 'red'}}>
+                  <Img
+                    source={{uri: item.image}}
+                    style={styles.newsImage}/>
+                </View>
+                {/* Superposición de texto sobre la imagen */}
+                <View style={{backgroundColor: 'white', padding: 10}}>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: '#1db8f3',
+                      fontWeight: 700
+                    }}>{new Date(item.date).toDateString()}</Text>
+                  <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{item.title}</Text>
+                </View>
+              </Pressable>
+            );
+          }}
+          estimatedItemSize={30}
+          estimatedListSize={{height: 300, width: Dimensions.get("screen").width}}
+          data={fortniteIONewsList}
+          collapsable={true}
+          horizontal={false}
+        />
 
-        {/* Mapear cada noticia de Fortnite Web */}
-        {newsBattleRoyaleList.map((news, index) => (
-          <Pressable key={index} onPress={() => goToNewsDetail(news)}>
-            {/* Contenedor de la imagen */}
-            <View style={{backgroundColor: 'red'}}>
-              <Image
-                source={{uri: news.image}}
-                style={styles.newsImage}/>
-            </View>
-            {/* Superposición de texto sobre la imagen */}
-            <View style={{backgroundColor: 'white', padding: 10}}>
-              <Text
-                style={{fontSize: 15, color: '#1db8f3', fontWeight: 700}}>{new Date(news.date).toDateString()}</Text>
-              <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{news.title}</Text>
-            </View>
-          </Pressable>
-        ))}
+        <FlashList
+          renderItem={({item}: any) => {
+            return (
+              <Pressable onPress={() => goToNewsDetail(item)}>
+                {/* Contenedor de la imagen */}
+                <View style={{backgroundColor: 'red'}}>
+                  <Img
+                    source={{uri: item.image}}
+                    style={styles.newsImage}/>
+                </View>
+                {/* Superposición de texto sobre la imagen */}
+                <View style={{backgroundColor: 'white', padding: 10}}>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: '#1db8f3',
+                      fontWeight: 700
+                    }}>{new Date(item.date).toDateString()}</Text>
+                  <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{item.title}</Text>
+                </View>
+              </Pressable>
+            );
+          }}
+          estimatedItemSize={30}
+          estimatedListSize={{height: 300, width: Dimensions.get("screen").width}}
+          data={newsBattleRoyaleList}
+          collapsable={true}
+          horizontal={false}
+        />
 
-        {/* Mapear cada noticia de Save the World */}
-        {newsSaveTheWorldList.map((news, index) => (
-          <Pressable key={index} onPress={() => goToNewsDetail(news)}>
-            {/* Contenedor de la imagen */}
-            <View style={{backgroundColor: 'red'}}>
-              <Image
-                source={{uri: news.image}}
-                style={styles.newsImage}/>
-            </View>
-            {/* Superposición de texto sobre la imagen */}
-            <View style={{backgroundColor: 'white', padding: 10}}>
-              <Text
-                style={{fontSize: 15, color: '#1db8f3', fontWeight: 700}}>{new Date(news.date).toDateString()}</Text>
-              <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{news.title}</Text>
-            </View>
-          </Pressable>
-        ))}
+        <FlashList
+          renderItem={({item}: any) => {
+            return (
+              <Pressable onPress={() => goToNewsDetail(item)}>
+                {/* Contenedor de la imagen */}
+                <View style={{backgroundColor: 'red'}}>
+                  <Img
+                    source={{uri: item.image}}
+                    style={styles.newsImage}/>
+                </View>
+                {/* Superposición de texto sobre la imagen */}
+                <View style={{backgroundColor: 'white', padding: 10}}>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: '#1db8f3',
+                      fontWeight: 700
+                    }}>{new Date(item.date).toDateString()}</Text>
+                  <Text style={{fontSize: 20, fontWeight: 400, textTransform: 'uppercase'}}>{item.title}</Text>
+                </View>
+              </Pressable>
+            );
+          }}
+          estimatedItemSize={30}
+          estimatedListSize={{height: 300, width: Dimensions.get("screen").width}}
+          data={newsSaveTheWorldList}
+          collapsable={true}
+          horizontal={false}
+        />
       </View>
     </ScrollView>
   );
@@ -144,11 +199,10 @@ export default function NewsScreen() {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: Colors.primary,
   },
   scrollReloadContainer: {
-    backgroundColor: Colors.primary,
   },
+
   newsContainer: {
     padding: 10,
     gap: 15,
@@ -170,13 +224,11 @@ const styles = StyleSheet.create({
 
   // NEWS LIST CONTAINER
   newsListContainer: {
-    backgroundColor: 'red',
     gap: 5,
   },
 
   // NEWS ITEMS CONTAINER
   newsItemComponent: {
-    backgroundColor: 'pink',
   },
   titleContainer: {
     width: '100%',

@@ -1,44 +1,54 @@
 import {RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {Colors} from "@/constants/Colors";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
 import React, {useEffect, useMemo, useState} from "react";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {ShopModule} from "@/components/shopComponents/ShopModule";
+import {useTheme} from "@react-navigation/native";
+import {LocalStoreService} from "@/app/services/localStore/localStore.service";
 
 export default function ShopScreen() {
-  const fortniteService = useMemo (() => new FortniteService(),[]);
+  const fortniteService = useMemo(() => new FortniteService(), []);
+  const localStoreService = useMemo(() => new LocalStoreService(), []);
+
   const {top} = useSafeAreaInsets()
+  const {colors} = useTheme();
 
-  const [shopInformation, setShopInformation] = useState({} as any);
+
   const [shopList, setShopList] = useState([] as any);
-
   const [shopRaw, setShopRaw] = useState({} as any);
   const [shopCache, setShopCache] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
+
+  const todayShopDate = {date: shopRaw ? shopRaw.lastUpdate?.date : null}
+
   const getStoreShop = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('daily-shop');
-      const objToTransform = jsonValue != null ? JSON.parse(jsonValue) : null;
-      if (objToTransform.lastUpdate.date
-        && new Date(objToTransform.lastUpdate.date).toDateString() !== new Date().toDateString()) {
 
-        const getShopCombined = await fortniteService.getDailyShop();
+    localStoreService.getStore('daily-shop').then(async (response) => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('daily-shop');
+        if (response.lastUpdate.date
+          && new Date(response.lastUpdate.date).toDateString() !== new Date().toDateString()) {
 
-        const jsonValue = JSON.stringify(getShopCombined);
-        await AsyncStorage.setItem('daily-shop', jsonValue);
+          const getShopCombined = await fortniteService.getDailyShop();
 
-        setShopCache(jsonValue as any)
-        setShopRaw(getShopCombined)
-      } else {
-        setShopCache(jsonValue as any)
-        setShopRaw(objToTransform as any)
+          const jsonValue = JSON.stringify(getShopCombined);
+          await AsyncStorage.setItem('daily-shop', jsonValue);
+
+          setShopCache(jsonValue as any)
+          setShopRaw(getShopCombined)
+        } else {
+          setShopCache(jsonValue as any)
+          setShopRaw(response as any)
+        }
+      } catch (err) {
+        // error reading value
+        console.log(err)
       }
-    } catch (err) {
-      // error reading value
-      console.log(err)
-    }
+    })
+
+
   }
 
   const getShopList = async () => {
@@ -56,7 +66,6 @@ export default function ShopScreen() {
       }
     }
 
-    setShopInformation({date: shopRaw ? shopRaw.lastUpdate?.date : null})
 
     let shopListArrayBuilder: any = []
     shopRaw.shop
@@ -83,37 +92,50 @@ export default function ShopScreen() {
           ...{offerId: entry.offerId},
           ...{id: entry.mainId},
           ...{assets: entry.displayAssets},
+          ...{index: entry.section.id},
 
           ...{items: entry.granted ? entry.granted : null}
-      };
+        };
 
         let sectionObject = {
-          ...{id: entry.section.id},
           ...{name: entry.section.name},
-        ...{products: [productObject]},
-      };
+
+          ...{id: entry.section.id},
+          ...{priority: entry.priority},
+          ...{groupIndex: entry.groupIndex},
+          ...{landingIndex: entry.section.landingIndex},
+
+          ...{products: [productObject]},
+        };
 
         let moduleObject = {
-          ...{category: entry.section ? entry.section.category : 'Uncategorized'},
-        ...{sections: [sectionObject]},
-      };
+          ...{category: entry.section.category},
+
+          ...{priority: entry.priority},
+          ...{landingIndex: entry.section.landingIndex},
+
+          ...{sections: [sectionObject]},
+        };
 
         const module = shopListArrayBuilder.find((element: any) => element.category === entry.section.category);
-      if (module) {
-        const section = module.sections.find((element: any) => element.name === entry.section.name);
-        if (section) {
-          section.products.push(productObject)
+        if (module) {
+          const section = module.sections.find((element: any) => element.name === entry.section.name);
+          if (section) {
+            section.products.sort((a: any, b: any) => b.index.localeCompare(a.index))
+            section.products.push(productObject)
+          } else {
+            module.sections.push(sectionObject);
+          }
         } else {
-          module.sections.push(sectionObject);
+          shopListArrayBuilder.push(moduleObject);
         }
-      } else {
-        shopListArrayBuilder.push(moduleObject);
-      }
       })
       : null
 
+    shopListArrayBuilder.reverse();
+    shopListArrayBuilder.forEach((modulo: any) => modulo.sections.reverse())
 
-    setShopList(shopListArrayBuilder ? shopListArrayBuilder.reverse().map((i: any) => i) : null);
+    setShopList(shopListArrayBuilder ? shopListArrayBuilder.map((i: any) => i) : null);
     setRefreshing(false);
   };
 
@@ -135,7 +157,6 @@ export default function ShopScreen() {
                         onRefresh={onRefresh}
                         style={styles.scrollReloadContainer}/>}>
       <View style={{
-        backgroundColor: Colors.primary,
         height: '100%',
         flex: 1,
         alignItems: 'center',
@@ -145,10 +166,10 @@ export default function ShopScreen() {
         {shopList[0] ?
           <View style={{marginBottom: 15, paddingTop: top}}>
             <Text style={{
-              color: 'white',
+              color: colors.text,
               fontSize: 23,
               fontWeight: '400'
-            }}>{new Date(shopInformation.date).toLocaleDateString('spanish', {
+            }}>{new Date(todayShopDate.date).toLocaleDateString('spanish', {
               weekday: "long",
               year: "numeric",
               month: "short",
@@ -160,14 +181,13 @@ export default function ShopScreen() {
 
         <View style={styles.shopListContainer}>
           <View style={{width: 'auto'}}>
-            {shopList[0] == undefined ?
+            {shopList[0] === undefined ?
               <View style={{
-                backgroundColor: Colors.primary,
                 height: '100%',
                 width: '100%',
               }}>
                 <Text style={{
-                  color: 'white',
+                  color: colors.text,
                   fontSize: 30,
                   fontWeight: '400',
                   margin: 'auto'
@@ -196,12 +216,10 @@ const styles = StyleSheet.create({
 
   container: {
     alignItems: 'center',
-    backgroundColor: Colors.primary,
     minHeight: '100%',
+
   },
-  scrollReloadContainer: {
-    backgroundColor: Colors.primary,
-  },
+  scrollReloadContainer: {},
 
   titleContainer: {
     flexDirection: 'row',
@@ -212,13 +230,9 @@ const styles = StyleSheet.create({
   // SHOP LIST CONTAINER
   shopListContainer: {
     width: '100%',
-    height: '100%',
     gap: 5,
-    paddingBottom: 35,
   },
   // NEWS ITEMS CONTAINER
-  itemContainer: {
-    backgroundColor: 'blue',
-  },
+  itemContainer: {},
 
 });

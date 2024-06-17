@@ -1,42 +1,32 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import React from "react";
-import {Colors} from "@/constants/Colors";
 import {ShopSection} from "@/components/shopComponents/ShopSection";
+import {useTheme} from "@react-navigation/native";
 
 export function ShopModule(props: any) {
+  const {colors} = useTheme();
 
-  const {module, index} = props
+  const {module} = props
+
+  const moduleName = module.category ? module.category : [...module.sections].reverse()[0].name;
 
   return (
-    <View style={{}}
-          key={index}>
-      <View style={{width: 'auto', backgroundColor: Colors.primary, gap: 5}}>
-        {/*TITULO MODULO*/}
-        <View>
-          <Text style={{
-            color: 'white',
-            fontSize: 25,
-            fontWeight: '500',
-            paddingLeft: 5
-          }}>{module.category}</Text>
-        </View>
-        {/*SECTIONS*/}
-        {module.sections.map((section: any, index: number) => {
-          return (
-            <ShopSection module={module.category} section={section} key={index}></ShopSection>
-          )
-        })}
+    <View style={{width: 'auto', gap: 5}}>
+      {/*TITULO MODULO*/}
+      <View>
+        <Text style={{
+          color: colors.text,
+          fontSize: 25,
+          fontWeight: '500',
+          paddingLeft: 5
+        }}>{moduleName}</Text>
       </View>
-
+      {/*SECTIONS*/}
+      {module.sections.map((section: any, index: number) => {
+        return (
+          <ShopSection module={moduleName} section={section} key={index}></ShopSection>
+        )
+      })}
     </View>
-
   );
 }
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 28,
-    lineHeight: 32,
-    marginTop: -6,
-  },
-});
