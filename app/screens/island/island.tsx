@@ -1,4 +1,4 @@
-import {ScrollView, Text, View} from 'react-native';
+import {Dimensions, ScrollView, Text, View} from 'react-native';
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
 import React, {useEffect, useState} from "react";
 import {Img} from "@/components/elements/Img";
@@ -40,7 +40,10 @@ export default function IslandScreen() {
           style={{objectFit: 'cover', height: 400}}
         ></Img>
       </View>
-      <View style={{gap: 10}}>
+      <View style={{
+        gap: 10, width: Dimensions.get("screen").width,
+        minHeight: 300
+      }}>
         <FlashList
           renderItem={({item}: any) => {
             return (
