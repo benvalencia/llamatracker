@@ -22,7 +22,9 @@ export function ShopProduct(props: any) {
       margin: 2,
       alignSelf: 'flex-start',
       justifyContent: 'space-between',
-    }, product.size === 'Size_1_x_1' ? {width: 108, height: 115} : null
+    },
+      // product.size === 'Size_1_x_1' ? {width: 108, height: 115} : null
+      , product.size === 'Size_1_x_1' ? {width: 110, height: 235} : null
       , product.size === 'Size_1_x_1' && isJamTracks ? {width: 140, height: 140} : null
       , product.size === 'Size_1_x_1' && isAlone ? {width: 110, height: 235} : null
       , product.size === 'Size_1_x_2' ? {width: 110, height: 235} : null
@@ -42,11 +44,16 @@ export function ShopProduct(props: any) {
             <View>
               {/*<Text>{product.size}</Text>*/}
               <Img
-                source={{uri: findImage().background}}
+                source={findImage().background}
                 style={[
-                  product.size === 'Size_1_x_1' ? {
-                    width: 115, height: 115,
+                  // product.size === 'Size_1_x_1' ? {
+                  //   width: 115, height: 115,
+                  // } : null,
+                  , product.size === 'Size_1_x_1' ? {
+                    width: 115,
+                    height: 250,
                   } : null,
+
                   product.size === 'Size_1_x_1' && isJamTracks ? {
                     width: 140, height: 140,
                   } : null
@@ -58,7 +65,6 @@ export function ShopProduct(props: any) {
                     transform: [{scaleX: 1.3}, {scaleY: 1.3}],
                     top: "15%",
                   } : null
-
                   , product.size === 'Size_1_x_2' ? {
                     width: 115,
                     height: 250,
@@ -88,13 +94,17 @@ export function ShopProduct(props: any) {
             </View>
             : <View>
               <Img
-                source={{uri: product.assets[0]?.background}}
+                source={product.assets[0]?.background}
                 style={[
-                  product.size === 'Size_1_x_1' ? {
-                    width: 125, height: 115,
-                    transform: [{translateX: -15}],
-
+                  // product.size === 'Size_1_x_1' ? {
+                  //   width: 125, height: 115,
+                  //   transform: [{translateX: -15}],
+                  // } : null
+                  , product.size === 'Size_1_x_1' ? {
+                    width: 115,
+                    height: 250,
                   } : null,
+
                   product.size === 'Size_1_x_1' && isJamTracks ? {
                     width: 140, height: 140,
                     transform: [{translateX: 0}],
@@ -147,7 +157,8 @@ export function ShopProduct(props: any) {
           <View>
             <Text style={{color: colors.text, letterSpacing: -.8}}>{product.name}</Text>
           </View>
-          {product.type && !isJamTracks && product.size !== 'Size_1_x_1'
+          {product.type && !isJamTracks
+            // && product.size !== 'Size_1_x_1'
             ?
             <View>
               <Text style={{color: colors.text, letterSpacing: -.8}}>{product.type}</Text>

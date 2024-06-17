@@ -1,14 +1,11 @@
 import React, {useState} from 'react';
 import {ActivityIndicator, StyleSheet, View} from "react-native";
-import {ImageNativeProps} from "expo-image/src/Image.types";
 import {Image} from "expo-image";
-
-type ImgProps = ImageNativeProps;
 
 const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
-export const Img: React.FC<ImgProps> = ({onLoad, ...rest}: any) => {
+export const Img = ({onLoad, style, ...rest}: any) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
   return (
@@ -19,6 +16,7 @@ export const Img: React.FC<ImgProps> = ({onLoad, ...rest}: any) => {
           setIsLoaded(true);
         }}
         placeholder={{blurhash}}
+        style={[style]}
         {...rest}
       />
       {!isLoaded && (
