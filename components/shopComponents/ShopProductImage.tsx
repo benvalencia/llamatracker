@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from "react";
 
 export function ShopProductImage(props: any) {
 
-  const {assets, size} = props
+  const {assets} = props
 
   const animation = useRef(new Animated.Value(0)).current;
   const [imageIndex, setImageIndex] = useState(0);

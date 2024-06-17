@@ -27,3 +27,4 @@ expo-env.d.ts
 
 /package-lock.json
 
+/ios/

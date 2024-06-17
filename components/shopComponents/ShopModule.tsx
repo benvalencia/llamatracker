@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import React from "react";
 import {ShopSection} from "@/components/shopComponents/ShopSection";
 import {useTheme} from "@react-navigation/native";
@@ -30,11 +30,3 @@ export function ShopModule(props: any) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 28,
-    lineHeight: 32,
-    marginTop: -6,
-  },
-});

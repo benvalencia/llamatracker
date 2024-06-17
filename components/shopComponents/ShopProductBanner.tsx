@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import React from "react";
 
 export function ShopProductBanner(props: any) {
@@ -7,7 +7,7 @@ export function ShopProductBanner(props: any) {
 
   return (
     <View style={{
-      backgroundColor: banner.intensity == 'Low' ? 'white' : 'yellow',
+      backgroundColor: banner.intensity === 'Low' ? 'white' : 'yellow',
       padding: 2,
       borderRadius: 25,
       paddingLeft: 10,
@@ -18,15 +18,3 @@ export function ShopProductBanner(props: any) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  image: {
-    width: '100%',
-    height: 380,
-  },
-});

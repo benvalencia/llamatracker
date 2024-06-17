@@ -1,4 +1,4 @@
-import {Image, ScrollView, StyleSheet, Text, useWindowDimensions, View} from 'react-native';
+import {Image, ScrollView, Text, useWindowDimensions, View} from 'react-native';
 import React from "react";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import RenderHTML from "react-native-render-html";
@@ -47,7 +47,7 @@ export default function NewsDetailScreen({route}: any) {
             fontWeight: 400,
             textTransform: 'uppercase',
             color: colors.text
-          }}>{newsDetail.title == newsDetail.tabTitle ? newsDetail.title : newsDetail.title + ' ' + newsDetail.tabTitle}</Text>
+          }}>{newsDetail.title === newsDetail.tabTitle ? newsDetail.title : newsDetail.title + ' ' + newsDetail.tabTitle}</Text>
 
           {newsDetail.author
             ? <Text style={{
@@ -82,11 +82,3 @@ export default function NewsDetailScreen({route}: any) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-});

@@ -12,10 +12,10 @@ const tertiary = '#3d02bd';
 const yellow = '#FFD700';
 
 // fortnite colors
-const fortniteLightBlue = '#1db8f3'
+// const fortniteLightBlue = '#1db8f3'
 
 // DATE FORMAT
-const dayInMilliseconds = 86400000;
+// const dayInMilliseconds = 86400000;
 
 export const Colors = {
   light: {

@@ -1,7 +1,9 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from "react";
 import {ShopProductBanner} from "@/components/shopComponents/ShopProductBanner";
 import {useTheme} from "@react-navigation/native";
+
+import {Img} from "@/components/elements/Img";
 
 export function ShopProduct(props: any) {
   const {colors} = useTheme();
@@ -20,13 +22,13 @@ export function ShopProduct(props: any) {
       margin: 2,
       alignSelf: 'flex-start',
       justifyContent: 'space-between',
-    }, product.size === 'Size_1_x_1' ? {width: 85, height: 108} : null
+    }, product.size === 'Size_1_x_1' ? {width: 108, height: 115} : null
       , product.size === 'Size_1_x_1' && isJamTracks ? {width: 140, height: 140} : null
-      , product.size === 'Size_1_x_1' && isAlone ? {width: 110, height: 220} : null
-      , product.size === 'Size_1_x_2' ? {width: 110, height: 220} : null
-      , product.size === 'Size_3_x_2' ? {width: 245, height: 220} : null
-      , product.size === 'Size_2_x_2' ? {width: 210, height: 220} : null
-      , product.size === 'Size_5_x_2' ? {width: 330, height: 220} : null
+      , product.size === 'Size_1_x_1' && isAlone ? {width: 110, height: 235} : null
+      , product.size === 'Size_1_x_2' ? {width: 110, height: 235} : null
+      , product.size === 'Size_3_x_2' ? {width: 245, height: 235} : null
+      , product.size === 'Size_2_x_2' ? {width: 250, height: 235} : null
+      , product.size === 'Size_5_x_2' ? {width: 330, height: 235} : null
       , product.size === 'Doublewide' ? {
         width: 245,
         height: 220
@@ -39,12 +41,11 @@ export function ShopProduct(props: any) {
           findImage() !== undefined ?
             <View>
               {/*<Text>{product.size}</Text>*/}
-              <Image
+              <Img
                 source={{uri: findImage().background}}
                 style={[
                   product.size === 'Size_1_x_1' ? {
-                    width: 110, height: 110,
-                    transform: [{translateX: -15}],
+                    width: 115, height: 115,
                   } : null,
                   product.size === 'Size_1_x_1' && isJamTracks ? {
                     width: 140, height: 140,
@@ -53,25 +54,23 @@ export function ShopProduct(props: any) {
                   ,
                   product.size === 'Size_1_x_1' && isAlone ? {
                     width: 115,
-                    height: 210,
+                    height: 250,
                     transform: [{scaleX: 1.3}, {scaleY: 1.3}],
                     top: "15%",
                   } : null
 
                   , product.size === 'Size_1_x_2' ? {
                     width: 115,
-                    height: 210,
-                    transform: [{scaleX: 1.3}, {scaleY: 1.3}],
-                    top: "15%",
+                    height: 250,
                   } : null
                   , product.size === 'Size_2_x_2' ? {
-                    width: 210,
-                    height: 220,
+                    width: 250,
+                    height: 250,
                     transform: [{scaleX: 1}, {scaleY: 1.1}],
                   } : null
                   , product.size === 'Size_3_x_2' ? {
                     width: 245,
-                    height: 220,
+                    height: 250,
                     transform: [{scaleX: 1}, {scaleY: 1.1}],
                   } : null
                   , product.size === 'Size_5_x_2' ? {
@@ -88,11 +87,11 @@ export function ShopProduct(props: any) {
               />
             </View>
             : <View>
-              <Image
+              <Img
                 source={{uri: product.assets[0]?.background}}
                 style={[
                   product.size === 'Size_1_x_1' ? {
-                    width: 110, height: 110,
+                    width: 125, height: 115,
                     transform: [{translateX: -15}],
 
                   } : null,
@@ -102,29 +101,26 @@ export function ShopProduct(props: any) {
                   } : null,
                   product.size === 'Size_1_x_1' && isAlone ? {
                     width: 115,
-                    height: 210,
-                    transform: [{scaleX: 1.3}, {scaleY: 1.3}],
-                    top: "15%",
+                    height: 250,
+                    transform: [{translateX: 0}],
                   } : null
                   , product.size === 'Size_1_x_2' ? {
                     width: 115,
-                    height: 210,
-                    transform: [{scaleX: 1.3}, {scaleY: 1.3}],
-                    top: "15%",
+                    height: 250,
                   } : null
                   , product.size === 'Size_2_x_2' ? {
-                    width: 210,
-                    height: 220,
+                    width: 250,
+                    height: 250,
                     transform: [{scaleX: 1}, {scaleY: 1.1}],
                   } : null
                   , product.size === 'Size_3_x_2' ? {
                     width: 245,
-                    height: 220,
+                    height: 250,
                     transform: [{scaleX: 1}, {scaleY: 1.1}],
                   } : null
                   , product.size === 'Size_5_x_2' ? {
                     width: 290,
-                    height: 220,
+                    height: 250,
                     top: 0,
                     transform: [{scaleX: 1.5}, {scaleY: 1.5}, {translateY: 37}],
                   } : null
@@ -144,13 +140,14 @@ export function ShopProduct(props: any) {
         : <View></View>}
 
       {/*PRODUCT INFORMATION*/}
-      <View style={{}}>
+      <View style={{borderRadius: 5, alignSelf: 'flex-start', padding: 5, overflow: 'hidden'}}>
+        <View style={[{backgroundColor: colors.background}, styles.productInformationBackground]}></View>
         {/*PRODUCT NAME*/}
         <View>
           <View>
             <Text style={{color: colors.text, letterSpacing: -.8}}>{product.name}</Text>
           </View>
-          {product.type && !isJamTracks
+          {product.type && !isJamTracks && product.size !== 'Size_1_x_1'
             ?
             <View>
               <Text style={{color: colors.text, letterSpacing: -.8}}>{product.type}</Text>
@@ -160,8 +157,8 @@ export function ShopProduct(props: any) {
         {/*PRODUCT PRICE*/}
         <View>
           <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-            <Image source={require('../../assets/images/vbuck/vbuck_80x80.webp')}
-                   style={{width: 25, height: 25}}></Image>
+            <Img source={require('../../assets/images/vbuck/vbuck_80x80.webp')}
+                 style={{width: 25, height: 25}}></Img>
             <Text style={{color: colors.text, letterSpacing: -.8}}>{product.finalPrice}</Text>
 
             {product.finalPrice !== product.regularPrice ?
@@ -189,6 +186,13 @@ export function ShopProduct(props: any) {
 }
 
 const styles = StyleSheet.create({
+
+  productInformationBackground: {
+    width: '150%',
+    height: '150%',
+    position: 'absolute',
+    opacity: .3,
+  },
   text: {
     fontSize: 28,
     lineHeight: 32,

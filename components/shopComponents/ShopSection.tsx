@@ -1,4 +1,4 @@
-import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Pressable, ScrollView, Text, View} from 'react-native';
 import React from "react";
 import {CommonActions, useTheme} from "@react-navigation/native";
 import {useNavigation} from "expo-router";
@@ -9,8 +9,6 @@ export function ShopSection(props: any) {
 
 
   const {module, section} = props
-
-  const productCounter = section.products.length - 1;
 
   const navigation = useNavigation()
 
@@ -26,7 +24,7 @@ export function ShopSection(props: any) {
 
   let size1x1Counter = 0;
   let isAlone = false;
-  const isJamTracks = section.name == 'Jam Tracks';
+  const isJamTracks = section.name === 'Jam Tracks';
 
   return (
     <View style={{width: 'auto'}}>
@@ -43,7 +41,7 @@ export function ShopSection(props: any) {
         <View style={{
           display: "flex",
           flexDirection: 'column',
-          height: isJamTracks ? 300 : 235,
+          height: isJamTracks ? 300 : 250,
           flexWrap: 'wrap',
           paddingLeft: 5,
           paddingRight: 5,
@@ -52,11 +50,11 @@ export function ShopSection(props: any) {
           {
             section.products.map((product: any, index: number) => {
               if (!isJamTracks) {
-                if (product.size == 'Size_1_x_1') {
+                if (product.size === 'Size_1_x_1') {
                   size1x1Counter = size1x1Counter + 1
 
                   if (section.products[index + 1]?.size !== 'Size_1_x_1') {
-                    isAlone = !(size1x1Counter % 2 == 0)
+                    isAlone = !(size1x1Counter % 2 === 0)
                   } else {
                     isAlone = false;
                   }
@@ -77,11 +75,3 @@ export function ShopSection(props: any) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 28,
-    lineHeight: 32,
-    marginTop: -6,
-  },
-});

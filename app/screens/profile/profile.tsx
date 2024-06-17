@@ -1,10 +1,8 @@
 import {StyleSheet, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
-import {useNavigation} from "@react-navigation/native";
 import LoginScreen from "@/app/screens/auth/login";
 
 export default function ProfileScreen() {
-  const navigation = useNavigation<any>();
 
   return (
     <View style={styles.container}>

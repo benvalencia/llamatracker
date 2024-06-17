@@ -5,41 +5,50 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {ShopModule} from "@/components/shopComponents/ShopModule";
 import {useTheme} from "@react-navigation/native";
+import {LocalStoreService} from "@/app/services/localStore/localStore.service";
 
 export default function ShopScreen() {
   const fortniteService = useMemo(() => new FortniteService(), []);
+  const localStoreService = useMemo(() => new LocalStoreService(), []);
+
   const {top} = useSafeAreaInsets()
   const {colors} = useTheme();
 
-  const [shopInformation, setShopInformation] = useState({} as any);
-  const [shopList, setShopList] = useState([] as any);
 
+  const [shopList, setShopList] = useState([] as any);
   const [shopRaw, setShopRaw] = useState({} as any);
   const [shopCache, setShopCache] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
+
+  const todayShopDate = {date: shopRaw ? shopRaw.lastUpdate?.date : null}
+
   const getStoreShop = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('daily-shop');
-      const objToTransform = jsonValue != null ? JSON.parse(jsonValue) : null;
-      if (objToTransform.lastUpdate.date
-        && new Date(objToTransform.lastUpdate.date).toDateString() !== new Date().toDateString()) {
 
-        const getShopCombined = await fortniteService.getDailyShop();
+    localStoreService.getStore('daily-shop').then(async (response) => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('daily-shop');
+        if (response.lastUpdate.date
+          && new Date(response.lastUpdate.date).toDateString() !== new Date().toDateString()) {
 
-        const jsonValue = JSON.stringify(getShopCombined);
-        await AsyncStorage.setItem('daily-shop', jsonValue);
+          const getShopCombined = await fortniteService.getDailyShop();
 
-        setShopCache(jsonValue as any)
-        setShopRaw(getShopCombined)
-      } else {
-        setShopCache(jsonValue as any)
-        setShopRaw(objToTransform as any)
+          const jsonValue = JSON.stringify(getShopCombined);
+          await AsyncStorage.setItem('daily-shop', jsonValue);
+
+          setShopCache(jsonValue as any)
+          setShopRaw(getShopCombined)
+        } else {
+          setShopCache(jsonValue as any)
+          setShopRaw(response as any)
+        }
+      } catch (err) {
+        // error reading value
+        console.log(err)
       }
-    } catch (err) {
-      // error reading value
-      console.log(err)
-    }
+    })
+
+
   }
 
   const getShopList = async () => {
@@ -57,7 +66,6 @@ export default function ShopScreen() {
       }
     }
 
-    setShopInformation({date: shopRaw ? shopRaw.lastUpdate?.date : null})
 
     let shopListArrayBuilder: any = []
     shopRaw.shop
@@ -161,7 +169,7 @@ export default function ShopScreen() {
               color: colors.text,
               fontSize: 23,
               fontWeight: '400'
-            }}>{new Date(shopInformation.date).toLocaleDateString('spanish', {
+            }}>{new Date(todayShopDate.date).toLocaleDateString('spanish', {
               weekday: "long",
               year: "numeric",
               month: "short",
@@ -173,7 +181,7 @@ export default function ShopScreen() {
 
         <View style={styles.shopListContainer}>
           <View style={{width: 'auto'}}>
-            {shopList[0] == undefined ?
+            {shopList[0] === undefined ?
               <View style={{
                 height: '100%',
                 width: '100%',
@@ -209,6 +217,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     minHeight: '100%',
+
   },
   scrollReloadContainer: {},
 
@@ -221,9 +230,7 @@ const styles = StyleSheet.create({
   // SHOP LIST CONTAINER
   shopListContainer: {
     width: '100%',
-    height: '100%',
     gap: 5,
-    paddingBottom: 35,
   },
   // NEWS ITEMS CONTAINER
   itemContainer: {},

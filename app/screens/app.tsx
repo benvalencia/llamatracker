@@ -86,17 +86,6 @@ export default function AppScreen() {
       }]
     }
 
-    const scaleStyles = {
-      opacity: scale.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 1],
-        extrapolate: 'clamp'
-      }),
-      transform: [{
-        scale: scale
-      }]
-    }
-
     return (
       <TouchableOpacity onPress={onPress}
                         activeOpacity={1}
