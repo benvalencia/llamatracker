@@ -1,8 +1,9 @@
-import {Image, ScrollView, Text, useWindowDimensions, View} from 'react-native';
+import {ScrollView, Text, useWindowDimensions, View} from 'react-native';
 import React from "react";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import RenderHTML from "react-native-render-html";
 import {useTheme} from "@react-navigation/native";
+import {Img} from "@/components/elements/Img";
 // import { WebView } from 'react-native-webview';
 
 export default function NewsDetailScreen({route}: any) {
@@ -34,10 +35,10 @@ export default function NewsDetailScreen({route}: any) {
 
   return (
     <View style={{paddingBottom: bottom + 165}}>
-      <Image
+      <Img
         source={{uri: newsDetail.image}}
         style={{objectFit: 'cover', height: 200}}
-      ></Image>
+      ></Img>
       <ScrollView style={{padding: 10}}>
         <View style={{gap: 15, paddingBottom: bottom}}>
           <Text

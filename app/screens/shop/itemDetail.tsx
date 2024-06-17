@@ -1,9 +1,10 @@
-import {Image, ScrollView, Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import React from "react";
 import {ShopProductImage} from "@/components/shopComponents/ShopProductImage";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {ShopProductBanner} from "@/components/shopComponents/ShopProductBanner";
 import {useTheme} from "@react-navigation/native";
+import {Img} from "@/components/elements/Img";
 
 export default function ItemDetailScreen({route}: any) {
   const {colors} = useTheme();
@@ -55,8 +56,8 @@ export default function ItemDetailScreen({route}: any) {
             {/*PRODUCT PRICE*/}
             <View style={{maxWidth: 145, padding: 5}}>
               <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-                <Image source={require('../../../assets/images/vbuck/vbuck_80x80.webp')}
-                       style={{width: 25, height: 25}}></Image>
+                <Img source={require('../../../assets/images/vbuck/vbuck_80x80.webp')}
+                     style={{width: 25, height: 25}}></Img>
                 <Text style={{color: colors.text, letterSpacing: -.8, fontSize: 20}}>{product.finalPrice}</Text>
 
                 {product.finalPrice !== product.regularPrice ?
@@ -107,8 +108,8 @@ export default function ItemDetailScreen({route}: any) {
                   height: 130,
                 }}>
                   <View>
-                    <Image source={{uri: item.images.background}}
-                           style={{width: 130, height: 130}}></Image>
+                    <Img source={{uri: item.images.background}}
+                         style={{width: 130, height: 130}}></Img>
 
                   </View>
                   <View style={{padding: 5, gap: 2, alignSelf: 'center'}}>

@@ -1,6 +1,7 @@
-import {Image, ScrollView, Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
 import {useEffect, useState} from "react";
+import {Img} from "@/components/elements/Img";
 
 export default function IslandScreen() {
   const fortniteService = new FortniteService();
@@ -29,14 +30,14 @@ export default function IslandScreen() {
       height: '100%',
     }}>
       <View style={{width: '100%'}}>
-        <Image
+        <Img
           source={{uri: mapImage.blank}}
           style={{objectFit: 'cover', height: 400}}
-        ></Image>
-        <Image
+        ></Img>
+        <Img
           source={{uri: mapImage.pois}}
           style={{objectFit: 'cover', height: 400}}
-        ></Image>
+        ></Img>
       </View>
       <View style={{gap: 10}}>
         {mapPoisPositions.map((poi: any, index: number) => {

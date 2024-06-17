@@ -1,10 +1,11 @@
-import {Image, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Pressable, RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from "@/constants/Colors";
 import React, {useEffect, useState} from "react";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
 import {CommonActions} from "@react-navigation/native";
 import {useNavigation} from "expo-router";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {Img} from "@/components/elements/Img";
 
 export default function NewsScreen() {
 
@@ -70,7 +71,7 @@ export default function NewsScreen() {
           <Pressable key={index} onPress={() => goToNewsDetail(news)}>
             {/* Contenedor de la imagen */}
             <View style={{}}>
-              <Image
+              <Img
                 source={{uri: news.image}}
                 style={styles.newsImage}/>
             </View>
@@ -88,7 +89,7 @@ export default function NewsScreen() {
           <Pressable key={index} onPress={() => goToNewsDetail(news)}>
             {/* Contenedor de la imagen */}
             <View style={{}}>
-              <Image
+              <Img
                 source={{uri: news.image}}
                 style={styles.newsImage}/>
             </View>
@@ -106,7 +107,7 @@ export default function NewsScreen() {
           <Pressable key={index} onPress={() => goToNewsDetail(news)}>
             {/* Contenedor de la imagen */}
             <View style={{backgroundColor: 'red'}}>
-              <Image
+              <Img
                 source={{uri: news.image}}
                 style={styles.newsImage}/>
             </View>
@@ -124,7 +125,7 @@ export default function NewsScreen() {
           <Pressable key={index} onPress={() => goToNewsDetail(news)}>
             {/* Contenedor de la imagen */}
             <View style={{backgroundColor: 'red'}}>
-              <Image
+              <Img
                 source={{uri: news.image}}
                 style={styles.newsImage}/>
             </View>

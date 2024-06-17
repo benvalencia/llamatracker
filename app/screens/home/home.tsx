@@ -182,8 +182,9 @@ export default function HomeScreen() {
           < View style={styles.newsGiftBanner}>
             <Pressable onPress={goToNews}>
               <Img
-                source={{uri: news?.data.br.image}}
-                style={{height: 210}}
+                source={[{uri: news?.data.br.image}]}
+                style={{height: 210}
+                }
               ></Img>
             </Pressable>
           </View>
