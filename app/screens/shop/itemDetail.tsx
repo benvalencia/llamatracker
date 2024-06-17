@@ -5,6 +5,7 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {ShopProductBanner} from "@/components/shopComponents/ShopProductBanner";
 import {useTheme} from "@react-navigation/native";
 import {Img} from "@/components/elements/Img";
+import {FlashList} from "@shopify/flash-list";
 
 export default function ItemDetailScreen({route}: any) {
   const {colors} = useTheme();
@@ -97,50 +98,56 @@ export default function ItemDetailScreen({route}: any) {
         <View style={{padding: 5, gap: 5, paddingBottom: bottom}}>
           <Text style={{fontSize: 23, color: colors.text}}>Incluye:</Text>
           <View style={{gap: 5}}>
-            {product.items.map((item: any, index: number) => {
-              return (
-                <View key={index} style={{
-                  backgroundColor: 'grey',
-                  display: 'flex',
-                  flexDirection: 'row',
-                  borderRadius: 10,
-                  overflow: 'hidden',
-                  height: 130,
-                }}>
-                  <View>
-                    <Img source={{uri: item.images.background}}
-                         style={{width: 130, height: 130}}></Img>
+            <FlashList
+              renderItem={({item}: any) => {
 
+                return (<View style={{
+                    backgroundColor: 'grey',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    borderRadius: 10,
+                    overflow: 'hidden',
+                    height: 130,
+                  }}>
+                    <View>
+                      <Img source={{uri: item.images.background}}
+                           style={{width: 130, height: 130}}></Img>
+
+                    </View>
+                    <View style={{padding: 5, gap: 2, alignSelf: 'center'}}>
+                      <Text style={{fontSize: 14}}>{item.name}</Text>
+
+                      <Text style={{fontSize: 14}}>{item.rarity.name} {item.type.name}</Text>
+                      <Text style={{fontSize: 14}}>{item.series ? item.series.name : 'no series'}</Text>
+
+                      <Text style={{fontSize: 14}}>{item.set ? item.set.partOf : 'no part of'}</Text>
+
+                      {item.description
+                        ? <View style={{
+                          padding: 5,
+                          borderRadius: 10,
+                          borderStyle: 'dashed',
+                          borderWidth: 1,
+                          borderColor: colors.text,
+                          justifyContent: 'flex-start'
+                        }}>
+                          <Text style={{
+                            fontSize: 14,
+                            color: colors.text,
+                            textAlign: 'center',
+                            maxWidth: 200
+                          }}>{item.description}</Text>
+                        </View>
+                        : null}
+                    </View>
                   </View>
-                  <View style={{padding: 5, gap: 2, alignSelf: 'center'}}>
-                    <Text style={{fontSize: 14}}>{item.name}</Text>
-
-                    <Text style={{fontSize: 14}}>{item.rarity.name} {item.type.name}</Text>
-                    <Text style={{fontSize: 14}}>{item.series ? item.series.name : 'no series'}</Text>
-
-                    <Text style={{fontSize: 14}}>{item.set ? item.set.partOf : 'no part of'}</Text>
-
-                    {item.description
-                      ? <View style={{
-                        padding: 5,
-                        borderRadius: 10,
-                        borderStyle: 'dashed',
-                        borderWidth: 1,
-                        borderColor: colors.text,
-                        justifyContent: 'flex-start'
-                      }}>
-                        <Text style={{
-                          fontSize: 14,
-                          color: colors.text,
-                          textAlign: 'center',
-                          maxWidth: 200
-                        }}>{item.description}</Text>
-                      </View>
-                      : null}
-                  </View>
-                </View>
-              )
-            })}
+                );
+              }}
+              estimatedItemSize={20}
+              data={product.items}
+              collapsable={true}
+              horizontal={false}
+            />
           </View>
         </View>
       </ScrollView>

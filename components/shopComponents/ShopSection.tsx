@@ -64,46 +64,6 @@ export function ShopSection(props: any) {
         collapsable={true}
         horizontal={true}
       />
-
-
-      {/*<ScrollView*/}
-      {/*    horizontal={true}*/}
-      {/*  >*/}
-      {/*    <View style={{*/}
-      {/*      display: "flex",*/}
-      {/*      flexDirection: 'column',*/}
-      {/*      height: isJamTracks ? 300 : 250,*/}
-      {/*      flexWrap: 'wrap',*/}
-      {/*      paddingLeft: 5,*/}
-      {/*      paddingRight: 5,*/}
-      {/*      paddingBottom: 5,*/}
-      {/*    }}>*/}
-      {/*      {*/}
-      {/*        section.products.map((product: any, index: number) => {*/}
-      {/*          if (!isJamTracks) {*/}
-      {/*            if (product.size === 'Size_1_x_1') {*/}
-      {/*              size1x1Counter = size1x1Counter + 1*/}
-
-      {/*              if (section.products[index + 1]?.size !== 'Size_1_x_1') {*/}
-      {/*                isAlone = !(size1x1Counter % 2 === 0)*/}
-      {/*              } else {*/}
-      {/*                isAlone = false;*/}
-      {/*              }*/}
-      {/*            } else {*/}
-      {/*              size1x1Counter = 0;*/}
-      {/*            }*/}
-      {/*          }*/}
-
-      {/*          return (*/}
-      {/*            <Pressable onPress={() => goToProductDetail(product)} key={index}>*/}
-      {/*              <ShopProduct isJamTracks={isJamTracks} isAlone={isAlone} product={product}*/}
-      {/*                           key={index}></ShopProduct>*/}
-      {/*            </Pressable>*/}
-      {/*          )*/}
-      {/*        })}*/}
-      {/*    </View>*/}
-      {/*  </ScrollView>*/}
-
     </View>
   );
 }

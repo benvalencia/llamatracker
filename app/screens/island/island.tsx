@@ -1,7 +1,8 @@
 import {ScrollView, Text, View} from 'react-native';
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Img} from "@/components/elements/Img";
+import {FlashList} from "@shopify/flash-list";
 
 export default function IslandScreen() {
   const fortniteService = new FortniteService();
@@ -40,17 +41,23 @@ export default function IslandScreen() {
         ></Img>
       </View>
       <View style={{gap: 10}}>
-        {mapPoisPositions.map((poi: any, index: number) => {
-          return (
-            <View key={index} style={{backgroundColor: 'grey', padding: 10, borderRadius: 10}}>
-              <Text>id: {poi.id}</Text>
-              <Text>x: {poi.location.x}</Text>
-              <Text>y: {poi.location.y}</Text>
-              <Text>z: {poi.location.z}</Text>
-              <Text>name: {poi.name}</Text>
-            </View>
-          )
-        })}
+        <FlashList
+          renderItem={({item}: any) => {
+            return (
+              <View style={{backgroundColor: 'grey', padding: 10, borderRadius: 10}}>
+                <Text>id: {item.id}</Text>
+                <Text>x: {item.location.x}</Text>
+                <Text>y: {item.location.y}</Text>
+                <Text>z: {item.location.z}</Text>
+                <Text>name: {item.name}</Text>
+              </View>
+            );
+          }}
+          estimatedItemSize={20}
+          data={mapPoisPositions}
+          collapsable={true}
+          horizontal={false}
+        />
       </View>
     </ScrollView>
   );
