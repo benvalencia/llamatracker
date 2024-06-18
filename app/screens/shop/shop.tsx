@@ -8,6 +8,7 @@ import {useTheme} from "@react-navigation/native";
 import {LocalStoreService} from "@/app/services/localStore/localStore.service";
 import {Fonts} from "@/constants/Colors";
 import Timer from "@/components/elements/Timer";
+import {Loader} from "@/components/elements/Loader";
 
 export default function ShopScreen() {
   const fortniteService = useMemo(() => new FortniteService(), []);
@@ -154,6 +155,13 @@ export default function ShopScreen() {
 
   return (
     <View style={{paddingTop: top, marginBottom: bottom + 40}}>
+
+      {shopList[0] === undefined ?
+        <View style={{position: 'absolute', top: '50%', width: '100%'}}>
+          <Loader></Loader>
+        </View>
+        : null}
+
       {shopList[0] ?
         <View style={{alignItems: 'center', marginBottom: 5}}>
           <Text style={{
@@ -183,48 +191,23 @@ export default function ShopScreen() {
               targetDate={new Date(todayShopDate.date).setDate(new Date(todayShopDate.date).getDate() + 1)}></Timer>
           </View>
         </View>
-        : null
-      }
+        : null}
 
       <ScrollView
         contentContainerStyle={[styles.container]}
         refreshControl={
           <RefreshControl refreshing={refreshing}
                           onRefresh={onRefresh}
-                          style={styles.scrollReloadContainer}/>}>
-        <View style={{
-          height: '100%',
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%'
-        }}>
-
-          <View style={styles.shopListContainer}>
-            <View style={{width: 'auto'}}>
-              {shopList[0] === undefined ?
-                <View style={{
-                  height: '100%',
-                  width: '100%',
-                }}>
-                  <Text style={{
-                    color: colors.text,
-                    fontSize: Fonts.size.xl,
-                    fontWeight: Fonts.weight.bold,
-                    margin: 'auto'
-                  }}>Loading...</Text>
-                </View>
-                : null}
-
+          />}>
+        <View>
+          <View>
               {/*MODULE*/}
               {shopList.map((module: any, index: number) => {
                 return (
                   <ShopModule module={module} key={index}></ShopModule>
                 )
               })}
-
             </View>
-          </View>
         </View>
       </ScrollView>
     </View>
@@ -232,29 +215,8 @@ export default function ShopScreen() {
 }
 
 const styles = StyleSheet.create({
-  isHidden: {
-    display: "none"
-  },
-
   container: {
     alignItems: 'center',
     minHeight: '100%',
-
   },
-  scrollReloadContainer: {},
-
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-
-  // SHOP LIST CONTAINER
-  shopListContainer: {
-    width: '100%',
-    gap: 5,
-  },
-  // NEWS ITEMS CONTAINER
-  itemContainer: {},
-
 });
