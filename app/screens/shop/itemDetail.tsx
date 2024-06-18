@@ -6,6 +6,7 @@ import {ShopProductBanner} from "@/components/shopComponents/ShopProductBanner";
 import {useTheme} from "@react-navigation/native";
 import {Img} from "@/components/elements/Img";
 import {FlashList} from "@shopify/flash-list";
+import {Fonts} from "@/constants/Colors";
 
 export default function ItemDetailScreen({route}: any) {
   const {colors} = useTheme();
@@ -35,22 +36,39 @@ export default function ItemDetailScreen({route}: any) {
       <ScrollView>
         <View style={{alignItems: 'center'}}>
           {/*PRODUCT NAME*/}
-          <Text style={{fontSize: 24, color: colors.text, width: '100%', padding: 5}}>{product.name}</Text>
+          <Text style={{
+            fontSize: Fonts.size.l,
+            color: colors.text,
+            width: '100%',
+            padding: 5
+          }}>{product.name}</Text>
           {/*PRODUCT INFO*/}
           <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
             {/*PRODUCT DETAILS*/}
             <View style={{maxWidth: 245, padding: 5, gap: 10}}>
               <View style={{gap: 5}}>
                 {/*PRODUCT RARITY & TYPE*/}
-                <Text style={{fontSize: 18, color: colors.text}}>{product.rarity.name} {product.type}</Text>
+                <Text style={{
+                  fontSize: Fonts.size.m,
+                  color: colors.text
+                }}>{product.rarity.name} {product.type}</Text>
                 {/*PRODUCT SERIES & TYPE*/}
                 {product.series
-                  ? <Text style={{fontSize: 18, color: colors.text}}>{product.series.name}</Text> : null}
+                  ? <Text style={{
+                    fontSize: Fonts.size.m,
+                    color: colors.text
+                  }}>{product.series.name}</Text> : null}
                 {/*PRODUCT RELEASED*/}
-                <Text style={{fontSize: 18, color: colors.text}}>Lanzado
+                <Text style={{
+                  fontSize: Fonts.size.m,
+                  color: colors.text
+                }}>Lanzado
                   el {new Date(product.in).toLocaleDateString()}</Text>
                 {/*PRODUCT DAYS LEFT*/}
-                <Text style={{fontSize: 18, color: colors.text}}>Se
+                <Text style={{
+                  fontSize: Fonts.size.m,
+                  color: colors.text
+                }}>Se
                   va {daysLeft ? 'en ' + daysLeft + (daysLeft > 1 ? ' días' : ' día') : 'hoy'}</Text>
               </View>
             </View>
@@ -58,20 +76,28 @@ export default function ItemDetailScreen({route}: any) {
             <View style={{maxWidth: 145, padding: 5}}>
               <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
                 <Img source={require('../../../assets/images/vbuck/vbuck_80x80.webp')}
-                     style={{width: 25, height: 25}}></Img>
-                <Text style={{color: colors.text, letterSpacing: -.8, fontSize: 20}}>{product.finalPrice}</Text>
+                     style={{width: 20, height: 20}}></Img>
+                <Text style={{
+                  color: colors.text,
+                  letterSpacing: Fonts.spacing.hard,
+                  fontSize: Fonts.size.m,
+                }}>{product.finalPrice}</Text>
 
                 {product.finalPrice !== product.regularPrice ?
                   <View style={{position: 'relative', opacity: .5}}>
-                    <Text style={{color: colors.text, letterSpacing: -.8, fontSize: 20}}>{product.regularPrice}</Text>
+                    <Text style={{
+                      color: colors.text,
+                      letterSpacing: Fonts.spacing.hard,
+                      fontSize: Fonts.size.m,
+                    }}>{product.regularPrice}</Text>
                     <View style={{
                       backgroundColor: colors.text,
-                      width: '110%',
+                      width: '120%',
                       height: 2,
-                      transform: [{rotate: '-10deg'}],
+                      transform: [{rotate: '-9deg'}],
                       position: 'absolute',
-                      top: '30%',
-                      left: -2,
+                      top: '45%',
+                      left: -3,
                       opacity: .6
                     }}></View>
                   </View>
@@ -90,13 +116,20 @@ export default function ItemDetailScreen({route}: any) {
               borderWidth: 1,
               borderColor: colors.text
             }}>
-              <Text style={{fontSize: 18, color: colors.text, textAlign: 'center'}}>{product.description}</Text>
+              <Text style={{
+                fontSize: Fonts.size.m,
+                color: colors.text,
+                textAlign: 'center'
+              }}>{product.description}</Text>
             </View>
             : null}
         </View>
 
         <View style={{padding: 5, gap: 5, paddingBottom: bottom}}>
-          <Text style={{fontSize: 23, color: colors.text}}>Incluye:</Text>
+          <Text style={{
+            fontSize: Fonts.size.l,
+            color: colors.text
+          }}>Incluye:</Text>
           <View style={{gap: 5}}>
             <FlashList
               renderItem={({item}: any) => {
@@ -108,6 +141,7 @@ export default function ItemDetailScreen({route}: any) {
                     borderRadius: 10,
                     overflow: 'hidden',
                     height: 130,
+                    margin: 10,
                   }}>
                     <View>
                       <Img source={{uri: item.images.background}}
@@ -115,12 +149,12 @@ export default function ItemDetailScreen({route}: any) {
 
                     </View>
                     <View style={{padding: 5, gap: 2, alignSelf: 'center'}}>
-                      <Text style={{fontSize: 14}}>{item.name}</Text>
+                      <Text style={{fontSize: Fonts.size.s}}>{item.name}</Text>
 
-                      <Text style={{fontSize: 14}}>{item.rarity.name} {item.type.name}</Text>
-                      <Text style={{fontSize: 14}}>{item.series ? item.series.name : 'no series'}</Text>
+                      <Text style={{fontSize: Fonts.size.s}}>{item.rarity.name} {item.type.name}</Text>
+                      <Text style={{fontSize: Fonts.size.s}}>{item.series ? item.series.name : 'no series'}</Text>
 
-                      <Text style={{fontSize: 14}}>{item.set ? item.set.partOf : 'no part of'}</Text>
+                      <Text style={{fontSize: Fonts.size.s}}>{item.set ? item.set.partOf : 'no part of'}</Text>
 
                       {item.description
                         ? <View style={{
@@ -132,7 +166,7 @@ export default function ItemDetailScreen({route}: any) {
                           justifyContent: 'flex-start'
                         }}>
                           <Text style={{
-                            fontSize: 14,
+                            fontSize: Fonts.size.s,
                             color: colors.text,
                             textAlign: 'center',
                             maxWidth: 200

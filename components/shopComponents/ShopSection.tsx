@@ -4,6 +4,7 @@ import {CommonActions, useTheme} from "@react-navigation/native";
 import {useNavigation} from "expo-router";
 import {ShopProduct} from "@/components/shopComponents/ShopProduct";
 import {FlashList} from "@shopify/flash-list";
+import {Fonts} from "@/constants/Colors";
 
 export function ShopSection(props: any) {
   const {colors} = useTheme();
@@ -30,9 +31,16 @@ export function ShopSection(props: any) {
     <View style={{width: 'auto'}}>
       {/*TITULO DE LA SECTION*/}
       {module !== section.name
-        ? <Text style={{color: colors.text, fontSize: 18, fontWeight: '300', paddingLeft: 5}}>
-          {section.name}
-        </Text>
+        ?
+        <View style={{paddingLeft: 5}}>
+          <Text style={{
+            color: colors.text,
+            fontSize: Fonts.size.m,
+            fontWeight: Fonts.weight.light,
+          }}>
+            {section.name}
+          </Text>
+        </View>
         : null}
 
       {/*300*/}

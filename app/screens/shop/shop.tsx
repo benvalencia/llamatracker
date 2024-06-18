@@ -6,12 +6,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {ShopModule} from "@/components/shopComponents/ShopModule";
 import {useTheme} from "@react-navigation/native";
 import {LocalStoreService} from "@/app/services/localStore/localStore.service";
+import {Fonts} from "@/constants/Colors";
+import Timer from "@/components/elements/Timer";
 
 export default function ShopScreen() {
   const fortniteService = useMemo(() => new FortniteService(), []);
   const localStoreService = useMemo(() => new LocalStoreService(), []);
 
-  const {top} = useSafeAreaInsets()
+  const {top, bottom} = useSafeAreaInsets()
   const {colors} = useTheme();
 
 
@@ -135,6 +137,7 @@ export default function ShopScreen() {
     shopListArrayBuilder.reverse();
     shopListArrayBuilder.forEach((modulo: any) => modulo.sections.reverse())
 
+
     setShopList(shopListArrayBuilder ? shopListArrayBuilder.map((i: any) => i) : null);
     setRefreshing(false);
   };
@@ -150,62 +153,81 @@ export default function ShopScreen() {
   }, [shopCache]);
 
   return (
-    <ScrollView
-      contentContainerStyle={[styles.container, {paddingTop: top}]}
-      refreshControl={
-        <RefreshControl refreshing={refreshing}
-                        onRefresh={onRefresh}
-                        style={styles.scrollReloadContainer}/>}>
-      <View style={{
-        height: '100%',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%'
-      }}>
-        {shopList[0] ?
-          <View style={{marginBottom: 15, paddingTop: top}}>
+    <View style={{paddingTop: top, marginBottom: bottom + 40}}>
+      {shopList[0] ?
+        <View style={{alignItems: 'center', marginBottom: 5}}>
+          <Text style={{
+            color: colors.text,
+            fontSize: Fonts.size.xl,
+            fontWeight: Fonts.weight.bold
+          }}>Daily Shop</Text>
+          <Text style={{
+            color: colors.text,
+            fontSize: Fonts.size.l,
+            fontWeight: Fonts.weight.normal
+          }}>{new Date(todayShopDate.date).toLocaleDateString('spanish', {
+            weekday: "long",
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+          })}</Text>
+          <View style={{display: 'flex', flexDirection: 'row'}}>
             <Text style={{
               color: colors.text,
-              fontSize: 23,
-              fontWeight: '400'
-            }}>{new Date(todayShopDate.date).toLocaleDateString('spanish', {
-              weekday: "long",
-              year: "numeric",
-              month: "short",
-              day: "numeric"
-            })}</Text>
-          </View>
-          : null
-        }
-
-        <View style={styles.shopListContainer}>
-          <View style={{width: 'auto'}}>
-            {shopList[0] === undefined ?
-              <View style={{
-                height: '100%',
-                width: '100%',
-              }}>
-                <Text style={{
-                  color: colors.text,
-                  fontSize: 30,
-                  fontWeight: '400',
-                  margin: 'auto'
-                }}>Loading...</Text>
-              </View>
-              : null}
-
-            {/*MODULE*/}
-            {shopList.map((module: any, index: number) => {
-              return (
-                <ShopModule module={module} key={index}></ShopModule>
-              )
-            })}
-
+              fontSize: Fonts.size.s,
+              fontWeight: Fonts.weight.light
+            }}>Next update in </Text>
+            <Timer
+              size={Fonts.size.s}
+              weight={Fonts.weight.light}
+              targetDate={new Date(todayShopDate.date).setDate(new Date(todayShopDate.date).getDate() + 1)}></Timer>
           </View>
         </View>
-      </View>
-    </ScrollView>
+        : null
+      }
+
+      <ScrollView
+        contentContainerStyle={[styles.container]}
+        refreshControl={
+          <RefreshControl refreshing={refreshing}
+                          onRefresh={onRefresh}
+                          style={styles.scrollReloadContainer}/>}>
+        <View style={{
+          height: '100%',
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%'
+        }}>
+
+          <View style={styles.shopListContainer}>
+            <View style={{width: 'auto'}}>
+              {shopList[0] === undefined ?
+                <View style={{
+                  height: '100%',
+                  width: '100%',
+                }}>
+                  <Text style={{
+                    color: colors.text,
+                    fontSize: Fonts.size.xl,
+                    fontWeight: Fonts.weight.bold,
+                    margin: 'auto'
+                  }}>Loading...</Text>
+                </View>
+                : null}
+
+              {/*MODULE*/}
+              {shopList.map((module: any, index: number) => {
+                return (
+                  <ShopModule module={module} key={index}></ShopModule>
+                )
+              })}
+
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 

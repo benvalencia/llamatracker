@@ -193,6 +193,12 @@ export default function HomeScreen() {
             <Text style={styles.timerTitle}>Capitulo 5 en...</Text>
             <Text style={styles.timerText}>{timeRemaining}</Text>
           </View>
+
+          {/* DONATION */}
+          <View style={styles.timerContainer}>
+            <Text style={styles.timerTitle}>Ayuda con una potion</Text>
+            <Text style={styles.timerText}>0.99£</Text>
+          </View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

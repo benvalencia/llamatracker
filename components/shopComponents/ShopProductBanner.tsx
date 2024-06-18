@@ -1,5 +1,6 @@
 import {Text, View} from 'react-native';
 import React from "react";
+import {Fonts} from "@/constants/Colors";
 
 export function ShopProductBanner(props: any) {
 
@@ -12,9 +13,12 @@ export function ShopProductBanner(props: any) {
       borderRadius: 25,
       paddingLeft: 10,
       paddingRight: 10,
-      alignSelf: align ? align : 'flex-start'
+      alignSelf: align ? align : 'flex-start',
     }}>
-      <Text>{banner.name}</Text>
+      <Text style={{
+        fontSize: Fonts.size.xs,
+        fontWeight: Fonts.weight.normal,
+      }}>{banner.name}</Text>
     </View>
   );
 }
