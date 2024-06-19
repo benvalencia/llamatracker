@@ -4,6 +4,7 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 import RenderHTML from "react-native-render-html";
 import {useTheme} from "@react-navigation/native";
 import {Img} from "@/components/elements/Img";
+import {Fonts} from "@/constants/Colors";
 // import { WebView } from 'react-native-webview';
 
 export default function NewsDetailScreen({route}: any) {
@@ -16,11 +17,11 @@ export default function NewsDetailScreen({route}: any) {
   const tagsStyles = {
     span: {
       color: colors.text,
-      fontSize: 16,
+      fontSize: Fonts.size.s,
     },
     p: {
       color: colors.text,
-      fontSize: 16,
+      fontSize: Fonts.size.s,
     },
     ul: {
       color: colors.text,
@@ -37,15 +38,19 @@ export default function NewsDetailScreen({route}: any) {
     <View style={{paddingBottom: bottom + 165}}>
       <Img
         source={{uri: newsDetail.image}}
-        style={{objectFit: 'cover', height: 200}}
+        style={{objectFit: 'fill', height: 200, top: 0}}
       ></Img>
       <ScrollView style={{padding: 10}}>
         <View style={{gap: 15, paddingBottom: bottom}}>
           <Text
-            style={{fontSize: 15, color: '#1db8f3', fontWeight: 700}}>{new Date(newsDetail.date).toDateString()}</Text>
+            style={{
+              fontSize: Fonts.size.m,
+              color: '#1db8f3',
+              fontWeight: Fonts.weight.bold
+            }}>{new Date(newsDetail.date).toDateString()}</Text>
           <Text style={{
-            fontSize: 20,
-            fontWeight: 400,
+            fontSize: Fonts.size.m,
+            fontWeight: Fonts.weight.bold,
             textTransform: 'uppercase',
             color: colors.text
           }}>{newsDetail.title === newsDetail.tabTitle ? newsDetail.title : newsDetail.title + ' ' + newsDetail.tabTitle}</Text>
@@ -73,7 +78,11 @@ export default function NewsDetailScreen({route}: any) {
               emSize={2}
               tagsStyles={tagsStyles}
             />
-            : <Text style={{fontSize: 20, fontWeight: 400, color: colors.text}}>{newsDetail.body}</Text>}
+            : <Text style={{
+              fontSize: Fonts.size.m,
+              fontWeight: Fonts.weight.normal,
+              color: colors.text
+            }}>{newsDetail.body}</Text>}
 
         </View>
       </ScrollView>

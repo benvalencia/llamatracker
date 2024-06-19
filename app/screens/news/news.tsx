@@ -90,25 +90,27 @@ export default function NewsScreen() {
             renderItem={({item}: any) => {
               return (
                 <Pressable onPress={() => goToNewsDetail(item)} style={{margin: 10}}>
-                  {/* Contenedor de la imagen */}
-                  <View>
-                    <Img
-                      source={{uri: item.image}}
-                      style={styles.newsImage}/>
-                  </View>
-                  {/* Superposición de texto sobre la imagen */}
-                  <View style={{backgroundColor: colors.text, padding: 10}}>
-                    <Text
-                      style={{
-                        fontSize: Fonts.size.xs,
-                        color: '#1db8f3',
-                        fontWeight: Fonts.weight.bold
-                      }}>{new Date(item.date).toDateString()}</Text>
-                    <Text style={{
-                      fontSize: Fonts.size.m,
-                      fontWeight: Fonts.weight.normal,
-                      textTransform: 'uppercase'
-                    }}>{item.title}</Text>
+                  <View style={{borderRadius: 15, overflow: 'hidden'}}>
+                    {/* Contenedor de la imagen */}
+                    <View>
+                      <Img
+                        source={{uri: item.image}}
+                        style={styles.newsImage}/>
+                    </View>
+                    {/* Superposición de texto sobre la imagen */}
+                    <View style={{backgroundColor: colors.text, padding: 10}}>
+                      <Text
+                        style={{
+                          fontSize: Fonts.size.xs,
+                          color: '#1db8f3',
+                          fontWeight: Fonts.weight.bold
+                        }}>{new Date(item.date).toDateString()}</Text>
+                      <Text style={{
+                        fontSize: Fonts.size.m,
+                        fontWeight: Fonts.weight.normal,
+                        textTransform: 'uppercase'
+                      }}>{item.title}</Text>
+                    </View>
                   </View>
                 </Pressable>
               );
