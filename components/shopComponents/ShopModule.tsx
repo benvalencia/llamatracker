@@ -2,6 +2,7 @@ import {Text, View} from 'react-native';
 import React from "react";
 import {ShopSection} from "@/components/shopComponents/ShopSection";
 import {useTheme} from "@react-navigation/native";
+import {Fonts} from "@/constants/Colors";
 
 export function ShopModule(props: any) {
   const {colors} = useTheme();
@@ -13,12 +14,11 @@ export function ShopModule(props: any) {
   return (
     <View style={{width: 'auto', gap: 5}}>
       {/*TITULO MODULO*/}
-      <View>
+      <View style={{paddingLeft: 5}}>
         <Text style={{
           color: colors.text,
-          fontSize: 25,
-          fontWeight: '500',
-          paddingLeft: 5
+          fontSize: Fonts.size.l,
+          fontWeight: Fonts.weight.bold,
         }}>{moduleName}</Text>
       </View>
       {/*SECTIONS*/}

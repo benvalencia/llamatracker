@@ -4,6 +4,7 @@ import {ShopProductBanner} from "@/components/shopComponents/ShopProductBanner";
 import {useTheme} from "@react-navigation/native";
 
 import {Img} from "@/components/elements/Img";
+import {Fonts} from "@/constants/Colors";
 
 export function ShopProduct(props: any) {
   const {colors} = useTheme();
@@ -153,36 +154,48 @@ export function ShopProduct(props: any) {
       <View style={{borderRadius: 5, alignSelf: 'flex-start', padding: 5, overflow: 'hidden'}}>
         <View style={[{backgroundColor: colors.background}, styles.productInformationBackground]}></View>
         {/*PRODUCT NAME*/}
-        <View>
-          <View>
-            <Text style={{color: colors.text, letterSpacing: -.8}}>{product.name}</Text>
-          </View>
+        <View style={{paddingBottom: 3}}>
+          <Text style={{
+            color: colors.text,
+            fontSize: Fonts.size.s,
+            letterSpacing: Fonts.spacing.hard
+          }}>{product.name}</Text>
           {product.type && !isJamTracks
             // && product.size !== 'Size_1_x_1'
             ?
-            <View>
-              <Text style={{color: colors.text, letterSpacing: -.8}}>{product.type}</Text>
-            </View>
+            <Text style={{
+              color: colors.text,
+              fontSize: Fonts.size.xs,
+              letterSpacing: Fonts.spacing.hard
+            }}>{product.type}</Text>
             : null}
         </View>
         {/*PRODUCT PRICE*/}
         <View>
-          <View style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+          <View style={{display: 'flex', flexDirection: 'row', gap: 6, alignItems: 'center'}}>
             <Img source={require('../../assets/images/vbuck/vbuck_80x80.webp')}
-                 style={{width: 25, height: 25}}></Img>
-            <Text style={{color: colors.text, letterSpacing: -.8}}>{product.finalPrice}</Text>
+                 style={{width: 18, height: 18}}></Img>
+            <Text style={{
+              color: colors.text,
+              fontSize: Fonts.size.s,
+              letterSpacing: Fonts.spacing.hard
+            }}>{product.finalPrice}</Text>
 
             {product.finalPrice !== product.regularPrice ?
               <View style={{position: 'relative', opacity: .5}}>
-                <Text style={{color: colors.text, letterSpacing: -.8}}>{product.regularPrice}</Text>
+                <Text style={{
+                  color: colors.text,
+                  fontSize: Fonts.size.s,
+                  letterSpacing: Fonts.spacing.hard
+                }}>{product.regularPrice}</Text>
                 <View style={{
                   backgroundColor: colors.text,
-                  width: '110%',
+                  width: '120%',
                   height: 2,
-                  transform: [{rotate: '-10deg'}],
+                  transform: [{rotate: '-9deg'}],
                   position: 'absolute',
-                  top: '30%',
-                  left: -2,
+                  top: '40%',
+                  left: -3,
                   opacity: .6
                 }}></View>
               </View>

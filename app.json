@@ -8,20 +8,45 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
+      "backgroundColor": "#ffffff",
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "dark": {
+        "backgroundColor": "#000000",
+        "image": "./assets/images/splash.png",
+        "resizeMode": "contain"
+      }
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.benciado.llamatracker"
+      "bundleIdentifier": "com.benciado.llamatracker",
+      "splash": {
+        "image": "./assets/images/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#000000",
+        "dark": {
+          "image": "./assets/images/splash.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#000000"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#000000"
       },
-      "package": "com.benciado.llamatracker"
+      "package": "com.benciado.llamatracker",
+      "splash": {
+        "image": "./assets/images/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#000000",
+        "dark": {
+          "image": "./assets/images/splash.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#000000"
+        }
+      }
     },
     "web": {
       "bundler": "metro",

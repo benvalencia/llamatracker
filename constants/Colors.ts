@@ -44,3 +44,30 @@ export const Colors = {
     padding: 10,
   }
 };
+
+export const Fonts: any = {
+  size: {
+    xs: 13,
+    s: 15,
+    m: 18,
+    l: 21,
+    xl: 25,
+  },
+
+  weight: {
+    bold: '600',
+    light: '200',
+    normal: '300',
+  },
+
+  spacing: {
+    soft: -.3,
+    hard: -.9
+  },
+};
+
+export const Boxes: any = {
+  border: {
+    normal: 10,
+  },
+};
