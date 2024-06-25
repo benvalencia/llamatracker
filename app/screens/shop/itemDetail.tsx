@@ -10,10 +10,9 @@ import {Fonts} from "@/constants/Colors";
 
 export default function ItemDetailScreen({route}: any) {
   const {colors} = useTheme();
+  const {bottom} = useSafeAreaInsets()
 
   const {product} = route.params;
-
-  const {bottom} = useSafeAreaInsets()
 
   const daysLeft = Math.trunc(((Number(new Date(product.out)) - Number(new Date())) / 86400000));
 

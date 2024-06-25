@@ -25,7 +25,6 @@ export default function ShopScreen() {
 
 
   const todayShopDate = {date: shopRaw ? shopRaw.lastUpdate?.date : null}
-
   const getStoreShop = async () => {
 
     localStoreService.getStore('daily-shop').then(async (response) => {
@@ -50,8 +49,6 @@ export default function ShopScreen() {
         console.log(err)
       }
     })
-
-
   }
 
   const getShopList = async () => {
@@ -137,7 +134,6 @@ export default function ShopScreen() {
 
     shopListArrayBuilder.reverse();
     shopListArrayBuilder.forEach((modulo: any) => modulo.sections.reverse())
-
 
     setShopList(shopListArrayBuilder ? shopListArrayBuilder.map((i: any) => i) : null);
     setRefreshing(false);

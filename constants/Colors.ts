@@ -65,3 +65,9 @@ export const Fonts: any = {
     hard: -.9
   },
 };
+
+export const Boxes: any = {
+  border: {
+    normal: 10,
+  },
+};

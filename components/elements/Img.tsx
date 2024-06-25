@@ -30,6 +30,7 @@ export const Img = ({onLoad, style, ...rest}: any) => {
 
 const styles = StyleSheet.create({
   spinner: {
+    padding: 10,
     alignItems: 'center',
     justifyContent: 'center'
   }
