@@ -1,4 +1,13 @@
-import {Animated, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Animated,
+  KeyboardAvoidingView,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  useWindowDimensions,
+  View
+} from 'react-native';
 import {Colors, Fonts} from "@/constants/Colors";
 import React, {useEffect, useMemo, useState} from "react";
 import {useNavigation} from "expo-router";
@@ -12,6 +21,7 @@ import {Img} from "@/components/elements/Img";
 import Timer from "@/components/elements/Timer";
 import {LocalStoreService} from "@/app/services/localStore/localStore.service";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import Selector from "@/components/elements/Selector";
 import ScrollView = Animated.ScrollView;
 
 export default function HomeScreen() {
@@ -21,6 +31,7 @@ export default function HomeScreen() {
   const navigation = useNavigation()
   const {top} = useSafeAreaInsets()
   const {colors} = useTheme();
+  const {width} = useWindowDimensions();
 
   const [username, setUsername] = useState('');
   const [recentSearch, setRecentSearch] = useState([] as string[]);
@@ -132,24 +143,34 @@ export default function HomeScreen() {
               style={styles.logoIcon}
             />
           </View>
-          {/* BARRA DE BÚSQUEDA */}
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputComponent}
-              placeholder={'Buscar perfil'}
-              placeholderTextColor={'#4b4b4b'}
-              onChangeText={(text) => setUsername(text)}
-              value={username}
-              onSubmitEditing={goToStats}//
-            />
-            <Pressable style={[styles.searchIconContainer, {display: username.length ? 'none' : 'flex'}]}>
-              <Img source={require('../../../assets/images/logo/icons8-fortnite-llama-48.png')}
-                   style={styles.searchIcon}/>
-            </Pressable>
-            <Pressable style={[styles.searchIconContainer, {display: username.length ? 'flex' : 'none'}]}
-                       onPress={clearInput}>
-              <Ionicons name={'close'} size={Fonts.size.xl}/>
-            </Pressable>
+
+          <View style={{width: '100%', margin: 5}}>
+            {/* BARRA DE BÚSQUEDA */}
+            {/*styles.inputContainer*/}
+            <View style={{width: width - 100, zIndex: 1}}>
+              {/*<Ionicons name={'search'} size={Fonts.size.xl} color={colors.text}/>*/}
+              <TextInput
+                style={styles.inputComponent}
+                placeholder={'Buscar perfil'}
+                placeholderTextColor={'#4b4b4b'}
+                onChangeText={(text) => setUsername(text)}
+                value={username}
+                onSubmitEditing={goToStats}//
+              />
+              <Pressable style={[styles.searchIconContainer, {display: username.length ? 'none' : 'flex'}]}>
+                <Img source={require('../../../assets/images/logo/icons8-fortnite-llama-48.png')}
+                     style={styles.searchIcon}/>
+              </Pressable>
+              <Pressable style={[styles.searchIconContainer, {display: username.length ? 'flex' : 'none'}]}
+                         onPress={clearInput}>
+                <Ionicons name={'close'} size={Fonts.size.xl}/>
+              </Pressable>
+            </View>
+
+            {/* Selector */}
+            <View style={{position: 'absolute', right: 0}}>
+              <Selector></Selector>
+            </View>
           </View>
 
           {/* RECENT SEARCH PILLS */}
@@ -215,13 +236,13 @@ const styles = StyleSheet.create({
   imageContainer: {},
 
   //INPUT Y PILLS CONTAINER
-  inputContainer: {
-    width: '100%',
-  },
+  // inputContainer: {
+  //   width: width - 75,
+  // },
 
   inputComponent: {
     height: 50,
-    borderRadius: 18,
+    borderRadius: 12,
     paddingLeft: 15,
     fontSize: Fonts.size.m,
     backgroundColor: '#fbefff',
