@@ -148,7 +148,7 @@ export class FortniteService {
    * This endpoint is FortniteApiIo
    * @param options Options for this endpoint
    */
-  public async getAccountIdByUsername(username: string, options?: BannersRequestParams): Promise<any> {
+  public async searchAccountId(username: string, options?: BannersRequestParams): Promise<any> {
     let response: any;
 
     await this.fortniteApiIOClient.searchAccountId(username)
@@ -167,7 +167,46 @@ export class FortniteService {
    * This endpoint is FortniteApiIo
    * @param options Options for this endpoint
    */
-  public async getPlayerStats(accountId: string, options?: BannersRequestParams): Promise<any> {
+  public async getAccountIdByUsername(username: string, options = {strict: true, platform: ""}): Promise<any> {
+    let response: any;
+
+    await this.fortniteApiIOClient.getAccountIdByUsername(username, options)
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+  /**
+   * Returns an array of all challenges
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getUserById(id: string): Promise<any> {
+    let response: any;
+
+    await this.fortniteApiIOClient.getUserById(id)
+      .then((res: any) => {
+        response = res
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+
+    return response
+  }
+
+
+  /**
+   * Returns an array of all challenges
+   * This endpoint is FortniteApiIo
+   * @param options Options for this endpoint
+   */
+  public async getGlobalPlayerStats(accountId: string, options?: BannersRequestParams): Promise<any> {
     let response: any;
 
     await this.fortniteApiIOClient.getGlobalPlayerStats(accountId)

@@ -22,6 +22,7 @@ import Timer from "@/components/elements/Timer";
 import {LocalStoreService} from "@/app/services/localStore/localStore.service";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Selector from "@/components/elements/Selector";
+import Toast from "react-native-toast-message";
 import ScrollView = Animated.ScrollView;
 
 export default function HomeScreen() {
@@ -36,6 +37,7 @@ export default function HomeScreen() {
   const [username, setUsername] = useState('');
   const [recentSearch, setRecentSearch] = useState([] as string[]);
   const [news, setNews] = useState<NewsResponseData | null>(null)
+  const [platform, setPlatform] = useState('')
 
   const nextUpdate = new Date('2024-08-16T08:00:00'); // Fecha y hora de la próxima actualización
 
@@ -44,20 +46,26 @@ export default function HomeScreen() {
 
     const fortniteUsername = username;
 
-    // RESET USERNAME
-    setUsername('');
+    storeRecentSearch(fortniteUsername)
 
-    storeRecentSearch(fortniteUsername).then(() => {
+    fortniteService.getAccountIdByUsername(fortniteUsername, {strict: true, platform: platform}).then((res: any) => {
+      console.log(res)
+      if (res.error !== undefined) {
+        Toast.show({
+          type: 'error',
+          text1: 'Username not found',
+        });
+      } else {
+        // GO TO STATS VIEW
+        navigation.dispatch(
+          CommonActions.navigate({
+            name: 'screens/profile/stats',
+            params: {
+              userId: res.account_id
+            }
+          }));
+      }
     });
-
-    // GO TO STATS VIEW
-    navigation.dispatch(
-      CommonActions.navigate({
-        name: 'screens/profile/stats',
-        params: {
-          fortniteUsername
-        }
-      }));
   }
   const goToNews = () => {
     navigation.dispatch(
@@ -72,7 +80,7 @@ export default function HomeScreen() {
 
   const storeRecentSearch = async (username: string) => {
     const isInArray = recentSearch.find((recentUserprofile) => recentUserprofile === username) !== undefined;
-    const isArrayFull = recentSearch.length > 6;
+    const isArrayFull = recentSearch.length > 5;
 
     if (isArrayFull) {
       const recentSearchArrayCut = recentSearch.filter((recentUserprofile, index) => index !== 0);
@@ -123,6 +131,10 @@ export default function HomeScreen() {
     setNews(news)
   };
 
+  const onItemSelected = (item: any): any => {
+    setPlatform(item.value);
+  }
+
   useEffect(() => {
     getNews();
     getStoreRecentSearch()
@@ -132,6 +144,7 @@ export default function HomeScreen() {
     <KeyboardAvoidingView style={{flex: 1}}
                           behavior='padding' keyboardVerticalOffset={0}
     >
+      <Toast/>
       <ScrollView style={styles.scrollViewContainer} keyboardShouldPersistTaps='handled'
                   contentContainerStyle={{alignContent: 'center', paddingTop: top}}>
 
@@ -147,29 +160,61 @@ export default function HomeScreen() {
           <View style={{width: '100%', margin: 5}}>
             {/* BARRA DE BÚSQUEDA */}
             {/*styles.inputContainer*/}
-            <View style={{width: width - 100, zIndex: 1}}>
-              {/*<Ionicons name={'search'} size={Fonts.size.xl} color={colors.text}/>*/}
-              <TextInput
-                style={styles.inputComponent}
-                placeholder={'Buscar perfil'}
-                placeholderTextColor={'#4b4b4b'}
-                onChangeText={(text) => setUsername(text)}
-                value={username}
-                onSubmitEditing={goToStats}//
-              />
-              <Pressable style={[styles.searchIconContainer, {display: username.length ? 'none' : 'flex'}]}>
-                <Img source={require('../../../assets/images/logo/icons8-fortnite-llama-48.png')}
-                     style={styles.searchIcon}/>
-              </Pressable>
-              <Pressable style={[styles.searchIconContainer, {display: username.length ? 'flex' : 'none'}]}
-                         onPress={clearInput}>
-                <Ionicons name={'close'} size={Fonts.size.xl}/>
-              </Pressable>
+            <View style={{
+              width: width - 100,
+              backgroundColor: '#fbefff',
+              borderRadius: 12,
+              zIndex: 1,
+              height: 50
+            }}>
+              <View style={{
+                position: 'absolute',
+                width: 35,
+                height: '100%',
+                zIndex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+                <Ionicons name={'search'} size={Fonts.size.m} color={'#4b4b4b'}/>
+              </View>
+              <View style={{
+                zIndex: 1
+              }}>
+                <TextInput
+                  style={styles.inputComponent}
+                  placeholder={'Buscar perfil'}
+                  placeholderTextColor={'#4b4b4b'}
+                  onChangeText={(text) => setUsername(text)}
+                  value={username}
+                  onSubmitEditing={goToStats}//
+                />
+              </View>
+              <View style={{
+                position: 'absolute',
+                width: 40,
+                height: '100%',
+                alignSelf: 'flex-end',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 2,
+              }}>
+                <Pressable style={[styles.searchIconContainer, {display: username.length ? 'none' : 'flex'}]}>
+                  <Img source={require('../../../assets/images/logo/icons8-fortnite-llama-48.png')}
+                       style={styles.searchIcon}/>
+                </Pressable>
+                <Pressable style={[styles.searchIconContainer, {display: username.length ? 'flex' : 'none'}]}
+                           onPress={clearInput}>
+                  <Ionicons name={'close'}
+                            size={Fonts.size.l}
+                            color={'#4b4b4b'}
+                  />
+                </Pressable>
+              </View>
             </View>
 
             {/* Selector */}
             <View style={{position: 'absolute', right: 0}}>
-              <Selector></Selector>
+              <Selector onSelect={onItemSelected}></Selector>
             </View>
           </View>
 
@@ -242,19 +287,13 @@ const styles = StyleSheet.create({
 
   inputComponent: {
     height: 50,
-    borderRadius: 12,
-    paddingLeft: 15,
+    paddingLeft: 30,
     fontSize: Fonts.size.m,
-    backgroundColor: '#fbefff',
     paddingBottom: 0,
   },
 
   searchIconContainer: {
-    height: '100%',
-    padding: 10,
     position: 'absolute',
-    alignSelf: 'center',
-    right: 5,
     zIndex: 1, // Asegura que el icono esté por encima del input
   },
 

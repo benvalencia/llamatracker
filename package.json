@@ -49,6 +49,7 @@
     "react-native-screens": "3.31.1",
     "react-native-select-dropdown": "^4.0.1",
     "react-native-svg": "15.2.0",
+    "react-native-toast-message": "^2.2.0",
     "react-native-web": "~0.19.10",
     "react-router-dom": "^6.23.1",
     "url": "^0.11.3"

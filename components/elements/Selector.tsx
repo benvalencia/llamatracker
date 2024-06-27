@@ -5,18 +5,18 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import {Fonts} from "@/constants/Colors";
 
 const emojisWithIcons = [
-  {title: 'Epic Games', icon: 'desktop-outline'},
-  {title: 'Playstation', icon: 'logo-playstation'},
-  {title: 'Xbox', icon: 'logo-xbox'},
+  {title: 'Epic Games', icon: 'desktop-outline', value: ''},
+  {title: 'Playstation', icon: 'logo-playstation', value: 'psn'},
+  {title: 'Xbox', icon: 'logo-xbox', value: 'xbl'},
 ];
 
-const Selector = () => {
+const Selector = ({onSelect}: any) => {
   return (
     <SelectDropdown
       data={emojisWithIcons}
       defaultValueByIndex={0}
       onSelect={(selectedItem, index) => {
-        console.log(selectedItem, index);
+        onSelect(selectedItem);
       }}
       renderButton={(selectedItem, isOpened) => {
         return (
