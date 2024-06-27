@@ -157,9 +157,9 @@ export default function HomeScreen() {
             />
           </View>
 
-          <View style={{width: '100%', margin: 5}}>
+          {/* BARRA DE BÚSQUEDA Y SELECTOR */}
+          <View style={{width: '100%', marginLeft: 5, marginRight: 5}}>
             {/* BARRA DE BÚSQUEDA */}
-            {/*styles.inputContainer*/}
             <View style={{
               width: width - 100,
               backgroundColor: '#fbefff',
@@ -212,12 +212,27 @@ export default function HomeScreen() {
               </View>
             </View>
 
-            {/* Selector */}
+            {/* SELECTOR */}
             <View style={{position: 'absolute', right: 0}}>
               <Selector onSelect={onItemSelected}></Selector>
             </View>
           </View>
 
+          <View style={{width: '100%'}}>
+            <Pressable style={{
+              backgroundColor: Colors.secondary,
+              width: '100%',
+              height: 35,
+              borderRadius: 12,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }} onPress={goToStats}>
+              <Text style={{
+                fontSize: Fonts.size.s,
+                color: '#fbefff'
+              }}>Search</Text>
+            </Pressable>
+          </View>
           {/* RECENT SEARCH PILLS */}
           <View style={styles.recentSearchContainer}>
             {recentSearch.map((item) => {
@@ -239,6 +254,7 @@ export default function HomeScreen() {
               ></Img>
             </Pressable>
           </View>
+
           {/* TIMER */}
           <View style={styles.timerContainer}>
             <Text style={styles.timerTitle}>Capitulo 5 en...</Text>
