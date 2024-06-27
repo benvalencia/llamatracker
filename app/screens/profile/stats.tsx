@@ -5,11 +5,10 @@ import {IUserProfile} from "@/app/services/fortnite/fortnite.interface";
 import {FortniteService} from "@/app/services/fortnite/fortnite.service";
 import {Ionicons} from '@expo/vector-icons';
 
-
 export default function StatsScreen({route}: any) {
 
   const fortniteService = new FortniteService();
-  const {fortniteUsername} = route.params;
+  const {userId} = route.params;
   const [fortniteProfile, setFortniteProfile] = useState<IUserProfile | null>(null)
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false);
@@ -32,8 +31,12 @@ export default function StatsScreen({route}: any) {
     }
   };
 
-  //Function para obtener el perfil de Fortnite
   const fetchProfile = useCallback(async () => {
+
+    fortniteService.getGlobalPlayerStats(userId).then((res: any) => {
+      console.log(res)
+    })
+
     try {
       if (!refreshing) setLoading(true); // Solo establece loading si no está refrescando
       const profile = await fortniteService.getProfileByUsername(fortniteUsername);
@@ -44,7 +47,7 @@ export default function StatsScreen({route}: any) {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [fortniteUsername, refreshing]);
+  }, [userId, refreshing]);
 
 // Obtener perfil al montar el componente
   useEffect(() => {
